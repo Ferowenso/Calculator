@@ -146,7 +146,7 @@ def valute():
     usd = encode["Valute"]["USD"]["Value"]
     eur = encode["Valute"]["EUR"]["Value"]
     print("""Доллар: {} рубля
-    Евро: {} рубля""".format(usd, eur))
+ Евро: {} рубля""".format(usd, eur))
     xp = xp + random.randint(1, 10)
     with shelve.open("log.dat") as stat:
         stat["опыт"] = xp
@@ -189,7 +189,7 @@ def weather():
                 stat["опыт"] = xp
         elif ent.lower() == "Выход".lower():
             break
-        else: 
+        else:
             print("шо?")
 #профиль
 def profile():
