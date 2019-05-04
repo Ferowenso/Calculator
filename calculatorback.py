@@ -96,7 +96,7 @@ def delete():
     while True:
         yesorno = input("Да или Нет: ")
         if yesorno.lower() == "Да".lower():
-            os.remove("log")
+            os.remove("log.dat")
             print("Удаление...")
             time.sleep(1)
             exit(0)
@@ -345,17 +345,17 @@ def calc():
                 elif encalc.lower() == "Вычитание".lower():
                     print("Вот твой результат, " + name + ":{}".format(x - y))
                     xp = xp + random.randint(1, 10)
-                    with shelve.open("log") as stat:
+                    with shelve.open("log.dat") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Умножение".lower():
                     print("Вот твой результат, " + name + ":{}".format(x * y))
                     xp = xp + random.randint(1, 10)
-                    with shelve.open("log") as stat:
+                    with shelve.open("log.dat") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Степень".lower():
                     print("Вот твой результат, " + name + ":{}".format(x ** y))
                     xp = xp + random.randint(1, 10)
-                    with shelve.open("log") as stat:
+                    with shelve.open("log.dat") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Деление".lower():
                     if x or y == 0:
@@ -363,22 +363,22 @@ def calc():
                     else:
                         print("Вот твой результат, " + name + ": {}".format(x / y))
                         xp = xp + random.randint(1, 10)
-                    with shelve.open("log") as stat:
+                    with shelve.open("log.dat") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Корень".lower():
                     print("Вот твой результат, " + name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
                     xp = xp + random.randint(1, 10)
-                    with shelve.open("log") as stat:
+                    with shelve.open("log.dat") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Синус".lower():
                     print("Вот твой результат, " + name + ":{} и {}".format(math.sin(x), math.sin(y)))
                     xp = xp + random.randint(1, 10)
-                    with shelve.open("log") as stat:
+                    with shelve.open("log.dat") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Косинус".lower():
                     print("Вот твой результат, " + name + ":{} и {}".format(math.cos(x), math.cos(y)))
                     xp = xp + random.randint(1, 10)
-                    with shelve.open("log") as stat:
+                    with shelve.open("log.dat") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Выход".lower():
                     print("Выходим")
@@ -386,9 +386,9 @@ def calc():
                     break
 #фихня нужная для запоминания имени
 def memory():
-    memory = os.path.isfile("log")
+    memory = os.path.isfile("log.dat")
     if memory:
-        with shelve.open("log") as stat:
+        with shelve.open("log.dat") as stat:
             global name
             global age
             global g
@@ -416,7 +416,7 @@ def memory():
         shop = items[:]
         xp = xp
         level = level
-        with shelve.open("log") as stat:
+        with shelve.open("log.dat") as stat:
             stat["г"] = g
             stat["денюжки"] = money
             stat["магаз"] = shop

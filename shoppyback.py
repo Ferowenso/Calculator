@@ -4,7 +4,7 @@ def shopping():
     global items
     items = []
     while True:
-        with shelve.open("log") as stat:
+        with shelve.open("log.dat") as stat:
             try:
                 items = stat["магаз"]
                 money = stat["денюжки"]
@@ -32,7 +32,7 @@ def shopping():
                     print("Вы купили Шапку-ушанку!")
                     items.append("Шапка-ушанка")
                     money = money -10
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -46,7 +46,7 @@ def shopping():
                     print("Вы купили Мерч Хесуса!")
                     items.append("Мерч Хесуса")
                     money = money -50
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -60,7 +60,7 @@ def shopping():
                     print("Вы купили Электрогитару!")
                     items.append("Электрогитара")
                     money = money -75
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -74,7 +74,7 @@ def shopping():
                     print("Вы купили АААААААААААвтомобиль!")
                     items.append("АААААААААААвтомобиль")
                     money = money -150
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -88,7 +88,7 @@ def shopping():
                     print("Вы купили Ракету SpaceX!")
                     items.append("Ракета SpaceX")
                     money = money -500
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -102,7 +102,7 @@ def shopping():
                     print("Вы купили Кошкодевочку от Tesla!")
                     items.append("Кошкодевочка от Tesla")
                     money = money -1500
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -116,7 +116,7 @@ def shopping():
                     print("Вы купили Вейп Братишкина!")
                     items.append("Вейп Братишкина")
                     money = money -2250
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -130,7 +130,7 @@ def shopping():
                     print("Вы купили Футболку \"КиШ\"!")
                     items.append("Футболка \"КиШ\"")
                     money = money -300
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
@@ -144,7 +144,7 @@ def shopping():
                     print("Вы купили ПК от ZyperPC!")
                     items.append("ПК от ZyperPC")
                     money = money -1000
-                    with shelve.open ("log") as stat:
+                    with shelve.open ("log.dat") as stat:
                         stat["магаз"] = items
                         stat["денюжки"] = money
                 else:
