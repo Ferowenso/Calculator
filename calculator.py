@@ -61,7 +61,7 @@ def randomn():
             rand = random.randint(x, y)
             print("Число: {}".format(rand))
             xp = xp + random.randint(1, 10)
-            with shelve.open("log.dat") as stat:
+            with shelve.open("log") as stat:
                 stat["опыт"] = xp
             break
         except ValueError:
@@ -77,7 +77,7 @@ def date():
     year = random.randint(2019, 2025)
     print("Дата {}: {}.{}.{}".format(event, day, moth, year))
     xp = xp + random.randint(1, 10)
-    with shelve.open("log.dat") as stat:
+    with shelve.open("log") as stat:
         stat["опыт"] = xp
 #шансы чего-либо
 def chance():
@@ -87,7 +87,7 @@ def chance():
     chance = random.randint(0, 100)
     print("Вероятность {}: {}%".format(event, chance))
     xp = xp + random.randint(1, 10)
-    with shelve.open("log.dat") as stat:
+    with shelve.open("log") as stat:
         stat["опыт"] = xp
 #удаление данных
 def delete():
@@ -106,12 +106,55 @@ def delete():
         else:
             print("Да/Нет")
             continue
+def luck():
+    global money
+    while True:
+        with shelve.open ("log") as stat:
+            try:
+                money = stat["денюжки"]
+            except KeyError:
+                stat["денюжки"] = money
+        print("""Это игра на удачу
+1 игра - 100 монет
+Если 2 числа совпадут - +500 монет
+Если 3 числа совпадут - +1000 монет
+Вы хотите продолжить? Да/Нет""")
+        entcas = input("")
+        if entcas.lower() == "Да".lower():
+            if money >= 100:
+                money = money -100
+                with shelve.open ("log") as stat:
+                    stat["магаз"] = items
+                    stat["денюжки"] = money
+                first = random.randint(1, 9)
+                second = random.randint(1,9)
+                third = random.randint(1,9)
+                print("Числа: {}, {}, {}".format(first, second, third))
+                if first == second or first == third or second == third:
+                    money = money + 500
+                    print("Два числа совпали! +500 монет")
+                    print("Ваш баланс {}".format(money))
+                    with shelve.open ("log") as stat:
+                          stat["денюжки"] = money
+                elif first == second == third:
+                    money = money + 1000
+                    print("Три числа совпали! +1000 монет")
+                    with shelve.open ("log") as stat:
+                        stat["денюжки"] = money
+                else:
+                    print("Вы проиграли D:")
+            else:
+                print("Недостаточно денег!")
+        elif entcas.lower() == "Нет".lower():
+            break
+        else:
+            print("шо?")
 #работа
 money = 0
 def jobmain():
     global money
     while True:
-        with shelve.open ("log.dat") as stat:
+        with shelve.open ("log") as stat:
             try:
                 money = stat["денюжки"]
             except KeyError:
@@ -123,22 +166,22 @@ def jobmain():
             if level == 0:
                 money = money + random.randint(1, 5)
                 print("Ваш баланс {}".format(money))
-                with shelve.open ("log.dat") as stat:
+                with shelve.open ("log") as stat:
                     stat["денюжки"] = money
             elif level == 1:
                     money = money + random.randint(5, 30)
                     print("Ваш баланс {}".format(money))
-                    with shelve.open ("log.dat") as stat:
+                    with shelve.open ("log") as stat:
                         stat["денюжки"] = money
             elif level == 2:
                 money = money + random.randint(25, 55)
                 print("Ваш баланс {}".format(money))
-                with shelve.open ("log.dat") as stat:
+                with shelve.open ("log") as stat:
                     stat["денюжки"] = money
             elif level == 3:
                 money = money + random.randint(50, 90)
                 print("Ваш баланс {}".format(money))
-                with shelve.open ("log.dat") as stat:
+                with shelve.open ("log") as stat:
                     stat["денюжки"] = money
         elif jobtest.lower() == "выход".lower():
             break
@@ -156,7 +199,7 @@ def valute():
     print("""Доллар: {} рубля
  Евро: {} рубля""".format(usd, eur))
     xp = xp + random.randint(1, 10)
-    with shelve.open("log.dat") as stat:
+    with shelve.open("log") as stat:
         stat["опыт"] = xp
 xp = 0
 #прогноз погоды
@@ -193,7 +236,7 @@ def weather():
             Влажность: {}
             Скорость ветра: {}м/с""".format(q, w, temp, vlaga, wind))
             xp = xp + random.randint(1, 10)
-            with shelve.open("log.dat") as stat:
+            with shelve.open("log") as stat:
                 stat["опыт"] = xp
         elif ent.lower() == "Выход".lower():
             break
@@ -213,7 +256,7 @@ def levelup():
     global xp
     global level
     while True:
-        with shelve.open("log.dat") as stat:
+        with shelve.open("log") as stat:
             try:
                 xp = stat["опыт"]
                 level = stat["уровень"]
@@ -235,7 +278,7 @@ def levelup():
                 if xp >= 75:
                     print("Вы апнули уровень до 1!")
                     level = 1
-                    with shelve.open ("log.dat") as stat:
+                    with shelve.open ("log") as stat:
                         stat["уровень"] = level
                 else:
                     print("Недостаточно xp!")
@@ -247,7 +290,7 @@ def levelup():
                 if xp >= 150:
                     print("Вы апнули уровень до 2!")
                     level = 2
-                    with shelve.open ("log.dat") as stat:
+                    with shelve.open ("log") as stat:
                         stat["уровень"] = level
                 else:
                     print("Недостаточно xp!")
@@ -259,7 +302,7 @@ def levelup():
                 if xp >= 300:
                     print("Вы апнули уровень до 3!")
                     level = 3
-                    with shelve.open ("log.dat") as stat:
+                    with shelve.open ("log") as stat:
                         stat["уровень"] = level
                 else:
                     print("Недостаточно xp!")
@@ -272,7 +315,7 @@ def calc():
     global xp
     print("Ты запустил калькулятор")
     while True:
-        with shelve.open("log.dat") as stat:
+        with shelve.open("log") as stat:
             try:
                 xp = stat["опыт"]
                 x = float(input("Первое значение: "))
@@ -445,6 +488,9 @@ try:
             memory()
         elif enter.lower() == "Курс".lower():
             valute()
+            memory()
+        elif enter.lower() == "Удача".lower():
+            luck()
             memory()
         else:
             print("Не понимаю!")
