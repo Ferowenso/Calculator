@@ -132,7 +132,7 @@ class Main():
             else:
                 print("шо?")
 
-    def calc():
+    def calc(self):
         print("Ты запустил калькулятор")
         while True:
             try:
@@ -469,7 +469,7 @@ try:
             11) Курс""")
         enter = input(calc.name + "," " введи что тебе нужно: ")
         if enter.lower() == "Калькулятор".lower():
-            calc()
+            calc.calc()
         elif enter.lower() == "Шансы".lower():
             chance()
         elif enter.lower() == "дата":
