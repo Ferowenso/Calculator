@@ -1,12 +1,5 @@
-
 # импорт всего шо надо
-import math
-import time
-import re
-import shelve
-import os.path
-import sys
-import random
+import math, time, re, shelve, sys, random, os.path
 try:
     import requests
 except ModuleNotFoundError:
@@ -19,10 +12,12 @@ except ModuleNotFoundError:
     sys.exit()
 items = []
 class Main():
-    def __init__(self, name=None, age=None, xp=0):
+    def __init__(self, name=None, age=None, xp=0, money=0, lvl=0):
         self.name = name
         self.age = age
         self.xp = xp
+        self.money = money
+        self.lvl = lvl
 
     def login(self):
         print("Каково же твое имя?")
@@ -85,7 +80,7 @@ class Main():
         print("Вероятность {}: {}%".format(event, chance))
         self.xp = self.xp + random.randint(1, 10)
 
-    def valute():
+    def valute(self):
         api = "https://www.cbr-xml-daily.ru/daily_json.js"
         print("Это курс валют!")
         r = requests.get(api)
@@ -96,7 +91,7 @@ class Main():
  Евро: {} рубля""".format(usd, eur))
         self.xp = self.xp + random.randint(1, 10)
 
-    def weather():
+    def weather(self):
         while True:
             print("Введите \'Продолжить\' или \'Выход\'")
             ent = input("")
@@ -395,25 +390,6 @@ if memory == False:
         stat["денюжки"] = money
         stat["магаз"] = shop
         stat["уровень"] = level
-def mem():
-    global g
-    global money
-    global shop
-    global xp
-    global level
-    with shelve.open("log") as stat:
-        stat["г"] = g
-        g = stat["г"]
-        stat["денюжки"] = money
-        money = stat["денюжки"]
-        stat["магаз"] = shop
-        shop = stat["магаз"]
-        stat["опыт"] = xp
-        xp = stat["опыт"]
-        stat["уровень"] = level
-        level = stat["уровень"]
-#memory()
-#mem()
 #начало хы
 try:
     print("Ладно, начнем-с")
@@ -434,15 +410,12 @@ try:
         enter = input(calc.name + "," " введи что тебе нужно: ")
         if enter.lower() == "Калькулятор".lower():
             calc()
-            memory()
         elif enter.lower() == "Шансы".lower():
             chance()
-            memory()
         elif enter.lower() == "дата":
             calc.date()
         elif enter.lower() == "Число".lower():
             randomn()
-            memory()
         elif enter.lower() == "Удалить данные".lower():
             delete()
         elif enter.lower() == "Работа".lower():
@@ -454,16 +427,12 @@ try:
             memory()
         elif enter.lower() == "Уровень".lower():
             levelup()
-            memory()
-        elif enter.lower() == "Погода".lower():
-            weather()
-            memory()
+        elif enter.lower() == "погода":
+            calc. weather()
         elif enter.lower() == "Курс".lower():
             valute()
-            memory()
         elif enter.lower() == "Удача".lower():
             luck()
-            memory()
         else:
             print("Не понимаю!")
 #выход через ctrl+c
