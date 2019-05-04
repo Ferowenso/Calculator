@@ -24,7 +24,7 @@ class Main():
         self.age = age
         self.xp = xp
 
-    def login():
+    def login(self):
         print("Каково же твое имя?")
         while 1:
             self.name = input('')
@@ -399,8 +399,9 @@ def memory():
             print("Здравствуй, {}".format(name))
             print(xp)
     if memory == False:
-        xp = 0
-        login()
+        calc = Main()
+        calc.login()
+        calc = Main(name=calc.name, age=calc.age)
         g = name, age
         money = money
         shop = items[:]
