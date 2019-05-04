@@ -26,3 +26,6 @@
 * Курс
 ## Скриншотик
 ![Image alt](https://i.imgur.com/wwC2fW0.png)
+## Программисты
+* [Данила](https://vk.com/ferowenso) - собсна, почти весь калькулятор написал. 
+* [Андрей](https://vk.com/slava_a_i_r) - не прямой фикс багов
