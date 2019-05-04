@@ -24,6 +24,36 @@ class Main():
         self.age = age
         self.xp = xp
 
+    def login():
+        print("Каково же твое имя?")
+        while 1:
+            self.name = input('')
+            if not self.name:
+                print("Зачем мне пустой ответ?")
+                continue
+            elif len(self.name) > 30:
+                print("Что-то слишком длинное имя....")
+                continue
+            elif re.findall(r'\d', self.name) == []:
+                break
+            else:
+                print("Я спросил имя!")
+        time.sleep(1)
+        print("А сколько же тебе лет?")
+        while 1:
+            try:
+                self.age = int(input(""))
+                if self.age > 100:
+                    print("Что-то слишком много..")
+                    continue
+                elif self.age < 1:
+                    print("Что-то слишком мало")
+                    continue
+                break
+            except ValueError:
+                print("Мне нужны числа!")
+                continue
+
     def randomn(self):
         while True:
             try:
@@ -39,75 +69,70 @@ class Main():
                 print("Число!")
                 continue
 
-def login():
-    print("Каково же твое имя?")
-    while 1:
-        global name
-        name = input('')
-        if not name:
-            print("Зачем мне пустой ответ?")
-            continue
-        elif len(name) > 30:
-            print("Что-то слишком длинное имя....")
-            continue
-        elif re.findall(r'\d', name) == []:
-            break
-        else:
-            print("Я спросил имя!")
-    time.sleep(1)
-    print("А сколько же тебе лет?")
-    while 1:
-        try:
-            global age
-            age = int(input(""))
-            if age > 100:
-                print("Что-то слишком много..")
-                continue
-            elif age < 1:
-                print("Что-то слишком мало")
-                continue
-            break
-        except ValueError:
-            print("Мне нужны числа!")
-            continue
-#рандомное число
-def randomn():
-    global xp
-    while True:
-        try:
-            print("Рандомное число из заданного диапазона")
-            x = int(input("Первое число: "))
-            y = int(input("Второе число: "))
-            global rand
-            rand = random.randint(x, y)
-            print("Число: {}".format(rand))
-            xp = xp + random.randint(1, 10)
-            break
-        except ValueError:
-            print("Число!")
-            continue
-#дата чего-либо
-def date():
-    global xp
-    print("Тут ты можешь узнать дату какого-либо события")
-    event = input("Событие: ")
-    day = random.randint(1, 31)
-    moth = random.randint(1, 12)
-    year = random.randint(2019, 2025)
-    print("Дата {}: {}.{}.{}".format(event, day, moth, year))
-    xp = xp + random.randint(1, 10)
-    with shelve.open("log") as stat:
-        stat["опыт"] = xp
-#шансы чего-либо
-def chance():
-    global xp
-    print("Тут ты можешь узнать вероятность какого-либо события")
-    event = input("Событие: ")
-    chance = random.randint(0, 100)
-    print("Вероятность {}: {}%".format(event, chance))
-    xp = xp + random.randint(1, 10)
-    with shelve.open("log") as stat:
-        stat["опыт"] = xp
+    def date(self):
+        print("Тут ты можешь узнать дату какого-либо события")
+        event = input("Событие: ")
+        day = random.randint(1, 31)
+        moth = random.randint(1, 12)
+        year = random.randint(2019, 2025)
+        print("Дата {}: {}.{}.{}".format(event, day, moth, year))
+        self.xp = self.xp + random.randint(1, 10)
+
+    def chance():
+        print("Тут ты можешь узнать вероятность какого-либо события")
+        event = input("Событие: ")
+        chance = random.randint(0, 100)
+        print("Вероятность {}: {}%".format(event, chance))
+        self.xp = self.xp + random.randint(1, 10)
+
+    def valute():
+        api = "https://www.cbr-xml-daily.ru/daily_json.js"
+        print("Это курс валют!")
+        r = requests.get(api)
+        encode = r.json()
+        usd = encode["Valute"]["USD"]["Value"]
+        eur = encode["Valute"]["EUR"]["Value"]
+        print("""Доллар: {} рубля
+ Евро: {} рубля""".format(usd, eur))
+        self.xp = self.xp + random.randint(1, 10)
+
+    def weather():
+        while True:
+            print("Введите \'Продолжить\' или \'Выход\'")
+            ent = input("")
+            if ent.lower() == "Продолжить".lower():
+                apiurl = "http://api.openweathermap.org/data/2.5/find"
+                print("Введите название города на английском")
+                q = input("")
+                q = q.lower()
+                appid = '22c7bf8e593c47b0cf88f390e8e5376a'
+                params = {
+                        'q': q,
+                        'appid': appid,
+                        'units': 'metric',
+                        'lang': 'ru'
+                }
+                r = requests.get(apiurl, params=params)
+                encode = r.json()
+                try:
+                    w = encode['list'][0]['weather'][0]['description']
+                    temp = encode["list"][0]["main"]["temp"]
+                    vlaga = encode["list"][0]["main"]["humidity"]
+                    wind = encode["list"][0]["wind"]["speed"]
+                except:
+                    print("что ты черт побери такое несешь? нет такого города")
+                    continue
+                print("""Город: {}
+                Погода: {}
+                Температура: {}°
+                Влажность: {}
+                Скорость ветра: {}м/с""".format(q, w, temp, vlaga, wind))
+                self.xp = self.xp + random.randint(1, 10)
+            elif ent.lower() == "Выход".lower():
+                break
+            else:
+                print("шо?")
+
 #удаление данных
 def delete():
     global yesorno
@@ -203,60 +228,6 @@ def jobmain():
                 with shelve.open ("log") as stat:
                     stat["денюжки"] = money
         elif jobtest.lower() == "выход".lower():
-            break
-        else:
-            print("шо?")
-#курс валют
-def valute():
-    global xp
-    api = "https://www.cbr-xml-daily.ru/daily_json.js"
-    print("Это курс валют!")
-    r = requests.get(api)
-    encode = r.json()
-    usd = encode["Valute"]["USD"]["Value"]
-    eur = encode["Valute"]["EUR"]["Value"]
-    print("""Доллар: {} рубля
- Евро: {} рубля""".format(usd, eur))
-    xp = xp + random.randint(1, 10)
-    with shelve.open("log") as stat:
-        stat["опыт"] = xp
-#прогноз погоды
-def weather():
-    global xp
-    while True:
-        print("Введите \'Продолжить\' или \'Выход\'")
-        ent = input("")
-        if ent.lower() == "Продолжить".lower():
-            apiurl = "http://api.openweathermap.org/data/2.5/find"
-            print("Введите название города на английском")
-            q = input("")
-            q = q.lower()
-            appid = '22c7bf8e593c47b0cf88f390e8e5376a'
-            params = {
-                    'q': q,
-                    'appid': appid,
-                    'units': 'metric',
-                    'lang': 'ru'
-            }
-            r = requests.get(apiurl, params=params)
-            encode = r.json()
-            try:
-                w = encode['list'][0]['weather'][0]['description']
-                temp = encode["list"][0]["main"]["temp"]
-                vlaga = encode["list"][0]["main"]["humidity"]
-                wind = encode["list"][0]["wind"]["speed"]
-            except:
-                print("что ты черт побери такое несешь? нет такого города")
-                continue
-            print("""Город: {}
-            Погода: {}
-            Температура: {}°
-            Влажность: {}
-            Скорость ветра: {}м/с""".format(q, w, temp, vlaga, wind))
-            xp = xp + random.randint(1, 10)
-            with shelve.open("log") as stat:
-                stat["опыт"] = xp
-        elif ent.lower() == "Выход".lower():
             break
         else:
             print("шо?")
