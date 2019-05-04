@@ -1,3 +1,4 @@
+
 # импорт всего шо надо
 import math
 import time
