@@ -9,12 +9,12 @@ import sys
 import random
 try:
     import requests
-except:
+except ModuleNotFoundError:
     print("У вас не установлен requests!")
     sys.exit()
 try:
     from shoppy import shopping
-except:
+except ModuleNotFoundError:
     print("У вас нет магазина! Скачать его вы можете здесь https://github.com/Ferowenso/Calculator")
     sys.exit()
 items = []
@@ -374,44 +374,27 @@ def calc():
                     time.sleep(1)
                     break
 #фихня нужная для запоминания имени
-def memory():
-    memory = os.path.isfile("log")
-    if memory:
-        with shelve.open("log") as stat:
-            global name
-            global age
-            global g
-            global money
-            global shop
-            global items
-            global xp
-            global level
-            g = stat["г"]
-            name = g[0]
-            age = g[1]
-            money = stat["денюжки"]
-            money = money
-            shop = stat["магаз"]
-            items = shop
-            xp = stat["опыт"]
-            level = stat["уровень"]
-            level = level
-            print("Здравствуй, {}".format(name))
-            print(xp)
-    if memory == False:
-        calc = Main()
-        calc.login()
-        calc = Main(name=calc.name, age=calc.age)
-        g = name, age
+memory = os.path.isfile("log")
+if memory:
+    with shelve.open("log") as stat:
+        money = stat["денюжки"]
         money = money
-        shop = items[:]
-        level = level
-        with shelve.open("log") as stat:
-            stat["г"] = g
-            stat["денюжки"] = money
-            stat["магаз"] = shop
-            stat["опыт"] = xp
-            stat["уровень"] = level
+        shop = stat["магаз"]
+        items = shop
+        level = stat["уровень"]
+        calc = stat["ты"]
+        print("Здравствуй, {}".format(calc.name))
+if memory == False:
+    calc = Main()
+    calc.login()
+    calc = Main(name=calc.name, age=calc.age)
+    money = money
+    shop = items[:]
+    with shelve.open("log") as stat:
+        state["ты"] = calc
+        stat["денюжки"] = money
+        stat["магаз"] = shop
+        stat["уровень"] = level
 def mem():
     global g
     global money
@@ -429,8 +412,8 @@ def mem():
         xp = stat["опыт"]
         stat["уровень"] = level
         level = stat["уровень"]
-memory()
-mem()
+#memory()
+#mem()
 #начало хы
 try:
     print("Ладно, начнем-с")
@@ -448,7 +431,7 @@ try:
             9) Уровень
             10) Погода
             11) Курс""")
-        enter = input(name + "," " введи что тебе нужно: ")
+        enter = input(calc.name + "," " введи что тебе нужно: ")
         if enter.lower() == "Калькулятор".lower():
             calc()
             memory()
@@ -486,6 +469,4 @@ try:
             print("Не понимаю!")
 #выход через ctrl+c
 except KeyboardInterrupt:
-    with shelve.open("log") as stat:
-        stat["опыт"] = xp
     print("Выходим");time.sleep(1);sys.exit
