@@ -6,8 +6,16 @@ import shelve
 import os.path
 import sys
 import random
-import requests
-from shoppy import shopping
+try:
+    import requests
+except:
+    print("У вас не установлен requests!")
+    sys.exit()
+try:
+    from shoppy import shopping
+except:
+    print("У вас нет магазина! Скачать его вы можете здесь https://github.com/Ferowenso/Calculator")
+    sys.exit()
 items = []
 # инфа для фсб
 def login():
