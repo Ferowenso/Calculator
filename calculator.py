@@ -438,9 +438,8 @@ try:
         elif enter.lower() == "Шансы".lower():
             chance()
             memory()
-        elif enter.lower() == "Дата".lower():
-            date()
-            memory()
+        elif enter.lower() == "дата":
+            calc.date()
         elif enter.lower() == "Число".lower():
             randomn()
             memory()
