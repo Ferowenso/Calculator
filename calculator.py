@@ -19,6 +19,9 @@ class Main():
         self.money = money
         self.lvl = lvl
 
+    def __str__(self):
+        return "Имя: {}, возраст: {}".format(calc.name, calc.age)
+
     def login(self):
         print("Каково же твое имя?")
         while 1:
@@ -128,6 +131,61 @@ class Main():
             else:
                 print("шо?")
 
+    def calc():
+    global xp
+    print("Ты запустил калькулятор")
+    while True:
+        try:
+            x = float(input("Первое значение: "))
+            y = float(input("Второе значение: "))
+        except KeyError:
+            stat["опыт"] = xp
+        except ValueError:
+            print("Цифорками!")
+            continue
+        else:
+            encalc = input("""Введи что тебе нужно:
+• Сложение
+• Вычитание
+• Умножение
+• Деление
+• Степень
+• Корень
+• Синус
+• Косинус
+• Выход
+""")
+            if encalc.lower() == "Сложение".lower():
+                print("Вот твой результат, " + calc.name + ":{}".format(x + y))
+                self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Вычитание".lower():
+                print("Вот твой результат, " + calc.name + ":{}".format(x - y))
+                self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Умножение".lower():
+                print("Вот твой результат, " + calc.name + ":{}".format(x * y))
+                self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Степень".lower():
+                print("Вот твой результат, " + calc.name + ":{}".format(x ** y))
+                self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Деление".lower():
+                if x or y == 0:
+                    print("Оставь вселенную в покое")
+                else:
+                    print("Вот твой результат, " + calc.name + ": {}".format(x / y))
+                    self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Корень".lower():
+                print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
+                self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Синус".lower():
+                print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)))
+                self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Косинус".lower():
+                print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)))
+                self.xp = self.xp + random.randint(1, 10)
+            elif encalc.lower() == "Выход".lower():
+                print("Выходим")
+                time.sleep(1)
+                break
 #удаление данных
 def delete():
     global yesorno
@@ -369,6 +427,7 @@ def calc():
                     time.sleep(1)
                     break
 #фихня нужная для запоминания имени
+<<<<<<< HEAD
 memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
@@ -378,13 +437,33 @@ if memory:
         items = shop
         level = stat["уровень"]
         calc = stat["ты"]
+=======
+if platform == "win32":
+    memory = os.path.isfile("log.dat")
+else:
+    memory = os.path.isfile("log")
+if memory:
+    with shelve.open("log") as stat:
+        calc = stat["калк"]
+>>>>>>> b8f08a7708a2309df25062dab8462607ed035d79
         print("Здравствуй, {}".format(calc.name))
 if memory == False:
     calc = Main()
     calc.login()
     calc = Main(name=calc.name, age=calc.age)
+<<<<<<< HEAD
     money = money
     shop = items[:]
+=======
+    with shelve.open("log") as stat:
+        stat["калк"] = calc
+def mem():
+    global g
+    global money
+    global shop
+    global xp
+    global level
+>>>>>>> b8f08a7708a2309df25062dab8462607ed035d79
     with shelve.open("log") as stat:
         state["ты"] = calc
         stat["денюжки"] = money
