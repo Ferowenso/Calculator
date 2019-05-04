@@ -77,7 +77,7 @@ class Main():
         print("Дата {}: {}.{}.{}".format(event, day, moth, year))
         self.xp = self.xp + random.randint(1, 10)
 
-    def chance():
+    def chance(self):
         print("Тут ты можешь узнать вероятность какого-либо события")
         event = input("Событие: ")
         chance = random.randint(0, 100)
@@ -471,11 +471,11 @@ try:
         if enter.lower() == "Калькулятор".lower():
             calc.calc()
         elif enter.lower() == "Шансы".lower():
-            chance()
+            calc.chance()
         elif enter.lower() == "дата":
             calc.date()
         elif enter.lower() == "Число".lower():
-            randomn()
+            calc.randomn()
         elif enter.lower() == "Удалить данные".lower():
             delete()
         elif enter.lower() == "Работа".lower():
@@ -484,13 +484,12 @@ try:
             profile()
         elif enter.lower() == "Магазин".lower():
             shopping()
-            memory()
         elif enter.lower() == "Уровень".lower():
             levelup()
         elif enter.lower() == "погода":
             calc. weather()
         elif enter.lower() == "Курс".lower():
-            valute()
+            calc.valute()
         elif enter.lower() == "Удача".lower():
             luck()
         else:
