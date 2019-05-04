@@ -297,7 +297,7 @@ def calc():
                 if encalc.lower() == "Сложение".lower():
                     print("Вот твой результат, " + name + ":{}".format(x + y))
                     xp = xp + random.randint(1, 10)
-                    with shelve.open("log.dat") as stat:
+                    with shelve.open("log") as stat:
                         stat["опыт"] = xp
                 elif encalc.lower() == "Вычитание".lower():
                     print("Вот твой результат, " + name + ":{}".format(x - y))
