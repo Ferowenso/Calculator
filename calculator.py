@@ -17,7 +17,7 @@ except:
     print("У вас нет магазина! Скачать его вы можете здесь https://github.com/Ferowenso/Calculator")
     sys.exit()
 items = []
-# инфа для фсб
+#инфа для фсб
 def login():
     print("Каково же твое имя?")
     while 1:
