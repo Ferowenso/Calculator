@@ -1,5 +1,6 @@
 # импорт всего шо надо
 import math, time, re, shelve, sys, random, os.path
+from sys import platform
 try:
     import requests
 except ModuleNotFoundError:
@@ -132,19 +133,16 @@ class Main():
                 print("шо?")
 
     def calc():
-    global xp
-    print("Ты запустил калькулятор")
-    while True:
-        try:
-            x = float(input("Первое значение: "))
-            y = float(input("Второе значение: "))
-        except KeyError:
-            stat["опыт"] = xp
-        except ValueError:
-            print("Цифорками!")
-            continue
-        else:
-            encalc = input("""Введи что тебе нужно:
+        print("Ты запустил калькулятор")
+        while True:
+            try:
+                x = float(input("Первое значение: "))
+                y = float(input("Второе значение: "))
+            except ValueError:
+                print("Цифорками!")
+                continue
+            else:
+                encalc = input("""Введи что тебе нужно:
 • Сложение
 • Вычитание
 • Умножение
@@ -427,17 +425,15 @@ def calc():
                     time.sleep(1)
                     break
 #фихня нужная для запоминания имени
-<<<<<<< HEAD
 memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
-        money = stat["денюжки"]
-        money = money
-        shop = stat["магаз"]
-        items = shop
-        level = stat["уровень"]
-        calc = stat["ты"]
-=======
+        #money = stat["денюжки"]
+        #money = money
+        #shop = stat["магаз"]
+        #items = shop
+        #level = stat["уровень"]
+        calc = stat["калк"]
 if platform == "win32":
     memory = os.path.isfile("log.dat")
 else:
@@ -445,30 +441,15 @@ else:
 if memory:
     with shelve.open("log") as stat:
         calc = stat["калк"]
->>>>>>> b8f08a7708a2309df25062dab8462607ed035d79
         print("Здравствуй, {}".format(calc.name))
 if memory == False:
     calc = Main()
     calc.login()
     calc = Main(name=calc.name, age=calc.age)
-<<<<<<< HEAD
     money = money
     shop = items[:]
-=======
     with shelve.open("log") as stat:
         stat["калк"] = calc
-def mem():
-    global g
-    global money
-    global shop
-    global xp
-    global level
->>>>>>> b8f08a7708a2309df25062dab8462607ed035d79
-    with shelve.open("log") as stat:
-        state["ты"] = calc
-        stat["денюжки"] = money
-        stat["магаз"] = shop
-        stat["уровень"] = level
 #начало хы
 try:
     print("Ладно, начнем-с")
