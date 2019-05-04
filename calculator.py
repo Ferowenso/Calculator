@@ -17,7 +17,27 @@ except:
     print("У вас нет магазина! Скачать его вы можете здесь https://github.com/Ferowenso/Calculator")
     sys.exit()
 items = []
-#инфа для фсб
+class Main():
+    def __init__(self, name=None, age=None, xp=0):
+        self.name = name
+        self.age = age
+        self.xp = xp
+
+    def randomn(self):
+        while True:
+            try:
+                print("Рандомное число из заданного диапазона")
+                x = int(input("Первое число: "))
+                y = int(input("Второе число: "))
+                global rand
+                rand = random.randint(x, y)
+                print("Число: {}".format(rand))
+                self.xp = self.xp + random.randint(1, 10)
+                break
+            except ValueError:
+                print("Число!")
+                continue
+
 def login():
     print("Каково же твое имя?")
     while 1:
@@ -61,8 +81,6 @@ def randomn():
             rand = random.randint(x, y)
             print("Число: {}".format(rand))
             xp = xp + random.randint(1, 10)
-            with shelve.open("log") as stat:
-                stat["опыт"] = xp
             break
         except ValueError:
             print("Число!")
@@ -201,7 +219,6 @@ def valute():
     xp = xp + random.randint(1, 10)
     with shelve.open("log") as stat:
         stat["опыт"] = xp
-xp = 0
 #прогноз погоды
 def weather():
     global xp
@@ -405,16 +422,16 @@ def memory():
             shop = stat["магаз"]
             items = shop
             xp = stat["опыт"]
-            xp = xp
             level = stat["уровень"]
             level = level
             print("Здравствуй, {}".format(name))
+            print(xp)
     if memory == False:
+        xp = 0
         login()
         g = name, age
         money = money
         shop = items[:]
-        xp = xp
         level = level
         with shelve.open("log") as stat:
             stat["г"] = g
@@ -496,4 +513,6 @@ try:
             print("Не понимаю!")
 #выход через ctrl+c
 except KeyboardInterrupt:
+    with shelve.open("log") as stat:
+        stat["опыт"] = xp
     print("Выходим");time.sleep(1);sys.exit
