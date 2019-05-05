@@ -62,7 +62,7 @@ class Main():
                 global rand
                 rand = random.randint(x, y)
                 print("Число: {}".format(rand))
-                self.xp = self.xp + random.randint(1, 10)
+                self.xp += random.randint(1, 10)
                 break
             except ValueError:
                 print("Число!")
@@ -216,7 +216,11 @@ class Kapitalizm(Main):
 Ваш баланс: {}$
 Ваши предметы: {}
 Ваш опыт: {}xp
+<<<<<<< HEAD
 Ваш уровень: {} """.format(calc.name, calc.age, kap.money, items, calc.xp, self.lvl))
+=======
+Ваш уровень: {} """.format(self.name, self.age, self.money, items, self.xp, self.lvl))
+>>>>>>> ddbb0c48f55c447ccec80f00cb3cceaec08ef2fb
     def jobmain(self):
         while True:
             with shelve.open ("log") as stat:
