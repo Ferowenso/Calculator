@@ -19,7 +19,6 @@ class Main():
         self.xp = xp
         self.money = money
         self.lvl = lvl
-        self.randomorg = randomorg
 
     def __str__(self):
         return "Имя: {}, возраст: {}".format(calc.name, calc.age)
@@ -228,7 +227,7 @@ def delete():
     while True:
         yesorno = input("Да или Нет: ")
         if yesorno.lower() == "Да".lower():
-            if platform == win32:
+            if platform == "win32":
                 os.remove("log.dat")
                 os.remove("log.bak")
                 os.remove("log.dir")
