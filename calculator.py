@@ -1,5 +1,5 @@
 # импорт всего шо надо
-import math, time, re, shelve, sys, random, os.path
+import math, time, re, shelve, sys, random, os.path, json
 from sys import platform
 try:
     import requests
@@ -19,6 +19,7 @@ class Main():
         self.xp = xp
         self.money = money
         self.lvl = lvl
+        self.randomorg = randomorg
 
     def __str__(self):
         return "Имя: {}, возраст: {}".format(calc.name, calc.age)
@@ -80,8 +81,8 @@ class Main():
     def chance(self):
         print("Тут ты можешь узнать вероятность какого-либо события")
         event = input("Событие: ")
-        chance = random.randint(0, 100)
-        print("Вероятность {}: {}%".format(event, chance))
+        test = randomorgmain(0, 100)
+        print("Шанс {} {}%" .format(event, test))
         self.xp = self.xp + random.randint(1, 10)
 
     def valute(self):
@@ -111,8 +112,12 @@ class Main():
                         'units': 'metric',
                         'lang': 'ru'
                 }
-                r = requests.get(apiurl, params=params)
-                encode = r.json()
+                try:
+                    r = requests.get(apiurl, params=params, timeout=5)
+                    encode = r.json()
+                except:
+                    print("Чота у вас с инетом или еще какие-то проблемы, мы тут ничо сделать не можем")
+                    sys.exit()
                 try:
                     w = encode['list'][0]['weather'][0]['description']
                     temp = encode["list"][0]["main"]["temp"]
@@ -184,14 +189,51 @@ class Main():
                 print("Выходим")
                 time.sleep(1)
                 break
-#удаление данных
+class Kapitalizm(Main):
+    None # Запихни сюды свой магаз, ежели поймешь как это сделать
+    # Ежели не понял или не хочешь - удаляй и пихай экономику в меин
+    # А ежели захочешь, то меин в скобочках наследует все чо там было. Т.е
+    # имена, возраст, и т.п
+
+# Кое чо из моего калькулятора, чо лень писать снова, но очень пиздато работает
+def randomorgmain(random1, random2):
+    url = "https://api.random.org/json-rpc/2/invoke"
+    mykey = "cb5861a7-60c0-4513-af5b-f8df81aa8e7e"
+    headers = {'content-type': 'application/json'}
+    data = {'jsonrpc':'2.0',
+           'method':'generateIntegers','params':
+           {'apiKey':mykey,
+           'n':1
+           ,'min':random1
+           ,'max':random2}
+          ,'id':24565}
+    params = json.dumps(data)
+    try:
+        r = requests.post(url, params, headers=headers, timeout=5)
+        encode = r.json()
+        rrandom = encode["result"]["random"]["data"][0]
+    except:
+        print("Рандом орг чота не работает или не может прислать рандом  в ответ. Мы тада используем программный")
+        rrandom = random.randint(random1, random2)
+    return rrandom
+
+def clrclear():
+    if platform == "win32":
+        os.system("cls")
+    else:
+        os.system("clear")
 def delete():
     global yesorno
     print("Ты точно хочешь удалить данные?")
     while True:
         yesorno = input("Да или Нет: ")
         if yesorno.lower() == "Да".lower():
-            os.remove("log")
+            if platform == win32:
+                os.remove("log.dat")
+                os.remove("log.bak")
+                os.remove("log.dir")
+            else:
+                os.remove("log")
             print("Удаление...")
             time.sleep(1)
             exit(0)
@@ -354,6 +396,7 @@ def levelup():
 memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
+        #как я и говорил, ибаца с магазом буишь ты
         #money = stat["денюжки"]
         #money = money
         #shop = stat["магаз"]
@@ -376,23 +419,29 @@ if memory == False:
     shop = items[:]
     with shelve.open("log") as stat:
         stat["калк"] = calc
+# перечень всех возможностей программы очень много места занимает на экране
+# и вылезает при каждом запросе
+# лучше его как в моем релизовать, только при запуске и хелп
 #начало хы
+helpme = """Функции этой прекрасной программы:
+        0) Очистить
+        1) Калькулятор
+        2) Шансы
+        3) Дата
+        4) Число
+        5) Удалить данные
+        6) Работа
+        7) Профиль
+        8) Магазин
+        9) Уровень
+        10) Погода
+        11) Курс"""
 try:
     print("Ладно, начнем-с")
+    print(helpme)
+
     time.sleep(1)
     while True:
-        print("""Функции этой прекрасной программы:
-            1) Калькулятор
-            2) Шансы
-            3) Дата
-            4) Число
-            5) Удалить данные
-            6) Работа
-            7) Профиль
-            8) Магазин
-            9) Уровень
-            10) Погода
-            11) Курс""")
         enter = input(calc.name + "," " введи что тебе нужно: ")
         if enter.lower() == "Калькулятор".lower():
             calc.calc()
@@ -413,11 +462,15 @@ try:
         elif enter.lower() == "Уровень".lower():
             levelup()
         elif enter.lower() == "погода":
-            calc. weather()
+            calc.weather()
         elif enter.lower() == "Курс".lower():
             calc.valute()
         elif enter.lower() == "Удача".lower():
             luck()
+        elif enter.lower() == "очистить":
+            clrclear()
+        elif enter.lower() == "хелп":
+            print(helpme)
         else:
             print("Не понимаю!")
 #выход через ctrl+c
