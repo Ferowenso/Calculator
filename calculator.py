@@ -21,7 +21,7 @@ class Main():
         self.lvl = lvl
 
     def __str__(self):
-        return "Имя: {}, возраст: {}".format(calc.name, calc.age)
+        return "Имя: {}, возраст: {}, баланс: {}".format(calc.name, calc.age, calc.money)
 
     def login(self):
         print("Каково же твое имя?")
@@ -188,11 +188,50 @@ class Main():
                 print("Выходим")
                 time.sleep(1)
                 break
+
 class Kapitalizm(Main):
-    None # Запихни сюды свой магаз, ежели поймешь как это сделать
-    # Ежели не понял или не хочешь - удаляй и пихай экономику в меин
-    # А ежели захочешь, то меин в скобочках наследует все чо там было. Т.е
-    # имена, возраст, и т.п
+    def profile(self):
+        print("""Ваше имя: {}
+Ваш возраст: {}
+Ваш баланс: {}$
+Ваши предметы: {}
+Ваш опыт: {}xp
+Ваш уровень: {} """.format(calc.name, calc.age, kap.money, items, self.xp, self.lvl))
+    def jobmain(self):
+        while True:
+            with shelve.open ("log") as stat:
+                try:
+                    self.money = stat["денюжки"]
+                except KeyError:
+                    stat["денюжки"] = self.money
+            print("""Напишите \"Работать\", чтобы работать
+\"Выход\", чтобы выйти""")
+            jobtest = input()
+            if jobtest.lower() == "работать".lower():
+                if self.lvl == 0:
+                    self.money = self.money + random.randint(1, 5)
+                    print("Ваш баланс {}".format(self.money))
+                    with shelve.open ("log") as stat:
+                        stat["денюжки"] = self.money
+                elif self.lvl == 1:
+                        self.money = self.money + random.randint(5, 30)
+                        print("Ваш баланс {}".format(self.money))
+                        with shelve.open ("log") as stat:
+                            stat["денюжки"] = self.money
+                elif self.lvl == 2:
+                    self.money = self.money + random.randint(25, 55)
+                    print("Ваш баланс {}".format(self.money))
+                    with shelve.open ("log") as stat:
+                        stat["денюжки"] = self.money
+                elif self.lvl == 3:
+                    self.money = self.money + random.randint(50, 90)
+                    print("Ваш баланс {}".format(self.money))
+                    with shelve.open ("log") as stat:
+                        stat["денюжки"] = self.money
+            elif jobtest.lower() == "выход".lower():
+                break
+            else:
+                print("шо?")
 
 # Кое чо из моего калькулятора, чо лень писать снова, но очень пиздато работает
 def randomorgmain(random1, random2):
@@ -285,53 +324,7 @@ def luck():
             break
         else:
             print("шо?")
-#работа
-money = 0
-def jobmain():
-    global money
-    while True:
-        with shelve.open ("log") as stat:
-            try:
-                money = stat["денюжки"]
-            except KeyError:
-                stat["денюжки"] = money
-        print("""Напишите \"Работать\", чтобы работать
-\"Выход\", чтобы выйти""")
-        jobtest = input()
-        if jobtest.lower() == "работать".lower():
-            if level == 0:
-                money = money + random.randint(1, 5)
-                print("Ваш баланс {}".format(money))
-                with shelve.open ("log") as stat:
-                    stat["денюжки"] = money
-            elif level == 1:
-                    money = money + random.randint(5, 30)
-                    print("Ваш баланс {}".format(money))
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = money
-            elif level == 2:
-                money = money + random.randint(25, 55)
-                print("Ваш баланс {}".format(money))
-                with shelve.open ("log") as stat:
-                    stat["денюжки"] = money
-            elif level == 3:
-                money = money + random.randint(50, 90)
-                print("Ваш баланс {}".format(money))
-                with shelve.open ("log") as stat:
-                    stat["денюжки"] = money
-        elif jobtest.lower() == "выход".lower():
-            break
-        else:
-            print("шо?")
-#профиль
-def profile():
-    print("""Ваше имя: {}
-Ваш возраст: {}
-Ваш баланс: {}$
-Ваши предметы: {}
-Ваш опыт: {}xp
-Ваш уровень: {} """.format(name, age, money, items, xp, level))
-level = 0
+
 #уровни
 def levelup():
     global xp
@@ -396,12 +389,12 @@ memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
         #как я и говорил, ибаца с магазом буишь ты
-        #money = stat["денюжки"]
-        #money = money
         #shop = stat["магаз"]
         #items = shop
         #level = stat["уровень"]
         calc = stat["калк"]
+        kap = stat["капитализм"]
+        kap.money= stat["денюжки"]
 if platform == "win32":
     memory = os.path.isfile("log.dat")
 else:
@@ -409,18 +402,19 @@ else:
 if memory:
     with shelve.open("log") as stat:
         calc = stat["калк"]
+        kap = stat["капитализм"]
+        kap.money= stat["денюжки"]
         print("Здравствуй, {}".format(calc.name))
 if memory == False:
     calc = Main()
     calc.login()
+    kap = Kapitalizm()
     calc = Main(name=calc.name, age=calc.age)
-    money = money
     shop = items[:]
     with shelve.open("log") as stat:
         stat["калк"] = calc
-# перечень всех возможностей программы очень много места занимает на экране
-# и вылезает при каждом запросе
-# лучше его как в моем релизовать, только при запуске и хелп
+        stat["капитализм"] = kap
+        stat["денюжки"] = kap.money
 #начало хы
 helpme = """Функции этой прекрасной программы:
         0) Очистить
@@ -434,7 +428,8 @@ helpme = """Функции этой прекрасной программы:
         8) Магазин
         9) Уровень
         10) Погода
-        11) Курс"""
+        11) Курс
+        12) Хелп"""
 try:
     print("Ладно, начнем-с")
     print(helpme)
@@ -453,9 +448,9 @@ try:
         elif enter.lower() == "Удалить данные".lower():
             delete()
         elif enter.lower() == "Работа".lower():
-            jobmain()
+            kap.jobmain()
         elif enter.lower() == "Профиль".lower():
-            profile()
+            kap.profile()
         elif enter.lower() == "Магазин".lower():
             shopping()
         elif enter.lower() == "Уровень".lower():
