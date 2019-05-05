@@ -230,15 +230,8 @@ class Main():
                 break
             else:
                 print("шо?")
-    def levelup():
+    def levelup(self):
         while True:
-            with shelve.open("log") as stat:
-                try:
-                    calc.xp = stat["опыт"]
-                    self.level = stat["уровень"]
-                except KeyError:
-                    stat["опыт"] = calc.xp
-                    stat["уровень"] = self.lvl
             print("""Тут ты можешь повысить свой уровень!
 1 Уровень - 75xp
 2 Уровень - 150xp
@@ -254,8 +247,6 @@ class Main():
                     if calc.xp >= 75:
                         print("Вы апнули уровень до 1!")
                         self.lvl = 1
-                        with shelve.open ("log") as stat:
-                            stat["уровень"] = self.lvl
                     else:
                         print("Недостаточно xp!")
             elif lvbuy == "2":
@@ -266,8 +257,6 @@ class Main():
                     if calc.xp >= 150:
                         print("Вы апнули уровень до 2!")
                         self.lvl = 2
-                        with shelve.open ("log") as stat:
-                            stat["уровень"] = self.lvl
                     else:
                         print("Недостаточно xp!")
             elif lvbuy == "3":
@@ -278,8 +267,6 @@ class Main():
                     if calc.xp >= 300:
                         print("Вы апнули уровень до 3!")
                         self.lvl = 3
-                        with shelve.open ("log") as stat:
-                            stat["уровень"] = self.lvl
                     else:
                         print("Недостаточно xp!")
             elif lvbuy.lower() == "Выход".lower():
@@ -523,7 +510,7 @@ try:
         elif enter.lower() == "Магазин".lower():
             shopping()
         elif enter.lower() == "Уровень".lower():
-            kap.levelup()
+            calc.levelup()
         elif enter.lower() == "погода":
             calc.weather()
         elif enter.lower() == "Курс".lower():
@@ -538,4 +525,7 @@ try:
             print("Не понимаю!")
 #выход через ctrl+c
 except KeyboardInterrupt:
-    print("Выходим");time.sleep(1);sys.exit
+    print("Выходим")
+    with shelve.open("log") as stat:
+        stat["калк"] = calc
+    sys.exit()
