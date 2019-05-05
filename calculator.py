@@ -9,7 +9,7 @@ except ModuleNotFoundError:
     sys.exit()
 #items = []
 class Main():
-    def __init__(self, name=None, age=None, xp=0, money=10, lvl=0, items=[]):
+    def __init__(self, name=None, age=None, xp=0, money=0, lvl=0, items=[]):
         self.name = name
         self.age = age
         self.xp = xp
