@@ -7,14 +7,9 @@ try:
 except ModuleNotFoundError:
     print("У вас не установлен requests!")
     sys.exit()
-try:
-    from shoppy import Main2
-except ModuleNotFoundError:
-    print("У вас нет магазина! Скачать его вы можете здесь https://github.com/Ferowenso/Calculator")
-    sys.exit()
-items = []
+#items = []
 class Main():
-    def __init__(self, name=None, age=None, xp=0, money=0, lvl=0, items=[]):
+    def __init__(self, name=None, age=None, xp=0, money=10, lvl=0, items=[]):
         self.name = name
         self.age = age
         self.xp = xp
@@ -281,6 +276,126 @@ class Main():
             else:
                 print("шо?")
 
+    def shopping(self):
+        while True:
+            print("""Для покупки напишите цифру:
+1) Шапка-ушанка - 10$
+2) Мерч Хесуса - 50$
+3) Электрогитара - 75$
+4) АААААААААААвтомобиль - 150$
+5) Ракета SpaceX - 500$
+6) Кошкодевочка от Tesla - 1500$
+7) Вейп Братишкина - 2250$
+8) Футболка \"КиШ\" - 300$
+9) ПК от ZyperPC - 1000$
+Напишите \"Выход\", чтобы выйти""")
+            buy = input("")
+            if buy == "1":
+                if "Шапка-ушанка" in self.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if self.money >= 10:
+                        print("Вы купили Шапку-ушанку!")
+                        self.items.append("Шапка-ушанка")
+                        self.money - 10
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "2":
+                if "Мерч Хесуса" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 50:
+                        print("Вы купили Мерч Хесуса!")
+                        calc.items.append("Мерч Хесуса")
+                        calc.money = calc.money -50
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "3":
+                if "Электрогитара" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 75:
+                        print("Вы купили Электрогитару!")
+                        calc.items.append("Электрогитара")
+                        calc.money = calc.money -75
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "4":
+                if "АААААААААААвтомобиль" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 150:
+                        print("Вы купили АААААААААААвтомобиль!")
+                        calc.items.append("АААААААААААвтомобиль")
+                        calc.money = calc.money -150
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "5":
+                if "Ракета SpaceX" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 500:
+                        print("Вы купили Ракету SpaceX!")
+                        calc.items.append("Ракета SpaceX")
+                        calc.money = calc.money -500
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "6":
+                if "Кошкодевочка от Tesla" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 1500:
+                        print("Вы купили Кошкодевочку от Tesla!")
+                        calc.items.append("Кошкодевочка от Tesla")
+                        calc.money = calc.money -1500
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "7":
+                if "Вейп Братишкина" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 2500:
+                        print("Вы купили Вейп Братишкина!")
+                        calc.items.append("Вейп Братишкина")
+                        calc.money = calc.money -2250
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "8":
+                if "Футболка \"КиШ\"" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 300:
+                        print("Вы купили Футболку \"КиШ\"!")
+                        calc.items.append("Футболка \"КиШ\"")
+                        calc.money = calc.money -300
+                    else:
+                        print("Недостаточно денег!")
+            elif buy == "9":
+                if "ПК от ZyperPC" in calc.items:
+                    print("У тебя есть этот предмет!")
+                    continue
+                else:
+                    if calc.money >= 1000:
+                        print("Вы купили ПК от ZyperPC!")
+                        calc.items.append("ПК от ZyperPC")
+                        calc.money = calc.money -1000
+                    else:
+                        print("Недостаточно денег!")
+            elif buy.lower() == "Выход".lower():
+                with shelve.open("log") as stat:
+                    stat["денюжки"] = self.money
+                break
+            else:
+                print("Не понимаю!")
+
 # Кое чо из моего калькулятора, чо лень писать снова, но очень пиздато работает
 def randomorgmain(random1, random2):
     url = "https://api.random.org/json-rpc/2/invoke"
@@ -378,16 +493,13 @@ memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
         calc = stat["калк"]
-        shop = stat["магаз"]
         print("Здравствуй, {}".format(calc.name))
 if memory == False:
     calc = Main()
-    shop = Main2()
     calc.login()
     calc = Main(name=calc.name, age=calc.age)
     with shelve.open("log") as stat:
         stat["калк"] = calc
-        stat["магаз"] = shop
 #начало хы
 helpme = """Функции этой прекрасной программы:
         0) Очистить
@@ -425,7 +537,8 @@ try:
         elif enter.lower() == "Профиль".lower():
             calc.profile()
         elif enter.lower() == "Магазин".lower():
-            shop.shopping()
+            #shop.shopping()
+            calc.shopping()
         elif enter.lower() == "Уровень".lower():
             calc.levelup()
         elif enter.lower() == "погода":
@@ -445,5 +558,4 @@ except KeyboardInterrupt:
     print("Выходим")
     with shelve.open("log") as stat:
         stat["калк"] = calc
-        stat["магаз"] = shop
     sys.exit()
