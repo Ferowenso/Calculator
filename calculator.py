@@ -7,21 +7,22 @@ except ModuleNotFoundError:
     print("У вас не установлен requests!")
     sys.exit()
 try:
-    from shoppy import shopping
+    from shoppy import Main2
 except ModuleNotFoundError:
     print("У вас нет магазина! Скачать его вы можете здесь https://github.com/Ferowenso/Calculator")
     sys.exit()
 items = []
 class Main():
-    def __init__(self, name=None, age=None, xp=0, money=0, lvl=0):
+    def __init__(self, name=None, age=None, xp=0, money=0, lvl=0, items=[]):
         self.name = name
         self.age = age
         self.xp = xp
         self.money = money
         self.lvl = lvl
+        self.items = items
 
     def __str__(self):
-        return "Имя: {}, возраст: {}, баланс: {}".format(calc.name, calc.age)
+        return "Имя: {}, возраст: {}".format(calc.name, calc.age)
 
     def login(self):
         print("Каково же твое имя?")
@@ -189,12 +190,17 @@ class Main():
                 break
 
     def profile(self):
+        with shelve.open ("log") as stat:
+            try:
+                self.money = stat["денюжки"]
+            except KeyError:
+                stat["денюжки"] = self.money
         print("""Ваше имя: {}
 Ваш возраст:{}
 Ваш баланс:{}$
 Ваши предметы: {}
 Ваш опыт: xp {}
-Ваш уровень:{}  """.format(self.name, self.age, self.money, "Добавь  эту хуйню сам", self.xp, self.lvl))
+Ваш уровень:{}  """.format(self.name, self.age, self.money, self.items, self.xp, self.lvl))
     def jobmain(self):
         while True:
             with shelve.open ("log") as stat:
@@ -371,14 +377,16 @@ memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
         calc = stat["калк"]
+        shop = stat["магаз"]
         print("Здравствуй, {}".format(calc.name))
 if memory == False:
     calc = Main()
+    shop = Main2()
     calc.login()
     calc = Main(name=calc.name, age=calc.age)
-    shop = items[:]
     with shelve.open("log") as stat:
         stat["калк"] = calc
+        stat["магаз"] = shop
 #начало хы
 helpme = """Функции этой прекрасной программы:
         0) Очистить
@@ -412,11 +420,11 @@ try:
         elif enter.lower() == "Удалить данные".lower():
             delete()
         elif enter.lower() == "Работа".lower():
-            kap.jobmain()
+            calc.jobmain()
         elif enter.lower() == "Профиль".lower():
             calc.profile()
         elif enter.lower() == "Магазин".lower():
-            shopping()
+            shop.shopping()
         elif enter.lower() == "Уровень".lower():
             calc.levelup()
         elif enter.lower() == "погода":
@@ -436,4 +444,5 @@ except KeyboardInterrupt:
     print("Выходим")
     with shelve.open("log") as stat:
         stat["калк"] = calc
+        stat["магаз"] = shop
     sys.exit()
