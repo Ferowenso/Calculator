@@ -19,6 +19,15 @@ class Main():
 
     def __str__(self):
         return "Имя: {}, возраст: {}".format(calc.name, calc.age)
+    def vidachaxp(self):
+        if self.lvl == 0:
+            self.xp = self.xp + random.randint(0, 5)
+        elif self.lvl == 1:
+            self.xp = self.xp + random.randint(0, 10)
+        elif self.lvl == 2:
+            self.xp = self.xp + random.randint(0, 15)
+        else:
+            self.xp = self.xp + random.randint(10, 30)
 
     def login(self):
         print("Каково же твое имя?")
@@ -34,7 +43,7 @@ class Main():
                 break
             else:
                 print("Я спросил имя!")
-        time.sleep(1)
+        time.sleep(0.5)
         print("А сколько же тебе лет?")
         while 1:
             try:
@@ -56,8 +65,7 @@ class Main():
                 print("Рандомное число из заданного диапазона")
                 x = int(input("Первое число: "))
                 y = int(input("Второе число: "))
-                global rand
-                rand = random.randint(x, y)
+                rand = randomorgmain(x, y)
                 print("Число: {}".format(rand))
                 self.xp += random.randint(1, 10)
                 break
@@ -68,9 +76,9 @@ class Main():
     def date(self):
         print("Тут ты можешь узнать дату какого-либо события")
         event = input("Событие: ")
-        day = random.randint(1, 31)
-        moth = random.randint(1, 12)
-        year = random.randint(2019, 2025)
+        day = randomorgmain(0, 31)
+        moth = randomorgmain(1, 12)
+        year = randomorgmain(2019, 3000)
         print("Дата {}: {}.{}.{}".format(event, day, moth, year))
         self.xp = self.xp + random.randint(1, 10)
 
@@ -88,6 +96,8 @@ class Main():
         encode = r.json()
         usd = encode["Valute"]["USD"]["Value"]
         eur = encode["Valute"]["EUR"]["Value"]
+        r = requests.get("https://blockchain.info/ru/ticker")
+        encode = r.json()
         print("""Доллар: {} рубля
  Евро: {} рубля""".format(usd, eur))
         self.xp = self.xp + random.randint(1, 10)
@@ -128,7 +138,7 @@ class Main():
                 Влажность: {}
                 Скорость ветра: {}м/с""".format(q, w, temp, vlaga, wind))
                 self.xp = self.xp + random.randint(1, 10)
-            elif ent.lower() == "Выход".lower():
+            elif ent.lower() == "выход":
                 break
             else:
                 print("шо?")
@@ -136,8 +146,8 @@ class Main():
         print("Ты запустил калькулятор")
         while True:
             try:
-                x = float(input("Первое значение: "))
-                y = float(input("Второе значение: "))
+                x = int(input("Первое значение: "))
+                y = int(input("Второе значение: "))
             except ValueError:
                     print("Цифорками!")
                     continue
@@ -185,11 +195,6 @@ class Main():
                 break
 
     def profile(self):
-        with shelve.open ("log") as stat:
-            try:
-                self.money = stat["денюжки"]
-            except KeyError:
-                stat["денюжки"] = self.money
         print("""Ваше имя: {}
 Ваш возраст:{}
 Ваш баланс:{}$""".format(self.name, self.age, self.money))
@@ -200,36 +205,23 @@ class Main():
 Ваш уровень:{}  """.format(self.xp, self.lvl))
     def jobmain(self):
         while True:
-            with shelve.open ("log") as stat:
-                try:
-                    self.money = stat["денюжки"]
-                except KeyError:
-                    stat["денюжки"] = self.money
             print("""Напишите \"Работать\", чтобы работать
 \"Выход\", чтобы выйти""")
             jobtest = input()
             if jobtest.lower() == "работать".lower():
                 if self.lvl == 0:
-                    self.money = self.money + random.randint(1, 5)
+                    self.money = self.money + randomorgmain(1, 5)
                     print("Ваш баланс {}".format(self.money))
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = self.money
                 elif self.lvl == 1:
-                        self.money = self.money + random.randint(5, 30)
+                        self.money = self.money + randomorgmain(5, 30)
                         print("Ваш баланс {}".format(self.money))
-                        with shelve.open ("log") as stat:
-                            stat["денюжки"] = self.money
                 elif self.lvl == 2:
-                    self.money = self.money + random.randint(25, 55)
+                    self.money = self.money + randomorgmain(25, 55)
                     print("Ваш баланс {}".format(self.money))
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = self.money
                 elif self.lvl == 3:
-                    self.money = self.money + random.randint(50, 90)
+                    self.money = self.money + randomorgmain(50, 90)
                     print("Ваш баланс {}".format(self.money))
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = self.money
-            elif jobtest.lower() == "выход".lower():
+            elif jobtest.lower() == "выход":
                 break
             else:
                 print("шо?")
@@ -391,9 +383,6 @@ class Main():
                     else:
                         print("Недостаточно денег!")
             elif buy.lower() == "Выход".lower():
-                with shelve.open("log") as stat:
-                    stat["денюжки"] = self.money
-                    stat["калк"] = calc
                 break
             else:
                 print("Не понимаю!")
@@ -426,11 +415,10 @@ def clrclear():
     else:
         os.system("clear")
 def delete():
-    global yesorno
     print("Ты точно хочешь удалить данные?")
     while True:
         yesorno = input("Да или Нет: ")
-        if yesorno.lower() == "Да".lower():
+        if yesorno.lower() == "да":
             if platform == "win32":
                 os.remove("log.dat")
                 os.remove("log.bak")
@@ -447,7 +435,6 @@ def delete():
             print("Да/Нет")
             continue
 def luck():
-    global money
     while True:
         with shelve.open ("log") as stat:
             try:
@@ -521,10 +508,10 @@ try:
     print("Ладно, начнем-с")
     print(helpme)
 
-    time.sleep(1)
+    time.sleep(0.5)
     while True:
         enter = input(calc.name + "," " введи что тебе нужно: ")
-        if enter.lower() == "Калькулятор":
+        if enter.lower() == "калькулятор":
             calc.calcc()
         elif enter.lower() == "шансы":
             calc.chance()
