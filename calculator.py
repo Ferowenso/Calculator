@@ -539,7 +539,6 @@ try:
         elif enter.lower() == "профиль":
             calc.profile()
         elif enter.lower() == "магазин":
-            #shop.shopping()
             calc.shopping()
         elif enter.lower() == "уровень":
             calc.levelup()
