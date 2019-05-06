@@ -194,7 +194,7 @@ class Main():
 Ваш возраст:{}
 Ваш баланс:{}$""".format(self.name, self.age, self.money))
         for it in self.items:
-            print("Ваши предметы: " +it)
+            print("Ваши предметы:" +it)
         print("""Ваш опыт: {}xp
 Ваш уровень:{}  """.format(self.xp, self.lvl))
     def jobmain(self):
