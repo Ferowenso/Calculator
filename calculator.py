@@ -132,7 +132,8 @@ class Main():
                 break
             else:
                 print("шо?")
-
+#тест
+#ыыыыы
     def calcc(self):
         print("Ты запустил калькулятор")
         while True:
