@@ -193,8 +193,9 @@ class Main():
         print("""Ваше имя: {}
 Ваш возраст:{}
 Ваш баланс:{}$""".format(self.name, self.age, self.money))
+        print("Ваши предметы:")
         for it in self.items:
-            print("Ваши предметы:" +it)
+            print(" •" + it)
         print("""Ваш опыт: {}xp
 Ваш уровень:{}  """.format(self.xp, self.lvl))
     def jobmain(self):
@@ -523,30 +524,30 @@ try:
     time.sleep(1)
     while True:
         enter = input(calc.name + "," " введи что тебе нужно: ")
-        if enter.lower() == "Калькулятор".lower():
+        if enter.lower() == "Калькулятор":
             calc.calcc()
-        elif enter.lower() == "Шансы".lower():
+        elif enter.lower() == "шансы":
             calc.chance()
         elif enter.lower() == "дата":
             calc.date()
-        elif enter.lower() == "Число".lower():
+        elif enter.lower() == "число":
             calc.randomn()
-        elif enter.lower() == "Удалить данные".lower():
+        elif enter.lower() == "удалить данные":
             delete()
-        elif enter.lower() == "Работа".lower():
+        elif enter.lower() == "работа":
             calc.jobmain()
-        elif enter.lower() == "Профиль".lower():
+        elif enter.lower() == "профиль":
             calc.profile()
-        elif enter.lower() == "Магазин".lower():
+        elif enter.lower() == "магазин":
             #shop.shopping()
             calc.shopping()
-        elif enter.lower() == "Уровень".lower():
+        elif enter.lower() == "уровень":
             calc.levelup()
         elif enter.lower() == "погода":
             calc.weather()
-        elif enter.lower() == "Курс".lower():
+        elif enter.lower() == "курс":
             calc.valute()
-        elif enter.lower() == "Удача".lower():
+        elif enter.lower() == "удача":
             luck()
         elif enter.lower() == "очистить":
             clrclear()
