@@ -298,7 +298,7 @@ class Main():
                     if self.money >= 10:
                         print("Вы купили Шапку-ушанку!")
                         self.items.append("Шапка-ушанка")
-                        self.money - 10
+                        self.money = self.money - 10
                     else:
                         print("Недостаточно денег!")
             elif buy == "2":
