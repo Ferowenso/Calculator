@@ -132,7 +132,6 @@ class Main():
                 break
             else:
                 print("шо?")
-
     def calcc(self):
         print("Ты запустил калькулятор")
         while True:
@@ -195,7 +194,7 @@ class Main():
 Ваш возраст:{}
 Ваш баланс:{}$
 Ваши предметы: {}
-Ваш опыт: xp {}
+Ваш опыт: {}xp
 Ваш уровень:{}  """.format(self.name, self.age, self.money, self.items, self.xp, self.lvl))
     def jobmain(self):
         while True:
@@ -302,96 +301,97 @@ class Main():
                     else:
                         print("Недостаточно денег!")
             elif buy == "2":
-                if "Мерч Хесуса" in calc.items:
+                if "Мерч Хесуса" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 50:
+                    if self.money >= 50:
                         print("Вы купили Мерч Хесуса!")
                         calc.items.append("Мерч Хесуса")
-                        calc.money = calc.money -50
+                        self.money = self.money -50
                     else:
                         print("Недостаточно денег!")
             elif buy == "3":
-                if "Электрогитара" in calc.items:
+                if "Электрогитара" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 75:
+                    if self.money >= 75:
                         print("Вы купили Электрогитару!")
-                        calc.items.append("Электрогитара")
-                        calc.money = calc.money -75
+                        self.items.append("Электрогитара")
+                        self.money = self.money -75
                     else:
                         print("Недостаточно денег!")
             elif buy == "4":
-                if "АААААААААААвтомобиль" in calc.items:
+                if "АААААААААААвтомобиль" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 150:
+                    if self.money >= 150:
                         print("Вы купили АААААААААААвтомобиль!")
-                        calc.items.append("АААААААААААвтомобиль")
-                        calc.money = calc.money -150
+                        self.items.append("АААААААААААвтомобиль")
+                        self.money = self.money -150
                     else:
                         print("Недостаточно денег!")
             elif buy == "5":
-                if "Ракета SpaceX" in calc.items:
+                if "Ракета SpaceX" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 500:
+                    if self.money >= 500:
                         print("Вы купили Ракету SpaceX!")
-                        calc.items.append("Ракета SpaceX")
-                        calc.money = calc.money -500
+                        self.items.append("Ракета SpaceX")
+                        self.money = self.money -500
                     else:
                         print("Недостаточно денег!")
             elif buy == "6":
-                if "Кошкодевочка от Tesla" in calc.items:
+                if "Кошкодевочка от Tesla" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 1500:
+                    if self.money >= 1500:
                         print("Вы купили Кошкодевочку от Tesla!")
-                        calc.items.append("Кошкодевочка от Tesla")
-                        calc.money = calc.money -1500
+                        self.items.append("Кошкодевочка от Tesla")
+                        self.money = self.money -1500
                     else:
                         print("Недостаточно денег!")
             elif buy == "7":
-                if "Вейп Братишкина" in calc.items:
+                if "Вейп Братишкина" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 2500:
+                    if self.money >= 2500:
                         print("Вы купили Вейп Братишкина!")
-                        calc.items.append("Вейп Братишкина")
-                        calc.money = calc.money -2250
+                        self.items.append("Вейп Братишкина")
+                        self.money = self.money -2250
                     else:
                         print("Недостаточно денег!")
             elif buy == "8":
-                if "Футболка \"КиШ\"" in calc.items:
+                if "Футболка \"КиШ\"" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 300:
+                    if self.money >= 300:
                         print("Вы купили Футболку \"КиШ\"!")
-                        calc.items.append("Футболка \"КиШ\"")
-                        calc.money = calc.money -300
+                        self.items.append("Футболка \"КиШ\"")
+                        self.money = self.money -300
                     else:
                         print("Недостаточно денег!")
             elif buy == "9":
-                if "ПК от ZyperPC" in calc.items:
+                if "ПК от ZyperPC" in self.items:
                     print("У тебя есть этот предмет!")
                     continue
                 else:
-                    if calc.money >= 1000:
+                    if self.money >= 1000:
                         print("Вы купили ПК от ZyperPC!")
-                        calc.items.append("ПК от ZyperPC")
-                        calc.money = calc.money -1000
+                        self.items.append("ПК от ZyperPC")
+                        self.money = self.money -1000
                     else:
                         print("Недостаточно денег!")
             elif buy.lower() == "Выход".lower():
                 with shelve.open("log") as stat:
                     stat["денюжки"] = self.money
+                    stat["калк"] = calc
                 break
             else:
                 print("Не понимаю!")
