@@ -192,10 +192,11 @@ class Main():
                 stat["денюжки"] = self.money
         print("""Ваше имя: {}
 Ваш возраст:{}
-Ваш баланс:{}$
-Ваши предметы: {}
-Ваш опыт: {}xp
-Ваш уровень:{}  """.format(self.name, self.age, self.money, self.items, self.xp, self.lvl))
+Ваш баланс:{}$""".format(self.name, self.age, self.money))
+        for it in self.items:
+            print("Ваши предметы:" +it)
+        print("""Ваш опыт: {}xp
+Ваш уровень:{}  """.format(self.xp, self.lvl))
     def jobmain(self):
         while True:
             with shelve.open ("log") as stat:
