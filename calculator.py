@@ -303,14 +303,10 @@ class Main():
             else:
                 print("шо?")
     def secret(self):
-<<<<<<< .merge_file_UMcwEa
         #От андрея
         self.money = self.money + 999999
-=======
         # от данилы
         self.money = self.money + 99999
->>>>>>> .merge_file_oyLuzd
-
     def shopping(self):
         while True:
             print("""Для покупки напишите цифру:
