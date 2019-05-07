@@ -280,19 +280,19 @@ class Main():
                     print("Числа: {}, {}, {}".format(first, second, third))
                     if first == second and first != third:
                         self.money = self.money + 500
-                        print("Два числа совпало! +500$")
+                        print("Два числа совпали! +500$")
                         print("Ваш баланс {}".format(self.money))
                     elif first == third and second != third:
                         self.money = self.money + 500
-                        print("Два числа совпало! +500$")
+                        print("Два числа совпали! +500$")
                         print("Ваш баланс {}".format(self.money))
                     elif second == third and first != second:
                         self.money = self.money + 500
-                        print("Два числа совпало! +500$")
+                        print("Два числа совпали! +500$")
                         print("Ваш баланс {}".format(self.money))
                     elif first == second == third:
                         self.money = self.money + 2500
-                        print("Три числа совпало! +2500$")
+                        print("Три числа совпали! +2500$")
                         print("Ваш баланс {}".format(self.money))
                     else:
                         print("Вы проиграли D:")
