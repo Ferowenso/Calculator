@@ -96,10 +96,14 @@ class Main():
         encode = r.json()
         usd = encode["Valute"]["USD"]["Value"]
         eur = encode["Valute"]["EUR"]["Value"]
+        print("Курс рубля")
+        print("Доллар: {}₽, евро: {}₽" .format(usd, eur))
+        print("Курс битка")
         r = requests.get("https://blockchain.info/ru/ticker")
         encode = r.json()
-        print("""Доллар: {} рубля
- Евро: {} рубля""".format(usd, eur))
+        rub = encode["RUB"]["15m"]
+        usd1 = encode["USD"]["15m"]
+        print("Рубль: {}₽, доллар: {}$" .format(rub, usd))
         self.xp = self.xp + random.randint(1, 10)
 
     def weather(self):
