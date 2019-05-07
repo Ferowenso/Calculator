@@ -1,4 +1,3 @@
-
 # импорт всего шо надо
 import math, time, re, shelve, sys, random, os.path, json
 from sys import platform
@@ -91,13 +90,13 @@ class Main():
 
     def valute(self):
         api = "https://www.cbr-xml-daily.ru/daily_json.js"
-        print("Это курс валют!")
+        print("Это курс валют, товарищ {}!" .format(self.name))
         r = requests.get(api)
         encode = r.json()
         usd = encode["Valute"]["USD"]["Value"]
         eur = encode["Valute"]["EUR"]["Value"]
         print("Курс рубля")
-        print("Доллар: {}₽, евро: {}₽" .format(usd, eur))
+        print("Доллар: {}₽, евро: {}₽ \n" .format(usd, eur))
         print("Курс битка")
         r = requests.get("https://blockchain.info/ru/ticker")
         encode = r.json()
@@ -152,6 +151,7 @@ class Main():
             try:
                 x = int(input("Первое значение: "))
                 y = int(input("Второе значение: "))
+                self.vidachaxp()
             except ValueError:
                     print("Цифорками!")
                     continue
@@ -168,31 +168,23 @@ class Main():
 """)
             if encalc.lower() == "сложение":
                 print("Вот твой результат, " + calc.name + ":{}".format(x + y))
-                self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Вычитание".lower():
                 print("Вот твой результат, " + calc.name + ":{}".format(x - y))
-                self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Умножение".lower():
                 print("Вот твой результат, " + calc.name + ":{}".format(x * y))
-                self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Степень".lower():
                 print("Вот твой результат, " + calc.name + ":{}".format(x ** y))
-                self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Деление".lower():
                 if x or y == 0:
                     print("Оставь вселенную в покое")
                 else:
                     print("Вот твой результат, " + calc.name + ": {}".format(x / y))
-                    self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Корень".lower():
                 print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
-                self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Синус".lower():
                 print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)))
-                self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Косинус".lower():
                 print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)))
-                self.xp = self.xp + random.randint(1, 10)
             elif encalc.lower() == "Выход".lower():
                 print("Выходим")
                 time.sleep(1)
