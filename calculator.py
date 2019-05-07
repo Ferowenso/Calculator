@@ -303,7 +303,7 @@ class Main():
             else:
                 print("шо?")
     def secret(self):
-        self.money = self.money + 99999
+        self.money = self.money + 999999
 
     def shopping(self):
         while True:
