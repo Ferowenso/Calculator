@@ -19,6 +19,15 @@ class Main():
 
     def __str__(self):
         return "Имя: {}, возраст: {}".format(calc.name, calc.age)
+    def vidachaxp(self):
+        if self.lvl == 0:
+            self.xp = self.xp + random.randint(0, 5)
+        elif self.lvl == 1:
+            self.xp = self.xp + random.randint(0, 10)
+        elif self.lvl == 2:
+            self.xp = self.xp + random.randint(0, 15)
+        else:
+            self.xp = self.xp + random.randint(10, 30)
 
     def login(self):
         print("Каково же твое имя?")
@@ -34,7 +43,7 @@ class Main():
                 break
             else:
                 print("Я спросил имя!")
-        time.sleep(1)
+        time.sleep(0.5)
         print("А сколько же тебе лет?")
         while 1:
             try:
@@ -56,8 +65,7 @@ class Main():
                 print("Рандомное число из заданного диапазона")
                 x = int(input("Первое число: "))
                 y = int(input("Второе число: "))
-                global rand
-                rand = random.randint(x, y)
+                rand = randomorgmain(x, y)
                 print("Число: {}".format(rand))
                 self.xp += random.randint(1, 10)
                 break
@@ -68,9 +76,9 @@ class Main():
     def date(self):
         print("Тут ты можешь узнать дату какого-либо события")
         event = input("Событие: ")
-        day = random.randint(1, 31)
-        moth = random.randint(1, 12)
-        year = random.randint(2019, 2025)
+        day = randomorgmain(0, 31)
+        moth = randomorgmain(1, 12)
+        year = randomorgmain(2019, 3000)
         print("Дата {}: {}.{}.{}".format(event, day, moth, year))
         self.xp = self.xp + random.randint(1, 10)
 
@@ -88,8 +96,14 @@ class Main():
         encode = r.json()
         usd = encode["Valute"]["USD"]["Value"]
         eur = encode["Valute"]["EUR"]["Value"]
-        print("""Доллар: {} рубля
- Евро: {} рубля""".format(usd, eur))
+        print("Курс рубля")
+        print("Доллар: {}₽, евро: {}₽" .format(usd, eur))
+        print("Курс битка")
+        r = requests.get("https://blockchain.info/ru/ticker")
+        encode = r.json()
+        rub = encode["RUB"]["15m"]
+        usd1 = encode["USD"]["15m"]
+        print("Рубль: {}₽, доллар: {}$" .format(rub, usd))
         self.xp = self.xp + random.randint(1, 10)
 
     def weather(self):
@@ -128,7 +142,7 @@ class Main():
                 Влажность: {}
                 Скорость ветра: {}м/с""".format(q, w, temp, vlaga, wind))
                 self.xp = self.xp + random.randint(1, 10)
-            elif ent.lower() == "Выход".lower():
+            elif ent.lower() == "выход":
                 break
             else:
                 print("шо?")
@@ -136,8 +150,8 @@ class Main():
         print("Ты запустил калькулятор")
         while True:
             try:
-                x = float(input("Первое значение: "))
-                y = float(input("Второе значение: "))
+                x = int(input("Первое значение: "))
+                y = int(input("Второе значение: "))
             except ValueError:
                     print("Цифорками!")
                     continue
@@ -185,50 +199,33 @@ class Main():
                 break
 
     def profile(self):
-        with shelve.open ("log") as stat:
-            try:
-                self.money = stat["денюжки"]
-            except KeyError:
-                stat["денюжки"] = self.money
         print("""Ваше имя: {}
 Ваш возраст:{}
 Ваш баланс:{}$""".format(self.name, self.age, self.money))
+        print("Ваши предметы:")
         for it in self.items:
-            print("Ваши предметы: " +it)
+            print(" •" + it)
         print("""Ваш опыт: {}xp
 Ваш уровень:{}  """.format(self.xp, self.lvl))
     def jobmain(self):
         while True:
-            with shelve.open ("log") as stat:
-                try:
-                    self.money = stat["денюжки"]
-                except KeyError:
-                    stat["денюжки"] = self.money
             print("""Напишите \"Работать\", чтобы работать
 \"Выход\", чтобы выйти""")
             jobtest = input()
             if jobtest.lower() == "работать".lower():
                 if self.lvl == 0:
-                    self.money = self.money + random.randint(1, 5)
+                    self.money = self.money + randomorgmain(1, 5)
                     print("Ваш баланс {}".format(self.money))
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = self.money
                 elif self.lvl == 1:
-                        self.money = self.money + random.randint(5, 30)
+                        self.money = self.money + randomorgmain(5, 30)
                         print("Ваш баланс {}".format(self.money))
-                        with shelve.open ("log") as stat:
-                            stat["денюжки"] = self.money
                 elif self.lvl == 2:
-                    self.money = self.money + random.randint(25, 55)
+                    self.money = self.money + randomorgmain(25, 55)
                     print("Ваш баланс {}".format(self.money))
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = self.money
                 elif self.lvl == 3:
-                    self.money = self.money + random.randint(50, 90)
+                    self.money = self.money + randomorgmain(50, 90)
                     print("Ваш баланс {}".format(self.money))
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = self.money
-            elif jobtest.lower() == "выход".lower():
+            elif jobtest.lower() == "выход":
                 break
             else:
                 print("шо?")
@@ -275,6 +272,47 @@ class Main():
                 break
             else:
                 print("шо?")
+    def luck(self):
+        while True:
+            print("""Это игра на удачу
+1 игра - 100$
+Если 2 числа совпадут - +500$
+Если 3 числа совпадут - +2500$
+Вы хотите продолжить? Да/Нет""")
+            entcas = input("")
+            if entcas.lower() == "да":
+                if self.money >= 100:
+                    self.money = self.money -100
+                    first = randomorgmain(1, 9)
+                    second = randomorgmain(1, 9)
+                    third = randomorgmain(1, 9)
+                    print("Числа: {}, {}, {}".format(first, second, third))
+                    if first == second and first != third:
+                        self.money = self.money + 500
+                        print("Два числа совпало! +500$")
+                        print("Ваш баланс {}".format(self.money))
+                    elif first == third and second != third:
+                        self.money = self.money + 500
+                        print("Два числа совпало! +500$")
+                        print("Ваш баланс {}".format(self.money))
+                    elif second == third and first != second:
+                        self.money = self.money + 500
+                        print("Два числа совпало! +500$")
+                        print("Ваш баланс {}".format(self.money))
+                    elif first == second == third:
+                        self.money = self.money + 2500
+                        print("Три числа совпало! +2500$")
+                        print("Ваш баланс {}".format(self.money))
+                    else:
+                        print("Вы проиграли D:")
+                else:
+                    print("Недостаточно денег!")
+            elif entcas.lower() == "нет":
+                break
+            else:
+                print("шо?")
+    def secret(self):
+        self.money = self.money + 99999
 
     def shopping(self):
         while True:
@@ -390,14 +428,10 @@ class Main():
                     else:
                         print("Недостаточно денег!")
             elif buy.lower() == "Выход".lower():
-                with shelve.open("log") as stat:
-                    stat["денюжки"] = self.money
-                    stat["калк"] = calc
                 break
             else:
                 print("Не понимаю!")
 
-# Кое чо из моего калькулятора, чо лень писать снова, но очень пиздато работает
 def randomorgmain(random1, random2):
     url = "https://api.random.org/json-rpc/2/invoke"
     mykey = "cb5861a7-60c0-4513-af5b-f8df81aa8e7e"
@@ -425,11 +459,10 @@ def clrclear():
     else:
         os.system("clear")
 def delete():
-    global yesorno
     print("Ты точно хочешь удалить данные?")
     while True:
         yesorno = input("Да или Нет: ")
-        if yesorno.lower() == "Да".lower():
+        if yesorno.lower() == "да":
             if platform == "win32":
                 os.remove("log.dat")
                 os.remove("log.bak")
@@ -445,50 +478,12 @@ def delete():
         else:
             print("Да/Нет")
             continue
-def luck():
-    global money
-    while True:
-        with shelve.open ("log") as stat:
-            try:
-                money = stat["денюжки"]
-            except KeyError:
-                stat["денюжки"] = money
-        print("""Это игра на удачу
-1 игра - 100 монет
-Если 2 числа совпадут - +500 монет
-Если 3 числа совпадут - +1000 монет
-Вы хотите продолжить? Да/Нет""")
-        entcas = input("")
-        if entcas.lower() == "Да".lower():
-            if money >= 100:
-                money = money -100
-                with shelve.open ("log") as stat:
-                    stat["магаз"] = items
-                    stat["денюжки"] = money
-                first = random.randint(1, 9)
-                second = random.randint(1,9)
-                third = random.randint(1,9)
-                print("Числа: {}, {}, {}".format(first, second, third))
-                if first == second or first == third or second == third:
-                    money = money + 500
-                    print("Два числа совпали! +500 монет")
-                    print("Ваш баланс {}".format(money))
-                    with shelve.open ("log") as stat:
-                          stat["денюжки"] = money
-                elif first == second == third:
-                    money = money + 1000
-                    print("Три числа совпали! +1000 монет")
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = money
-                else:
-                    print("Вы проиграли D:")
-            else:
-                print("Недостаточно денег!")
-        elif entcas.lower() == "Нет".lower():
-            break
-        else:
-            print("шо?")
-
+def exit():
+    print("Выходим")
+    time.sleep(0.5)
+    with shelve.open("log") as stat:
+        stat["калк"] = calc
+    sys.exit()
 #фихня нужная для запоминания имени
 memory = os.path.isfile("log")
 if memory:
@@ -515,43 +510,47 @@ helpme = """Функции этой прекрасной программы:
         9) Уровень
         10) Погода
         11) Курс
-        12) Хелп"""
+        12) Хелп
+        (все данные сохраняются только при написании команды "Выход"!) """
 try:
     print("Ладно, начнем-с")
     print(helpme)
 
-    time.sleep(1)
+    time.sleep(0.5)
     while True:
-        enter = input(calc.name + "," " введи что тебе нужно: ")
-        if enter.lower() == "Калькулятор".lower():
+        enter = input("{}, введи что тебе нужно: ".format(calc.name))
+        if enter.lower() == "калькулятор":
             calc.calcc()
-        elif enter.lower() == "Шансы".lower():
+        elif enter.lower() == "шансы":
             calc.chance()
         elif enter.lower() == "дата":
             calc.date()
-        elif enter.lower() == "Число".lower():
+        elif enter.lower() == "число":
             calc.randomn()
-        elif enter.lower() == "Удалить данные".lower():
+        elif enter.lower() == "удалить данные":
             delete()
-        elif enter.lower() == "Работа".lower():
+        elif enter.lower() == "работа":
             calc.jobmain()
-        elif enter.lower() == "Профиль".lower():
+        elif enter.lower() == "профиль":
             calc.profile()
-        elif enter.lower() == "Магазин".lower():
-            #shop.shopping()
+        elif enter.lower() == "магазин":
             calc.shopping()
-        elif enter.lower() == "Уровень".lower():
+        elif enter.lower() == "уровень":
             calc.levelup()
         elif enter.lower() == "погода":
             calc.weather()
-        elif enter.lower() == "Курс".lower():
+        elif enter.lower() == "курс":
             calc.valute()
-        elif enter.lower() == "Удача".lower():
-            luck()
+        elif enter.lower() == "удача":
+            calc.luck()
         elif enter.lower() == "очистить":
             clrclear()
         elif enter.lower() == "хелп":
             print(helpme)
+        elif enter.lower() == "майнкрафт":
+            calc.secret()
+        elif enter.lower() == "выход":
+            exit()
         else:
             print("Не понимаю!")
 #выход через ctrl+c
