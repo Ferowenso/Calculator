@@ -469,58 +469,12 @@ def delete():
         else:
             print("Да/Нет")
             continue
-<<<<<<< HEAD
 def exit():
     print("Выходим")
     time.sleep(0.5)
     with shelve.open("log") as stat:
         stat["калк"] = calc
     sys.exit()
-=======
-def luck():
-    while True:
-        with shelve.open ("log") as stat:
-            try:
-                money = stat["денюжки"]
-            except KeyError:
-                stat["денюжки"] = money
-        print("""Это игра на удачу
-1 игра - 100 монет
-Если 2 числа совпадут - +500 монет
-Если 3 числа совпадут - +1000 монет
-Вы хотите продолжить? Да/Нет""")
-        entcas = input("")
-        if entcas.lower() == "Да".lower():
-            if money >= 100:
-                money = money -100
-                with shelve.open ("log") as stat:
-                    stat["магаз"] = items
-                    stat["денюжки"] = money
-                first = random.randint(1, 9)
-                second = random.randint(1,9)
-                third = random.randint(1,9)
-                print("Числа: {}, {}, {}".format(first, second, third))
-                if first == second or first == third or second == third:
-                    money = money + 500
-                    print("Два числа совпали! +500 монет")
-                    print("Ваш баланс {}".format(money))
-                    with shelve.open ("log") as stat:
-                          stat["денюжки"] = money
-                elif first == second == third:
-                    money = money + 1000
-                    print("Три числа совпали! +1000 монет")
-                    with shelve.open ("log") as stat:
-                        stat["денюжки"] = money
-                else:
-                    print("Вы проиграли D:")
-            else:
-                print("Недостаточно денег!")
-        elif entcas.lower() == "Нет".lower():
-            break
-        else:
-            print("шо?")
-
->>>>>>> 7dafb36ca379b0832d61083be442e0e2f1ae00c9
 #фихня нужная для запоминания имени
 memory = os.path.isfile("log")
 if memory:
