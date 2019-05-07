@@ -6,7 +6,6 @@ try:
 except ModuleNotFoundError:
     print("У вас не установлен requests!")
     sys.exit()
-#items = []
 class Main():
     def __init__(self, name=None, age=None, xp=0, money=0, lvl=0, items=[]):
         self.name = name
@@ -66,7 +65,7 @@ class Main():
                 y = int(input("Второе число: "))
                 rand = randomorgmain(x, y)
                 print("Число: {}".format(rand))
-                self.xp += random.randint(1, 10)
+                self.vidachaxp()
                 break
             except ValueError:
                 print("Число!")
@@ -187,7 +186,7 @@ class Main():
                 print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)))
             elif encalc.lower() == "Выход".lower():
                 print("Выходим")
-                time.sleep(1)
+                time.sleep(0.5)
                 break
 
     def profile(self):
@@ -422,8 +421,8 @@ def delete():
             else:
                 os.remove("log")
             print("Удаление...")
-            time.sleep(1)
-            exit(0)
+            time.sleep(0.5)
+            sys.exit()
         elif yesorno.lower() == "Нет".lower():
             print("Ну и зачем ты тогда сюда заходил?")
             break
@@ -529,8 +528,6 @@ try:
             calc.weather()
         elif enter.lower() == "курс":
             calc.valute()
-        elif enter.lower() == "удача":
-            luck()
         elif enter.lower() == "очистить":
             clrclear()
         elif enter.lower() == "хелп":
