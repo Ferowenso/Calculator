@@ -263,6 +263,47 @@ class Main():
                 break
             else:
                 print("шо?")
+    def luck(self):
+        while True:
+            print("""Это игра на удачу
+1 игра - 100$
+Если 2 числа совпадут - +500$
+Если 3 числа совпадут - +2500$
+Вы хотите продолжить? Да/Нет""")
+            entcas = input("")
+            if entcas.lower() == "да":
+                if self.money >= 100:
+                    self.money = self.money -100
+                    first = randomorgmain(1, 9)
+                    second = randomorgmain(1, 9)
+                    third = randomorgmain(1, 9)
+                    print("Числа: {}, {}, {}".format(first, second, third))
+                    if first == second and first != third:
+                        self.money = self.money + 500
+                        print("Два числа совпало! +500$")
+                        print("Ваш баланс {}".format(self.money))
+                    elif first == third and second != third:
+                        self.money = self.money + 500
+                        print("Два числа совпало! +500$")
+                        print("Ваш баланс {}".format(self.money))
+                    elif second == third and first != second:
+                        self.money = self.money + 500
+                        print("Два числа совпало! +500$")
+                        print("Ваш баланс {}".format(self.money))
+                    elif first == second == third:
+                        self.money = self.money + 2500
+                        print("Три числа совпало! +2500$")
+                        print("Ваш баланс {}".format(self.money))
+                    else:
+                        print("Вы проиграли D:")
+                else:
+                    print("Недостаточно денег!")
+            elif entcas.lower() == "нет":
+                break
+            else:
+                print("шо?")
+    def secret(self):
+        self.money = self.money + 99999
 
     def shopping(self):
         while True:
@@ -382,7 +423,6 @@ class Main():
             else:
                 print("Не понимаю!")
 
-# Кое чо из моего калькулятора, чо лень писать снова, но очень пиздато работает
 def randomorgmain(random1, random2):
     url = "https://api.random.org/json-rpc/2/invoke"
     mykey = "cb5861a7-60c0-4513-af5b-f8df81aa8e7e"
@@ -429,6 +469,14 @@ def delete():
         else:
             print("Да/Нет")
             continue
+<<<<<<< HEAD
+def exit():
+    print("Выходим")
+    time.sleep(0.5)
+    with shelve.open("log") as stat:
+        stat["калк"] = calc
+    sys.exit()
+=======
 def luck():
     while True:
         with shelve.open ("log") as stat:
@@ -472,6 +520,7 @@ def luck():
         else:
             print("шо?")
 
+>>>>>>> 7dafb36ca379b0832d61083be442e0e2f1ae00c9
 #фихня нужная для запоминания имени
 memory = os.path.isfile("log")
 if memory:
@@ -498,14 +547,15 @@ helpme = """Функции этой прекрасной программы:
         9) Уровень
         10) Погода
         11) Курс
-        12) Хелп"""
+        12) Хелп
+        (все данные сохраняются только при написании команды "Выход"!) """
 try:
     print("Ладно, начнем-с")
     print(helpme)
 
     time.sleep(0.5)
     while True:
-        enter = input(calc.name + "," " введи что тебе нужно: ")
+        enter = input("{}, введи что тебе нужно: ".format(calc.name))
         if enter.lower() == "калькулятор":
             calc.calcc()
         elif enter.lower() == "шансы":
@@ -528,10 +578,16 @@ try:
             calc.weather()
         elif enter.lower() == "курс":
             calc.valute()
+        elif enter.lower() == "удача":
+            calc.luck()
         elif enter.lower() == "очистить":
             clrclear()
         elif enter.lower() == "хелп":
             print(helpme)
+        elif enter.lower() == "майнкрафт":
+            calc.secret()
+        elif enter.lower() == "выход":
+            exit()
         else:
             print("Не понимаю!")
 #выход через ctrl+c
