@@ -303,6 +303,7 @@ class Main():
             else:
                 print("шо?")
     def secret(self):
+        # от данилы
         self.money = self.money + 99999
 
     def shopping(self):
