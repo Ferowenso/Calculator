@@ -109,7 +109,7 @@ class Main():
         while True:
             print("Введите \'Продолжить\' или \'Выход\'")
             ent = input("")
-            if ent.lower() == "Продолжить".lower():
+            if ent.lower() == "продолжить":
                 apiurl = "http://api.openweathermap.org/data/2.5/find"
                 print("Введите название города на английском")
                 q = input("")
@@ -204,7 +204,7 @@ class Main():
             print("""Напишите \"Работать\", чтобы работать
 \"Выход\", чтобы выйти""")
             jobtest = input()
-            if jobtest.lower() == "работать".lower():
+            if jobtest.lower() == "работать":
                 if self.lvl == 0:
                     self.money = self.money + randomorgmain(1, 5)
                     print("Ваш баланс {}".format(self.money))
@@ -260,7 +260,7 @@ class Main():
                         self.lvl = 3
                     else:
                         print("Недостаточно xp!")
-            elif lvbuy.lower() == "Выход".lower():
+            elif lvbuy.lower() == "выход":
                 break
             else:
                 print("шо?")
@@ -421,7 +421,7 @@ class Main():
                         self.money = self.money -1000
                     else:
                         print("Недостаточно денег!")
-            elif buy.lower() == "Выход".lower():
+            elif buy.lower() == "выход":
                 break
             else:
                 print("Не понимаю!")
@@ -466,7 +466,7 @@ def delete():
             print("Удаление...")
             time.sleep(0.5)
             sys.exit()
-        elif yesorno.lower() == "Нет".lower():
+        elif yesorno.lower() == "нет":
             print("Ну и зачем ты тогда сюда заходил?")
             break
         else:
