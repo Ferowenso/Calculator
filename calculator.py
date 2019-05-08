@@ -533,6 +533,7 @@ try:
         elif enter == "число":
             try:
                 testing =  enter.split()[1]
+                calc.randomn()
             except IndexError:
                 calc.randomn()
         elif enter == "удалить данные":
