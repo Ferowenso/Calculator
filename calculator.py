@@ -57,19 +57,22 @@ class Main():
                 print("Мне нужны числа!")
                 continue
 
-    def randomn(self):
+    def randomn(self, x=None, y=None):
+        print("рандом в заданном диапазоне" )
         while True:
             try:
-                print("Рандомное число из заданного диапазона")
-                x = int(input("Первое число: "))
-                y = int(input("Второе число: "))
+                if x and y:
+                   x  = int(x); y = int(y)
+                else:
+                    x = int(input("Первое число: "))
+                    y = int(input("Второе число: "))
                 rand = randomorgmain(x, y)
                 print("Число: {}".format(rand))
                 self.vidachaxp()
                 break
             except ValueError:
-                print("Число!")
-                continue
+                print("Нужны числа!")
+                break
 
     def date(self):
         print("Тут ты можешь узнать дату какого-либо события")
@@ -512,6 +515,11 @@ def lobby():
         while True:
             enter = input("{}, введи что тебе нужно: ".format(calc.name))
             enter = enter.lower()
+            try:
+                if enter.split()[1]:
+                    args1 = enter.split()[1]
+                    args2 = enter.split()[2]
+            except IndexError: args1 = None; args2 = None
             if enter == "калькулятор":
                 calc.calcc()
             elif enter == "шансы":
@@ -520,12 +528,8 @@ def lobby():
                 calc.date()
             elif enter == "удалить данные":
                 delete()
-            elif enter == "число":
-                try:
-                    testing =  enter.split()[1]
-                    calc.randomn()
-                except IndexError:
-                    calc.randomn()
+            elif enter.split()[0] == "число":
+                calc.randomn(args1, args2)
             elif enter == "удалить данные":
                 delete()
             elif enter == "работа":
