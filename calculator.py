@@ -1,4 +1,3 @@
-# тест
 # импорт всего шо надо
 import math, time, re, shelve, sys, random, os.path, json
 from sys import platform
@@ -524,39 +523,43 @@ try:
     time.sleep(0.5)
     while True:
         enter = input("{}, введи что тебе нужно: ".format(calc.name))
-        if enter.lower() == "калькулятор":
+        enter = enter.lower()
+        if enter == "калькулятор":
             calc.calcc()
-        elif enter.lower() == "шансы":
+        elif enter == "шансы":
             calc.chance()
-        elif enter.lower() == "дата":
+        elif enter == "дата":
             calc.date()
-        elif enter.lower() == "число":
-            calc.randomn()
-        elif enter.lower() == "удалить данные":
+        elif enter == "число":
+            try:
+                testing =  enter.split()[1]
+            except IndexError:
+                calc.randomn()
+        elif enter == "удалить данные":
             delete()
-        elif enter.lower() == "работа":
+        elif enter == "работа":
             calc.jobmain()
-        elif enter.lower() == "профиль":
+        elif enter == "профиль":
             calc.profile()
-        elif enter.lower() == "магазин":
+        elif enter == "магазин":
             calc.shopping()
-        elif enter.lower() == "уровень":
+        elif enter == "уровень":
             calc.levelup()
-        elif enter.lower() == "погода":
+        elif enter == "погода":
             calc.weather()
-        elif enter.lower() == "курс":
+        elif enter == "курс":
             calc.valute()
-        elif enter.lower() == "удача":
+        elif enter == "удача":
             calc.luck()
-        elif enter.lower() == "очистить":
+        elif enter == "очистить":
             clrclear()
-        elif enter.lower() == "хелп":
+        elif enter == "хелп":
             print(helpme)
-        elif enter.lower() == "майнкрафт":
+        elif enter == "майнкрафт":
             calc.secret()
-        elif enter.lower() == "выход":
+        elif enter == "выход":
             exit()
-        elif enter.lower() == "гайд":
+        elif enter == "гайд":
             print(guide)
         else:
             print("Не понимаю!")
