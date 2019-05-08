@@ -168,24 +168,24 @@ class Main():
 """)
             if encalc.lower() == "сложение":
                 print("Вот твой результат, " + calc.name + ":{}".format(x + y))
-            elif encalc.lower() == "Вычитание".lower():
+            elif encalc.lower() == "вычитание":
                 print("Вот твой результат, " + calc.name + ":{}".format(x - y))
-            elif encalc.lower() == "Умножение".lower():
+            elif encalc.lower() == "умножение":
                 print("Вот твой результат, " + calc.name + ":{}".format(x * y))
-            elif encalc.lower() == "Степень".lower():
+            elif encalc.lower() == "степень":
                 print("Вот твой результат, " + calc.name + ":{}".format(x ** y))
-            elif encalc.lower() == "Деление".lower():
+            elif encalc.lower() == "деление":
                 if x or y == 0:
                     print("Оставь вселенную в покое")
                 else:
                     print("Вот твой результат, " + calc.name + ": {}".format(x / y))
-            elif encalc.lower() == "Корень".lower():
+            elif encalc.lower() == "корень":
                 print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
-            elif encalc.lower() == "Синус".lower():
+            elif encalc.lower() == "синус":
                 print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)))
-            elif encalc.lower() == "Косинус".lower():
+            elif encalc.lower() == "косинус":
                 print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)))
-            elif encalc.lower() == "Выход".lower():
+            elif encalc.lower() == "выход":
                 print("Выходим")
                 time.sleep(0.5)
                 break
