@@ -479,7 +479,10 @@ def exit():
         stat["калк"] = calc
     sys.exit()
 #фихня нужная для запоминания имени
-memory = os.path.isfile("log")
+if platform == "win32":
+    memory = os.path.isfile("log.dat")
+else:
+    memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
         calc = stat["калк"]
@@ -490,6 +493,7 @@ if memory == False:
     calc = Main(name=calc.name, age=calc.age)
     with shelve.open("log") as stat:
         stat["калк"] = calc
+    print(calc.name + ", наш агент фсб уже выслан к вам \n")
 #начало хы
 helpme = """Функции этой прекрасной программы:
         0) Очистить
