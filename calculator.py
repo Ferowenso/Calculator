@@ -522,9 +522,14 @@ try:
             calc.chance()
         elif enter.lower() == "дата":
             calc.date()
-        elif enter.lower() == "число":
-            calc.randomn()
         elif enter.lower() == "удалить данные":
+        elif enter == "число":
+            try:
+                testing =  enter.split()[1]
+                calc.randomn()
+            except IndexError:
+                calc.randomn()
+        elif enter == "удалить данные":
             delete()
         elif enter.lower() == "работа":
             calc.jobmain()
