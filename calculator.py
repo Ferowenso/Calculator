@@ -303,13 +303,7 @@ class Main():
             else:
                 print("шо?")
     def secret(self):
-<<<<<<< .merge_file_UMcwEa
-        #От андрея
-        self.money = self.money + 999999
-=======
-        # от данилы
         self.money = self.money + 99999
->>>>>>> .merge_file_oyLuzd
 
     def shopping(self):
         while True:
@@ -493,71 +487,76 @@ if memory == False:
     calc = Main(name=calc.name, age=calc.age)
     with shelve.open("log") as stat:
         stat["калк"] = calc
-#начало хы
-helpme = """Функции этой прекрасной программы:
-        0) Очистить
-        1) Калькулятор
-        2) Шансы
-        3) Дата
-        4) Число
-        5) Удалить данные
-        6) Работа
-        7) Профиль
-        8) Магазин
-        9) Уровень
-        10) Погода
-        11) Курс
-        12) Хелп
-        (все данные сохраняются только при написании команды "Выход"!) """
-try:
-    print("Ладно, начнем-с")
-    print(helpme)
+def lobby():
+    #начало хы
+    helpme = """Функции этой прекрасной программы:
+            0) Очистить
+            1) Калькулятор
+            2) Шансы
+            3) Дата
+            4) Число
+            5) Удалить данные
+            6) Работа
+            7) Профиль
+            8) Магазин
+            9) Уровень
+            10) Погода
+            11) Курс
+            12) Хелп
+            (все данные сохраняются только при написании команды "Выход"!) """
+    try:
+        print("Ладно, начнем-с")
+        print(helpme)
 
-    time.sleep(0.5)
-    while True:
-        enter = input("{}, введи что тебе нужно: ".format(calc.name))
-        if enter.lower() == "калькулятор":
-            calc.calcc()
-        elif enter.lower() == "шансы":
-            calc.chance()
-        elif enter.lower() == "дата":
-            calc.date()
-        elif enter.lower() == "удалить данные":
-        elif enter == "число":
-            try:
-                testing =  enter.split()[1]
-                calc.randomn()
-            except IndexError:
-                calc.randomn()
-        elif enter == "удалить данные":
-            delete()
-        elif enter.lower() == "работа":
-            calc.jobmain()
-        elif enter.lower() == "профиль":
-            calc.profile()
-        elif enter.lower() == "магазин":
-            calc.shopping()
-        elif enter.lower() == "уровень":
-            calc.levelup()
-        elif enter.lower() == "погода":
-            calc.weather()
-        elif enter.lower() == "курс":
-            calc.valute()
-        elif enter.lower() == "удача":
-            calc.luck()
-        elif enter.lower() == "очистить":
-            clrclear()
-        elif enter.lower() == "хелп":
-            print(helpme)
-        elif enter.lower() == "майнкрафт":
-            calc.secret()
-        elif enter.lower() == "выход":
-            exit()
-        else:
-            print("Не понимаю!")
+        time.sleep(0.5)
+        while True:
+            enter = input("{}, введи что тебе нужно: ".format(calc.name))
+            enter = enter.lower()
+            if enter == "калькулятор":
+                calc.calcc()
+            elif enter == "шансы":
+                calc.chance()
+            elif enter == "дата":
+                calc.date()
+            elif enter == "удалить данные":
+                delete()
+            elif enter == "число":
+                try:
+                    testing =  enter.split()[1]
+                    calc.randomn()
+                except IndexError:
+                    calc.randomn()
+            elif enter == "удалить данные":
+                delete()
+            elif enter == "работа":
+                calc.jobmain()
+            elif enter == "профиль":
+                calc.profile()
+            elif enter == "магазин":
+                calc.shopping()
+            elif enter == "уровень":
+                calc.levelup()
+            elif enter == "погода":
+                calc.weather()
+            elif enter == "курс":
+                calc.valute()
+            elif enter == "удача":
+                calc.luck()
+            elif enter == "очистить":
+                clrclear()
+            elif enter == "хелп":
+                print(helpme)
+            elif enter == "майнкрафт":
+                calc.secret()
+            elif enter == "выход":
+                exit()
+            else:
+                print("Не понимаю!")
+
 #выход через ctrl+c
-except KeyboardInterrupt:
-    print("Выходим")
-    with shelve.open("log") as stat:
-        stat["калк"] = calc
-    sys.exit()
+    except KeyboardInterrupt:
+        print("Выходим")
+        with shelve.open("log") as stat:
+            stat["калк"] = calc
+        sys.exit()
+lobby()
