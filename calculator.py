@@ -57,19 +57,22 @@ class Main():
                 print("Мне нужны числа!")
                 continue
 
-    def randomn(self):
+    def randomn(self, x=None, y=None):
+        print("рандом в заданном диапазоне" )
         while True:
             try:
-                print("Рандомное число из заданного диапазона")
-                x = int(input("Первое число: "))
-                y = int(input("Второе число: "))
+                if x and y:
+                   x  = int(x); y = int(y)
+                else:
+                    x = int(input("Первое число: "))
+                    y = int(input("Второе число: "))
                 rand = randomorgmain(x, y)
                 print("Число: {}".format(rand))
                 self.vidachaxp()
                 break
             except ValueError:
-                print("Число!")
-                continue
+                print("Нужны числа!")
+                break
 
     def date(self):
         print("Тут ты можешь узнать дату какого-либо события")
@@ -79,10 +82,22 @@ class Main():
         year = randomorgmain(2019, 3000)
         print("Дата {}: {}.{}.{}".format(event, day, moth, year))
         self.xp = self.xp + random.randint(1, 10)
+    def translit(self, text):
+        apikey = "trnsl.1.1.20190508T201810Z.385ebfa1e596baa0.90672cf8655555b1b51ced31b03c2e8bb9bde46c"
+        url = "https://translate.yandex.net/api/v1.5/tr.json/translate"
+        params = {"key": apikey,
+                "text":text,
+                "lang":"ru-en"}
+        r = requests.get(url, params=params)
+        encode = r.json()
+        return encode["text"][0]
 
-    def chance(self):
+    def chance(self, argevent):
         print("Тут ты можешь узнать вероятность какого-либо события")
-        event = input("Событие: ")
+        if argevent:
+           event = argevent
+        else:
+            event = input("Событие: ")
         test = randomorgmain(0, 100)
         print("Шанс {} {}%" .format(event, test))
         self.xp = self.xp + random.randint(1, 10)
@@ -104,46 +119,42 @@ class Main():
         print("Рубль: {}₽, доллар: {}$" .format(rub, usd))
         self.xp = self.xp + random.randint(1, 10)
 
-    def weather(self):
+    def weather(self, qr=None):
         while True:
-            print("Введите \'Продолжить\' или \'Выход\'")
-            ent = input("")
-            if ent.lower() == "продолжить":
-                apiurl = "http://api.openweathermap.org/data/2.5/find"
-                print("Введите название города на английском")
-                q = input("")
-                q = q.lower()
-                appid = '22c7bf8e593c47b0cf88f390e8e5376a'
-                params = {
-                        'q': q,
-                        'appid': appid,
-                        'units': 'metric',
-                        'lang': 'ru'
-                }
-                try:
-                    r = requests.get(apiurl, params=params, timeout=5)
-                    encode = r.json()
-                except:
-                    print("Чота у вас с инетом или еще какие-то проблемы, мы тут ничо сделать не можем")
-                    sys.exit()
-                try:
-                    w = encode['list'][0]['weather'][0]['description']
-                    temp = encode["list"][0]["main"]["temp"]
-                    vlaga = encode["list"][0]["main"]["humidity"]
-                    wind = encode["list"][0]["wind"]["speed"]
-                except:
-                    print("что ты черт побери такое несешь? нет такого города")
-                    continue
-                print("""Город: {}
-                Погода: {}
-                Температура: {}°
-                Влажность: {}
-                Скорость ветра: {}м/с""".format(q, w, temp, vlaga, wind))
-                self.xp = self.xp + random.randint(1, 10)
-            elif ent.lower() == "выход":
+            apiurl = "http://api.openweathermap.org/data/2.5/find"
+            if not qr:
+                print("Введите название города")
+                qr = input("город: ")
+            qr = qr.lower()
+            q = self.translit(qr)
+            appid = '22c7bf8e593c47b0cf88f390e8e5376a'
+            params = {
+                    'q': q,
+                    'appid': appid,
+                    'units': 'metric',
+                    'lang': 'ru'
+            }
+            try:
+                r = requests.get(apiurl, params=params, timeout=5)
+                encode = r.json()
+            except:
+                print("Чота у вас с инетом или еще какие-то проблемы, мы тут ничо сделать не можем")
+                sys.exit()
+            try:
+                w = encode['list'][0]['weather'][0]['description']
+                temp = encode["list"][0]["main"]["temp"]
+                vlaga = encode["list"][0]["main"]["humidity"]
+                wind = encode["list"][0]["wind"]["speed"]
+            except:
+                print("что ты черт побери такое несешь? нет такого города")
                 break
-            else:
-                print("шо?")
+            print("""Город: {}
+            Погода: {}
+            Температура: {}°
+            Влажность: {}
+            Скорость ветра: {}м/с""".format(qr, w, temp, vlaga, wind))
+            self.xp = self.xp + random.randint(1, 10)
+            break
     def calcc(self):
         print("Ты запустил калькулятор")
         while True:
@@ -303,10 +314,8 @@ class Main():
             else:
                 print("шо?")
     def secret(self):
-        #От андрея
-        self.money = self.money + 999999
-        # от данилы
         self.money = self.money + 99999
+
     def shopping(self):
         while True:
             print("""Для покупки напишите цифру:
@@ -494,79 +503,82 @@ if memory == False:
         stat["калк"] = calc
     print(calc.name + ", наш агент фсб уже выслан к вам \n")
 #начало хы
-helpme = """Функции этой прекрасной программы:
-        0) Очистить
-        1) Калькулятор
-        2) Шансы
-        3) Дата
-        4) Число
-        5) Удалить данные
-        6) Работа
-        7) Профиль
-        8) Магазин
-        9) Уровень
-        10) Погода
-        11) Курс
-        12) Хелп
-        13) Гайд
-        (все данные сохраняются только при написании команды "Выход"!) """
-guide = """ Гайд по нашей экономике в калькуляторе и экспе:
-xp дается за использование калькулятора, размер выдамоей xp зависит от уровня.
-К примеру: за использование калькулятора(со всем остальным буит так же) на втором уровне:
-буит зачислено от 0 до 15.
-Бабло зарабатывается в "работа", количество выдаваемого бабла так жи зависит от лвла.
-Бабло мона тратить в магазине покупая вещи, которые отображаются в профиле
-Собсна, всо"""
-try:
-    print("Ладно, начнем-с")
-    print(helpme)
-    time.sleep(0.5)
-    while True:
-        enter = input("{}, введи что тебе нужно: ".format(calc.name))
-        enter = enter.lower()
-        if enter == "калькулятор":
-            calc.calcc()
-        elif enter == "шансы":
-            calc.chance()
-        elif enter == "дата":
-            calc.date()
-        elif enter == "число":
+def lobby():
+    #начало хы
+    helpme = """Функции этой прекрасной программы:
+            0) Очистить
+            1) Калькулятор
+            2) Шансы
+            3) Дата
+            4) Число
+            5) Удалить данные
+            6) Работа
+            7) Профиль
+            8) Магазин
+            9) Уровень
+            10) Погода
+            11) Курс
+            12) Хелп
+            (все данные сохраняются только при написании команды "Выход"!) """
+    try:
+        print("Ладно, начнем-с")
+        print(helpme)
+
+        time.sleep(0.5)
+        while True:
+            enter = input("{}, ваш запрос: ".format(calc.name))
+            enter = enter.lower()
+            args1 = None
+            args2 = None
+            uberargs = None
+            if not enter:
+                continue
             try:
-                testing =  enter.split()[1]
-                calc.randomn()
-            except IndexError:
-                calc.randomn()
-        elif enter == "удалить данные":
-            delete()
-        elif enter == "работа":
-            calc.jobmain()
-        elif enter == "профиль":
-            calc.profile()
-        elif enter == "магазин":
-            calc.shopping()
-        elif enter == "уровень":
-            calc.levelup()
-        elif enter == "погода":
-            calc.weather()
-        elif enter == "курс":
-            calc.valute()
-        elif enter == "удача":
-            calc.luck()
-        elif enter == "очистить":
-            clrclear()
-        elif enter == "хелп":
-            print(helpme)
-        elif enter == "майнкрафт":
-            calc.secret()
-        elif enter == "выход":
-            exit()
-        elif enter == "гайд":
-            print(guide)
-        else:
-            print("Не понимаю!")
+                if enter.split()[1]:
+                    args1 = enter.split()[1]
+                    args2 = enter.split()[2]
+            except IndexError: None
+            if enter == "калькулятор":
+                calc.calcc()
+            elif enter.split()[0] == "шансы":
+                calc.chance(args1)
+            elif enter == "дата":
+                calc.date()
+            elif enter == "удалить данные":
+                delete()
+            elif enter.split()[0] == "число":
+                calc.randomn(args1, args2)
+            elif enter == "удалить данные":
+                delete()
+            elif enter == "работа":
+                calc.jobmain()
+            elif enter == "профиль":
+                calc.profile()
+            elif enter == "магазин":
+                calc.shopping()
+            elif enter == "уровень":
+                calc.levelup()
+            elif enter.split()[0] == "погода":
+                calc.weather(args1)
+            elif enter == "курс":
+                calc.valute()
+            elif enter == "удача":
+                calc.luck()
+            elif enter == "очистить":
+                clrclear()
+            elif enter == "хелп":
+                print(helpme)
+            elif enter == "майнкрафт":
+                calc.secret()
+            elif enter == "выход":
+                exit()
+            else:
+                print("Не понимаю!")
+
 #выход через ctrl+c
-except (KeyboardInterrupt, EOFError):
-    print("Выходим")
-    with shelve.open("log") as stat:
-        stat["калк"] = calc
-    sys.exit()
+    except KeyboardInterrupt:
+        print("Выходим")
+        with shelve.open("log") as stat:
+            stat["калк"] = calc
+        sys.exit()
+lobby()
