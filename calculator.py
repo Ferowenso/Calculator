@@ -232,6 +232,53 @@ class Main():
                 break
             else:
                 print("шо?")
+    def bomb(self):
+        print("""В этой игре вам нужно угадать верный провод для того чтобы разминировать бомбу
+Есть 4 провода:
+З - зеленый
+Ж - желтый
+К - красный
+О - оранжевый 
+Вы должны сделать ставку
+Минимум - 50$""")
+        while True:
+            print("Продолжить? Да/Нет")
+            bombyes = input("")
+            bombyes = bombyes.lower()
+            if bombyes == "да": 
+                try:
+                    stavka = int(input("Ставка: "))
+                    if stavka < 50:
+                        print("Минимум 50$!")
+                        continue
+                    if stavka > self.money:
+                        print("Меньше!")
+                        continue
+                except ValueError:
+                    print("Число!")
+                    continue
+                print("""Ваша ставка: {}
+Если вы выйграете +{}$
+Если проиграете -{}$""".format(stavka, stavka * 2, stavka))
+                provod = ["з", "ж", "к", "о"]
+                randomprovod = random.choice(provod)
+                choiceprovod = input("Выберите провод: ")
+                choiceprovod = choiceprovod.lower()
+                if not all([choiceprovod in provod]):
+                    print("Напишите букву провода!")
+                    continue
+                elif choiceprovod == "з" or "ж" or "к" or "о":
+                    if choiceprovod == randomprovod:
+                        print("Вы угадали! +{}$".format(stavka * 2))
+                        self.money = self.money + stavka * 2
+                    else:
+                        print("Вы проиграли! -{}$".format(stavka))
+                        self.money = self.money - stavka
+            elif bombyes == "нет":
+                break
+            else:
+                print("шо?")
+                continue
     def levelup(self):
         while True:
             print("""Тут ты можешь повысить свой уровень!
@@ -520,6 +567,7 @@ def lobby():
             10) Погода
             11) Курс
             12) Хелп
+            13) Бомба
             (все данные сохраняются только при написании команды "Выход"!) """
     try:
         print("Ладно, начнем-с")
@@ -571,6 +619,8 @@ def lobby():
                 print(helpme)
             elif enter == "майнкрафт":
                 calc.secret()
+            elif enter == "бомба":
+                calc.bomb()
             elif enter == "выход":
                 exit()
             else:
