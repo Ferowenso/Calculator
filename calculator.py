@@ -74,9 +74,10 @@ class Main():
                 print("Нужны числа!")
                 break
 
-    def date(self):
+    def date(self, event=None):
         print("Тут ты можешь узнать дату какого-либо события")
-        event = input("Событие: ")
+        if not event:
+            event = input("Событие: ")
         day = randomorgmain(0, 31)
         moth = randomorgmain(1, 12)
         year = randomorgmain(2019, 3000)
@@ -155,8 +156,7 @@ class Main():
             Скорость ветра: {}м/с""".format(qr, w, temp, vlaga, wind))
             self.xp = self.xp + random.randint(1, 10)
             break
-    def calcc(self, x=None, y=None, entercalc=None):
-        print("Ты запустил калькулятор")
+    def calcc(self, x=None, entercalc=None, y=None):
         while True:
             try:
                 if x and y:
@@ -164,49 +164,46 @@ class Main():
                 else:
                     x = int(input("Первое значение: "))
                     y = int(input("Второе значение: "))
-                    self.vidachaxp()
             except ValueError:
                 print("Цифорками!")
-                continue
+                x = None; y = None
             else:
                 if entercalc:
                     encalc = entercalc
                 else:
                     encalc = input("""Введи что тебе нужно:
-• Сложение
-• Вычитание
-• Умножение
-• Деление
-• Степень
-• Корень
-• Синус
-• Косинус
+• Сложение +
+• Вычитание -
+• Умножение *
+• Деление /
+• Степень так же
+• Корень так же
+• Синус так же
+• Косинус так же
 • Выход
 """)
                     encalc = encalc.lower()
-                if encalc == "сложение":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x + y));break
-                elif encalc == "вычитание":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x - y));break
-                elif encalc == "умножение":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x * y));break
-                elif encalc == "степень":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x ** y));break
-                elif encalc == "деление":
-                    if x or y == 0:
-                        print("Оставь вселенную в покое");break
-                    else:
-                        print("Вот твой результат, " + calc.name + ": {}".format(x / y));break
+                if encalc == "+":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x + y))
+                elif encalc == "-":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x - y))
+                elif encalc == "*":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x * y))
+                elif encalc == "**":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x ** y))
+                elif encalc == "/":
+                    try:
+                        print("Вот твой результат, " + calc.name + ": {}".format(x / y))
+                    except ZeroDivisionError:
+                        print("КАК ТЕБЕ УДАЛОСЬ ЭТО СДЕЛАТЬ? ПОЧЕМУ ЛЮДИ УМИРАЮТ")
+                        break
                 elif encalc == "корень":
-                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)));break
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
                 elif encalc == "синус":
-                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)));break
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sin(x), math.sin(y)))
                 elif encalc == "косинус":
-                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)));break
-                elif encalc == "выход":
-                    print("Выходим")
-                    time.sleep(0.5)
-                    break
+                    print("Вот твой результат, " + calc.name + " :{} и {}".format(math.cos(x), math.cos(y)))
+            break
 
     def profile(self):
         print("""Ваше имя: {}
@@ -588,6 +585,7 @@ def lobby():
             args2 = None
             args3 = None
             uberargs = None
+            zapros = enter.split()[0]
             if not enter:
                 continue
             try:
@@ -596,41 +594,41 @@ def lobby():
                     args2 = enter.split()[2]
                     args3 = enter.split()[3]
             except IndexError: None
-            if enter.split()[0] == "калькулятор":
+            if zapros == "калькулятор":
                 calc.calcc(args1, args2, args3)
             elif enter.split()[0] == "шансы":
                 calc.chance(args1)
-            elif enter == "дата":
-                calc.date()
+            elif zapros == "дата":
+                calc.date(args1)
             elif enter == "удалить данные":
                 delete()
-            elif enter.split()[0] == "число":
+            elif zapros == "число":
                 calc.randomn(args1, args2)
-            elif enter == "удалить данные":
+            elif zapros == "удалить данные":
                 delete()
-            elif enter == "работа":
+            elif zapros == "работа":
                 calc.jobmain()
-            elif enter == "профиль":
+            elif zapros == "профиль":
                 calc.profile()
-            elif enter == "магазин":
+            elif zapros == "магазин":
                 calc.shopping()
-            elif enter == "уровень":
+            elif zapros == "уровень":
                 calc.levelup()
-            elif enter.split()[0] == "погода":
+            elif zapros == "погода":
                 calc.weather(args1)
-            elif enter == "курс":
+            elif zapros == "курс":
                 calc.valute()
-            elif enter == "удача":
+            elif zapros  == "удача":
                 calc.luck()
-            elif enter == "очистить":
+            elif zapros == "очистить":
                 clrclear()
-            elif enter == "хелп":
+            elif zapros == "хелп":
                 print(helpme)
-            elif enter == "майнкрафт":
+            elif zapros == "майнкрафт":
                 calc.secret()
-            elif enter == "бомба":
+            elif zapros == "бомба":
                 calc.bomb()
-            elif enter == "выход":
+            elif zapros == "выход":
                 exit()
             else:
                 print("Не понимаю!")
