@@ -155,17 +155,24 @@ class Main():
             Скорость ветра: {}м/с""".format(qr, w, temp, vlaga, wind))
             self.xp = self.xp + random.randint(1, 10)
             break
-    def calcc(self):
+    def calcc(self, x=None, y=None, entercalc=None):
         print("Ты запустил калькулятор")
         while True:
             try:
-                x = int(input("Первое значение: "))
-                y = int(input("Второе значение: "))
-                self.vidachaxp()
+                if x and y:
+                   x  = int(x); y = int(y)
+                else:
+                    x = int(input("Первое значение: "))
+                    y = int(input("Второе значение: "))
+                    self.vidachaxp()
             except ValueError:
-                    print("Цифорками!")
-                    continue
-            encalc = input("""Введи что тебе нужно:
+                print("Цифорками!")
+                continue
+            else:
+                if entercalc:
+                    encalc = entercalc
+                else:
+                    encalc = input("""Введи что тебе нужно:
 • Сложение
 • Вычитание
 • Умножение
@@ -176,30 +183,30 @@ class Main():
 • Косинус
 • Выход
 """)
-            encalc = encalc.lower()
-            if encalc == "сложение":
-                print("Вот твой результат, " + calc.name + ":{}".format(x + y))
-            elif encalc == "вычитание":
-                print("Вот твой результат, " + calc.name + ":{}".format(x - y))
-            elif encalc == "умножение":
-                print("Вот твой результат, " + calc.name + ":{}".format(x * y))
-            elif encalc == "степень":
-                print("Вот твой результат, " + calc.name + ":{}".format(x ** y))
-            elif encalc == "деление":
-                if x or y == 0:
-                    print("Оставь вселенную в покое")
-                else:
-                    print("Вот твой результат, " + calc.name + ": {}".format(x / y))
-            elif encalc == "корень":
-                print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
-            elif encalc == "синус":
-                print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)))
-            elif encalc == "косинус":
-                print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)))
-            elif encalc == "выход":
-                print("Выходим")
-                time.sleep(0.5)
-                break
+                    encalc = encalc.lower()
+                if encalc == "сложение":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x + y));break
+                elif encalc == "вычитание":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x - y));break
+                elif encalc == "умножение":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x * y));break
+                elif encalc == "степень":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x ** y));break
+                elif encalc == "деление":
+                    if x or y == 0:
+                        print("Оставь вселенную в покое");break
+                    else:
+                        print("Вот твой результат, " + calc.name + ": {}".format(x / y));break
+                elif encalc == "корень":
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)));break
+                elif encalc == "синус":
+                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)));break
+                elif encalc == "косинус":
+                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)));break
+                elif encalc == "выход":
+                    print("Выходим")
+                    time.sleep(0.5)
+                    break
 
     def profile(self):
         print("""Ваше имя: {}
@@ -579,6 +586,7 @@ def lobby():
             enter = enter.lower()
             args1 = None
             args2 = None
+            args3 = None
             uberargs = None
             if not enter:
                 continue
@@ -586,9 +594,10 @@ def lobby():
                 if enter.split()[1]:
                     args1 = enter.split()[1]
                     args2 = enter.split()[2]
+                    args3 = enter.split()[3]
             except IndexError: None
-            if enter == "калькулятор":
-                calc.calcc()
+            if enter.split()[0] == "калькулятор":
+                calc.calcc(args1, args2, args3)
             elif enter.split()[0] == "шансы":
                 calc.chance(args1)
             elif enter == "дата":
