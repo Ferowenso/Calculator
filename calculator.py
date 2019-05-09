@@ -184,25 +184,25 @@ class Main():
 """)
                     encalc = encalc.lower()
                 if encalc == "+":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x + y))
+                    print("Вот твой результат, " + calc.name + ": {}".format(x + y));calc.vidachaxp()
                 elif encalc == "-":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x - y))
+                    print("Вот твой результат, " + calc.name + ": {}".format(x - y));calc.vidachaxp()
                 elif encalc == "*":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x * y))
+                    print("Вот твой результат, " + calc.name + ": {}".format(x * y));calc.vidachaxp()
                 elif encalc == "**":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x ** y))
+                    print("Вот твой результат, " + calc.name + ": {}".format(x ** y));calc.vidachaxp()
                 elif encalc == "/":
                     try:
-                        print("Вот твой результат, " + calc.name + ": {}".format(x / y))
+                        print("Вот твой результат, " + calc.name + ": {}".format(x / y));calc.vidachaxp()
                     except ZeroDivisionError:
                         print("КАК ТЕБЕ УДАЛОСЬ ЭТО СДЕЛАТЬ? ПОЧЕМУ ЛЮДИ УМИРАЮТ")
                         break
                 elif encalc == "корень":
-                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)));calc.vidachaxp()
                 elif encalc == "синус":
-                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sin(x), math.sin(y)))
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sin(x), math.sin(y)));calc.vidachaxp()
                 elif encalc == "косинус":
-                    print("Вот твой результат, " + calc.name + " :{} и {}".format(math.cos(x), math.cos(y)))
+                    print("Вот твой результат, " + calc.name + " :{} и {}".format(math.cos(x), math.cos(y)));calc.vidachaxp()
             break
 
     def profile(self):
@@ -236,6 +236,24 @@ class Main():
                 break
             else:
                 print("шо?")
+    def prefix(self, selfprefix):
+        while 1:
+            if self.lvl < 2:
+                print("Префикс доступен со второго уровня!")
+                break
+            else:
+                if selfprefix:
+                        self.name = selfprefix
+                        if not self.name:
+                            print("Ну и зачем мне пустой ответ, а?")
+                            continue
+                        break
+                else:
+                        self.name = input("Введите префикс: ")
+                        if not self.name:
+                            print("Ну и зачем мне пустой ответ, а?")
+                            continue
+                        break
     def bomb(self):
         print("""В этой игре вам нужно угадать верный провод для того чтобы разминировать бомбу
 Есть 4 провода:
@@ -572,6 +590,7 @@ def lobby():
             11) Курс
             12) Хелп
             13) Бомба
+            14) Префикс
             (все данные сохраняются только при написании команды "Выход"!) """
     try:
         print("Ладно, начнем-с")
@@ -630,6 +649,8 @@ def lobby():
                 calc.bomb()
             elif zapros == "выход":
                 exit()
+            elif zapros == "префикс":
+                calc.prefix(args1)
             else:
                 print("Не понимаю!")
 
