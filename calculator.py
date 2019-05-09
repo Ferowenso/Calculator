@@ -1,4 +1,4 @@
-#импорт всего шо надо
+# импорт всего шо надо
 import math, time, re, shelve, sys, random, os.path, json
 from sys import platform
 try:
@@ -146,7 +146,7 @@ class Main():
                 vlaga = encode["list"][0]["main"]["humidity"]
                 wind = encode["list"][0]["wind"]["speed"]
             except:
-                print("что ты черт побери такое несешь? нет такого города")
+                print("что ты черт побери такое несешь? нет такого города, попробуй ввести на английском")
                 break
             print("""Город: {}
             Погода: {}
@@ -155,17 +155,24 @@ class Main():
             Скорость ветра: {}м/с""".format(qr, w, temp, vlaga, wind))
             self.xp = self.xp + random.randint(1, 10)
             break
-    def calcc(self):
+    def calcc(self, x=None, y=None, entercalc=None):
         print("Ты запустил калькулятор")
         while True:
             try:
-                x = int(input("Первое значение: "))
-                y = int(input("Второе значение: "))
-                self.vidachaxp()
+                if x and y:
+                   x  = int(x); y = int(y)
+                else:
+                    x = int(input("Первое значение: "))
+                    y = int(input("Второе значение: "))
+                    self.vidachaxp()
             except ValueError:
-                    print("Цифорками!")
-                    continue
-            encalc = input("""Введи что тебе нужно:
+                print("Цифорками!")
+                continue
+            else:
+                if entercalc:
+                    encalc = entercalc
+                else:
+                    encalc = input("""Введи что тебе нужно:
 • Сложение
 • Вычитание
 • Умножение
@@ -176,30 +183,30 @@ class Main():
 • Косинус
 • Выход
 """)
-            encalc = encalc.lower()
-            if encalc == "сложение":
-                print("Вот твой результат, " + calc.name + ":{}".format(x + y))
-            elif encalc == "вычитание":
-                print("Вот твой результат, " + calc.name + ":{}".format(x - y))
-            elif encalc == "умножение":
-                print("Вот твой результат, " + calc.name + ":{}".format(x * y))
-            elif encalc == "степень":
-                print("Вот твой результат, " + calc.name + ":{}".format(x ** y))
-            elif encalc == "деление":
-                if x or y == 0:
-                    print("Оставь вселенную в покое")
-                else:
-                    print("Вот твой результат, " + calc.name + ": {}".format(x / y))
-            elif encalc == "корень":
-                print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
-            elif encalc == "синус":
-                print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)))
-            elif encalc == "косинус":
-                print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)))
-            elif encalc == "выход":
-                print("Выходим")
-                time.sleep(0.5)
-                break
+                    encalc = encalc.lower()
+                if encalc == "сложение":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x + y));break
+                elif encalc == "вычитание":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x - y));break
+                elif encalc == "умножение":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x * y));break
+                elif encalc == "степень":
+                    print("Вот твой результат, " + calc.name + ":{}".format(x ** y));break
+                elif encalc == "деление":
+                    if x or y == 0:
+                        print("Оставь вселенную в покое");break
+                    else:
+                        print("Вот твой результат, " + calc.name + ": {}".format(x / y));break
+                elif encalc == "корень":
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)));break
+                elif encalc == "синус":
+                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)));break
+                elif encalc == "косинус":
+                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)));break
+                elif encalc == "выход":
+                    print("Выходим")
+                    time.sleep(0.5)
+                    break
 
     def profile(self):
         print("""Ваше имя: {}
@@ -215,7 +222,7 @@ class Main():
             print("""Напишите \"Работать\", чтобы работать
 \"Выход\", чтобы выйти""")
             jobtest = input()
-            if jobtest.lower() == "работать".lower():
+            if jobtest.lower() == "работать":
                 if self.lvl == 0:
                     self.money = self.money + randomorgmain(1, 5)
                     print("Ваш баланс {}".format(self.money))
@@ -232,6 +239,53 @@ class Main():
                 break
             else:
                 print("шо?")
+    def bomb(self):
+        print("""В этой игре вам нужно угадать верный провод для того чтобы разминировать бомбу
+Есть 4 провода:
+З - зеленый
+Ж - желтый
+К - красный
+О - оранжевый
+Вы должны сделать ставку
+Минимум - 50$""")
+        while True:
+            print("Продолжить? Да/Нет")
+            bombyes = input("")
+            bombyes = bombyes.lower()
+            if bombyes == "да":
+                try:
+                    stavka = int(input("Ставка: "))
+                    if stavka < 50:
+                        print("Минимум 50$!")
+                        continue
+                    if stavka > self.money:
+                        print("Меньше!")
+                        continue
+                except ValueError:
+                    print("Число!")
+                    continue
+                print("""Ваша ставка: {}
+Если вы выйграете +{}$
+Если проиграете -{}$""".format(stavka, stavka * 2, stavka))
+                provod = ["з", "ж", "к", "о"]
+                randomprovod = random.choice(provod)
+                choiceprovod = input("Выберите провод: ")
+                choiceprovod = choiceprovod.lower()
+                if not all([choiceprovod in provod]):
+                    print("Напишите букву провода!")
+                    continue
+                elif choiceprovod == "з" or "ж" or "к" or "о":
+                    if choiceprovod == randomprovod:
+                        print("Вы угадали! +{}$".format(stavka * 2))
+                        self.money = self.money + stavka * 2
+                    else:
+                        print("Вы проиграли! -{}$".format(stavka))
+                        self.money = self.money - stavka
+            elif bombyes == "нет":
+                break
+            else:
+                print("шо?")
+                continue
     def levelup(self):
         while True:
             print("""Тут ты можешь повысить свой уровень!
@@ -271,7 +325,7 @@ class Main():
                         self.lvl = 3
                     else:
                         print("Недостаточно xp!")
-            elif lvbuy.lower() == "Выход".lower():
+            elif lvbuy.lower() == "выход":
                 break
             else:
                 print("шо?")
@@ -292,19 +346,19 @@ class Main():
                     print("Числа: {}, {}, {}".format(first, second, third))
                     if first == second and first != third:
                         self.money = self.money + 500
-                        print("Два числа совпало! +500$")
+                        print("Два числа совпали! +500$")
                         print("Ваш баланс {}".format(self.money))
                     elif first == third and second != third:
                         self.money = self.money + 500
-                        print("Два числа совпало! +500$")
+                        print("Два числа совпали! +500$")
                         print("Ваш баланс {}".format(self.money))
                     elif second == third and first != second:
                         self.money = self.money + 500
-                        print("Два числа совпало! +500$")
+                        print("Два числа совпали! +500$")
                         print("Ваш баланс {}".format(self.money))
                     elif first == second == third:
                         self.money = self.money + 2500
-                        print("Три числа совпало! +2500$")
+                        print("Три числа совпали! +2500$")
                         print("Ваш баланс {}".format(self.money))
                     else:
                         print("Вы проиграли D:")
@@ -430,7 +484,7 @@ class Main():
                         self.money = self.money -1000
                     else:
                         print("Недостаточно денег!")
-            elif buy.lower() == "Выход".lower():
+            elif buy.lower() == "выход":
                 break
             else:
                 print("Не понимаю!")
@@ -475,7 +529,7 @@ def delete():
             print("Удаление...")
             time.sleep(0.5)
             sys.exit()
-        elif yesorno.lower() == "Нет".lower():
+        elif yesorno.lower() == "нет":
             print("Ну и зачем ты тогда сюда заходил?")
             break
         else:
@@ -488,7 +542,10 @@ def exit():
         stat["калк"] = calc
     sys.exit()
 #фихня нужная для запоминания имени
-memory = os.path.isfile("log")
+if platform == "win32":
+    memory = os.path.isfile("log.dat")
+else:
+    memory = os.path.isfile("log")
 if memory:
     with shelve.open("log") as stat:
         calc = stat["калк"]
@@ -499,6 +556,8 @@ if memory == False:
     calc = Main(name=calc.name, age=calc.age)
     with shelve.open("log") as stat:
         stat["калк"] = calc
+    print(calc.name + ", наш агент фсб уже выслан к вам \n")
+#начало хы
 def lobby():
     #начало хы
     helpme = """Функции этой прекрасной программы:
@@ -515,6 +574,7 @@ def lobby():
             10) Погода
             11) Курс
             12) Хелп
+            13) Бомба
             (все данные сохраняются только при написании команды "Выход"!) """
     try:
         print("Ладно, начнем-с")
@@ -526,6 +586,7 @@ def lobby():
             enter = enter.lower()
             args1 = None
             args2 = None
+            args3 = None
             uberargs = None
             if not enter:
                 continue
@@ -533,9 +594,10 @@ def lobby():
                 if enter.split()[1]:
                     args1 = enter.split()[1]
                     args2 = enter.split()[2]
+                    args3 = enter.split()[3]
             except IndexError: None
-            if enter == "калькулятор":
-                calc.calcc()
+            if enter.split()[0] == "калькулятор":
+                calc.calcc(args1, args2, args3)
             elif enter.split()[0] == "шансы":
                 calc.chance(args1)
             elif enter == "дата":
@@ -566,6 +628,8 @@ def lobby():
                 print(helpme)
             elif enter == "майнкрафт":
                 calc.secret()
+            elif enter == "бомба":
+                calc.bomb()
             elif enter == "выход":
                 exit()
             else:
