@@ -554,7 +554,6 @@ if memory == False:
     with shelve.open("log") as stat:
         stat["калк"] = calc
     print(calc.name + ", наш агент фсб уже выслан к вам \n")
-#начало хы
 def lobby():
     #начало хы
     helpme = """Функции этой прекрасной программы:
