@@ -1,4 +1,4 @@
-# импорт всего шо надо
+#импорт всего шо надо
 import math, time, re, shelve, sys, random, os.path, json
 from sys import platform
 try:
