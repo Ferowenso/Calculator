@@ -155,8 +155,7 @@ class Main():
             Скорость ветра: {}м/с""".format(qr, w, temp, vlaga, wind))
             self.xp = self.xp + random.randint(1, 10)
             break
-    def calcc(self, x=None, y=None, entercalc=None):
-        print("Ты запустил калькулятор")
+    def calcc(self, x=None, entercalc=None, y=None):
         while True:
             try:
                 if x and y:
@@ -164,10 +163,9 @@ class Main():
                 else:
                     x = int(input("Первое значение: "))
                     y = int(input("Второе значение: "))
-                    self.vidachaxp()
             except ValueError:
                 print("Цифорками!")
-                continue
+                x = None; y = None
             else:
                 if entercalc:
                     encalc = entercalc
@@ -184,29 +182,27 @@ class Main():
 • Выход
 """)
                     encalc = encalc.lower()
-                if encalc == "сложение":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x + y));break
-                elif encalc == "вычитание":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x - y));break
-                elif encalc == "умножение":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x * y));break
-                elif encalc == "степень":
-                    print("Вот твой результат, " + calc.name + ":{}".format(x ** y));break
-                elif encalc == "деление":
-                    if x or y == 0:
-                        print("Оставь вселенную в покое");break
-                    else:
-                        print("Вот твой результат, " + calc.name + ": {}".format(x / y));break
+                if encalc == "+":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x + y))
+                elif encalc == "-":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x - y))
+                elif encalc == "*":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x * y))
+                elif encalc == "**":
+                    print("Вот твой результат, " + calc.name + ": {}".format(x ** y))
+                elif encalc == "/":
+                    try:
+                        print("Вот твой результат, " + calc.name + ": {}".format(x / y))
+                    except ZeroDivisionError:
+                        print("КАК ТЕБЕ УДАЛОСЬ ЭТО СДЕЛАТЬ? ПОЧЕМУ ЛЮДИ УМИРАЮТ")
+                        break
                 elif encalc == "корень":
-                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)));break
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
                 elif encalc == "синус":
-                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)));break
+                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sin(x), math.sin(y)))
                 elif encalc == "косинус":
-                    print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)));break
-                elif encalc == "выход":
-                    print("Выходим")
-                    time.sleep(0.5)
-                    break
+                    print("Вот твой результат, " + calc.name + " :{} и {}".format(math.cos(x), math.cos(y)))
+            break
 
     def profile(self):
         print("""Ваше имя: {}
