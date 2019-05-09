@@ -82,10 +82,22 @@ class Main():
         year = randomorgmain(2019, 3000)
         print("Дата {}: {}.{}.{}".format(event, day, moth, year))
         self.xp = self.xp + random.randint(1, 10)
+    def translit(self, text):
+        apikey = "trnsl.1.1.20190508T201810Z.385ebfa1e596baa0.90672cf8655555b1b51ced31b03c2e8bb9bde46c"
+        url = "https://translate.yandex.net/api/v1.5/tr.json/translate"
+        params = {"key": apikey,
+                "text":text,
+                "lang":"ru-en"}
+        r = requests.get(url, params=params)
+        encode = r.json()
+        return encode["text"][0]
 
-    def chance(self):
+    def chance(self, argevent):
         print("Тут ты можешь узнать вероятность какого-либо события")
-        event = input("Событие: ")
+        if argevent:
+           event = argevent
+        else:
+            event = input("Событие: ")
         test = randomorgmain(0, 100)
         print("Шанс {} {}%" .format(event, test))
         self.xp = self.xp + random.randint(1, 10)
@@ -107,46 +119,42 @@ class Main():
         print("Рубль: {}₽, доллар: {}$" .format(rub, usd))
         self.xp = self.xp + random.randint(1, 10)
 
-    def weather(self):
+    def weather(self, qr=None):
         while True:
-            print("Введите \'Продолжить\' или \'Выход\'")
-            ent = input("")
-            if ent.lower() == "Продолжить".lower():
-                apiurl = "http://api.openweathermap.org/data/2.5/find"
-                print("Введите название города на английском")
-                q = input("")
-                q = q.lower()
-                appid = '22c7bf8e593c47b0cf88f390e8e5376a'
-                params = {
-                        'q': q,
-                        'appid': appid,
-                        'units': 'metric',
-                        'lang': 'ru'
-                }
-                try:
-                    r = requests.get(apiurl, params=params, timeout=5)
-                    encode = r.json()
-                except:
-                    print("Чота у вас с инетом или еще какие-то проблемы, мы тут ничо сделать не можем")
-                    sys.exit()
-                try:
-                    w = encode['list'][0]['weather'][0]['description']
-                    temp = encode["list"][0]["main"]["temp"]
-                    vlaga = encode["list"][0]["main"]["humidity"]
-                    wind = encode["list"][0]["wind"]["speed"]
-                except:
-                    print("что ты черт побери такое несешь? нет такого города")
-                    continue
-                print("""Город: {}
-                Погода: {}
-                Температура: {}°
-                Влажность: {}
-                Скорость ветра: {}м/с""".format(q, w, temp, vlaga, wind))
-                self.xp = self.xp + random.randint(1, 10)
-            elif ent.lower() == "выход":
+            apiurl = "http://api.openweathermap.org/data/2.5/find"
+            if not qr:
+                print("Введите название города")
+                qr = input("город: ")
+            qr = qr.lower()
+            q = self.translit(qr)
+            appid = '22c7bf8e593c47b0cf88f390e8e5376a'
+            params = {
+                    'q': q,
+                    'appid': appid,
+                    'units': 'metric',
+                    'lang': 'ru'
+            }
+            try:
+                r = requests.get(apiurl, params=params, timeout=5)
+                encode = r.json()
+            except:
+                print("Чота у вас с инетом или еще какие-то проблемы, мы тут ничо сделать не можем")
+                sys.exit()
+            try:
+                w = encode['list'][0]['weather'][0]['description']
+                temp = encode["list"][0]["main"]["temp"]
+                vlaga = encode["list"][0]["main"]["humidity"]
+                wind = encode["list"][0]["wind"]["speed"]
+            except:
+                print("что ты черт побери такое несешь? нет такого города")
                 break
-            else:
-                print("шо?")
+            print("""Город: {}
+            Погода: {}
+            Температура: {}°
+            Влажность: {}
+            Скорость ветра: {}м/с""".format(qr, w, temp, vlaga, wind))
+            self.xp = self.xp + random.randint(1, 10)
+            break
     def calcc(self):
         print("Ты запустил калькулятор")
         while True:
@@ -168,26 +176,27 @@ class Main():
 • Косинус
 • Выход
 """)
-            if encalc.lower() == "сложение":
+            encalc = encalc.lower()
+            if encalc == "сложение":
                 print("Вот твой результат, " + calc.name + ":{}".format(x + y))
-            elif encalc.lower() == "Вычитание".lower():
+            elif encalc == "вычитание":
                 print("Вот твой результат, " + calc.name + ":{}".format(x - y))
-            elif encalc.lower() == "Умножение".lower():
+            elif encalc == "умножение":
                 print("Вот твой результат, " + calc.name + ":{}".format(x * y))
-            elif encalc.lower() == "Степень".lower():
+            elif encalc == "степень":
                 print("Вот твой результат, " + calc.name + ":{}".format(x ** y))
-            elif encalc.lower() == "Деление".lower():
+            elif encalc == "деление":
                 if x or y == 0:
                     print("Оставь вселенную в покое")
                 else:
                     print("Вот твой результат, " + calc.name + ": {}".format(x / y))
-            elif encalc.lower() == "Корень".lower():
+            elif encalc == "корень":
                 print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
-            elif encalc.lower() == "Синус".lower():
+            elif encalc == "синус":
                 print("Вот твой результат, " + calc.name + ":{} и {}".format(math.sin(x), math.sin(y)))
-            elif encalc.lower() == "Косинус".lower():
+            elif encalc == "косинус":
                 print("Вот твой результат, " + calc.name + ":{} и {}".format(math.cos(x), math.cos(y)))
-            elif encalc.lower() == "Выход".lower():
+            elif encalc == "выход":
                 print("Выходим")
                 time.sleep(0.5)
                 break
@@ -305,53 +314,6 @@ class Main():
                 break
             else:
                 print("шо?")
-        def bomb(self):
-        print("""В этой игре вам нужно угадать верный провод для того чтобы разминировать бомбу
-Есть 4 провода:
-З - зеленый
-Ж - желтый
-К - красный
-О - оранжевый 
-Вы должны сделать ставку
-Минимум - 50$""")
-        while True:
-            print("Продолжить? Да/Нет")
-            bombyes = input("")
-            bombyes = bombyes.lower()
-            if bombyes == "да": 
-                try:
-                    stavka = int(input("Ставка: "))
-                    if stavka < 50:
-                        print("Минимум 50$!")
-                        continue
-                    if stavka > self.money:
-                        print("Меньше!")
-                        continue
-                except ValueError:
-                    print("Число!")
-                    continue
-                print("""Ваша ставка: {}
-Если вы выйграете +{}$
-Если проиграете -{}$""".format(stavka, stavka * 2, stavka))
-                provod = ["з", "ж", "к", "о"]
-                randomprovod = random.choice(provod)
-                choiceprovod = input("Выберите провод: ")
-                choiceprovod = choiceprovod.lower()
-                if not all([choiceprovod in provod]):
-                    print("Напишите букву провода!")
-                    continue
-                elif choiceprovod == "з" or "ж" or "к" or "о":
-                    if choiceprovod == randomprovod:
-                        print("Вы угадали! +{}$".format(stavka * 2))
-                        self.money = self.money + stavka * 2
-                    else:
-                        print("Вы проиграли! -{}$".format(stavka))
-                        self.money = self.money - stavka
-            elif bombyes == "нет":
-                break
-            else:
-                print("шо?")
-                continue
     def secret(self):
         self.money = self.money + 99999
 
@@ -553,7 +515,6 @@ def lobby():
             10) Погода
             11) Курс
             12) Хелп
-            13) Бомба
             (все данные сохраняются только при написании команды "Выход"!) """
     try:
         print("Ладно, начнем-с")
@@ -561,17 +522,22 @@ def lobby():
 
         time.sleep(0.5)
         while True:
-            enter = input("{}, введи что тебе нужно: ".format(calc.name))
+            enter = input("{}, ваш запрос: ".format(calc.name))
             enter = enter.lower()
+            args1 = None
+            args2 = None
+            uberargs = None
+            if not enter:
+                continue
             try:
                 if enter.split()[1]:
                     args1 = enter.split()[1]
                     args2 = enter.split()[2]
-            except IndexError: args1 = None; args2 = None
+            except IndexError: None
             if enter == "калькулятор":
                 calc.calcc()
-            elif enter == "шансы":
-                calc.chance()
+            elif enter.split()[0] == "шансы":
+                calc.chance(args1)
             elif enter == "дата":
                 calc.date()
             elif enter == "удалить данные":
@@ -588,8 +554,8 @@ def lobby():
                 calc.shopping()
             elif enter == "уровень":
                 calc.levelup()
-            elif enter == "погода":
-                calc.weather()
+            elif enter.split()[0] == "погода":
+                calc.weather(args1)
             elif enter == "курс":
                 calc.valute()
             elif enter == "удача":
@@ -602,8 +568,6 @@ def lobby():
                 calc.secret()
             elif enter == "выход":
                 exit()
-            elif enter == "бомба":
-                calc.bomb()
             else:
                 print("Не понимаю!")
 
