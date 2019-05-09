@@ -146,7 +146,7 @@ class Main():
                 vlaga = encode["list"][0]["main"]["humidity"]
                 wind = encode["list"][0]["wind"]["speed"]
             except:
-                print("что ты черт побери такое несешь? нет такого города")
+                print("что ты черт побери такое несешь? нет такого города, попробуй ввести на английском")
                 break
             print("""Город: {}
             Погода: {}
@@ -238,14 +238,14 @@ class Main():
 З - зеленый
 Ж - желтый
 К - красный
-О - оранжевый 
+О - оранжевый
 Вы должны сделать ставку
 Минимум - 50$""")
         while True:
             print("Продолжить? Да/Нет")
             bombyes = input("")
             bombyes = bombyes.lower()
-            if bombyes == "да": 
+            if bombyes == "да":
                 try:
                     stavka = int(input("Ставка: "))
                     if stavka < 50:
