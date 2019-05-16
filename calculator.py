@@ -607,9 +607,9 @@ def lobby():
             args2 = None
             args3 = None
             uberargs = None
-            zapros = enter.split()[0]
             if not enter:
                 continue
+            zapros = enter.split()[0]
             try:
                 if enter.split()[1]:
                     args1 = enter.split()[1]
