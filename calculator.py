@@ -78,6 +78,15 @@ class Main():
                 print("Нужны числа!")
                 break
 
+    def orelireshka(self):
+        print("Подбрасываем монетку..")
+        random = randomorgmain(0, 2)
+        if random == 0:
+            print("Орел")
+        elif random == 1:
+            print("Решка")
+        else:
+            print("Карась")
     def date(self, event=None):
         print("Тут ты можешь узнать дату какого-либо события")
         if not event:
@@ -654,6 +663,8 @@ def lobby():
                 exit()
             elif zapros == "префикс":
                 calc.prefix(args1)
+            elif zapros == "монета":
+                calc.orelireshka()
             else:
                 print("Не понимаю!")
 
