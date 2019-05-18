@@ -193,25 +193,26 @@ class Main():
 """)
                     encalc = encalc.lower()
                 if encalc == "+":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x + y));calc.vidachaxp()
+                    print("Вот твой результат, " + self.name + ": {}".format(x + y))
                 elif encalc == "-":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x - y));calc.vidachaxp()
+                    print("Вот твой результат, " + self.name + ": {}".format(x - y))
                 elif encalc == "*":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x * y));calc.vidachaxp()
+                    print("Вот твой результат, " + self.name + ": {}".format(x * y))
                 elif encalc == "**":
-                    print("Вот твой результат, " + calc.name + ": {}".format(x ** y));calc.vidachaxp()
+                    print("Вот твой результат, " + self.name + ": {}".format(x ** y))
                 elif encalc == "/":
                     try:
-                        print("Вот твой результат, " + calc.name + ": {}".format(x / y));calc.vidachaxp()
+                        print("Вот твой результат, " + self.name + ": {}".format(x / y))
                     except ZeroDivisionError:
                         print("КАК ТЕБЕ УДАЛОСЬ ЭТО СДЕЛАТЬ? ПОЧЕМУ ЛЮДИ УМИРАЮТ")
                         break
                 elif encalc == "корень":
-                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)));calc.vidachaxp()
+                    print("Вот твой результат, " + self.name + ": {} и {}".format(math.sqrt(x), math.sqrt(y)))
                 elif encalc == "синус":
-                    print("Вот твой результат, " + calc.name + ": {} и {}".format(math.sin(x), math.sin(y)));calc.vidachaxp()
+                    print("Вот твой результат, " + self.name + ": {} и {}".format(math.sin(x), math.sin(y)))
                 elif encalc == "косинус":
-                    print("Вот твой результат, " + calc.name + " :{} и {}".format(math.cos(x), math.cos(y)));calc.vidachaxp()
+                    print("Вот твой результат, " + self.name + " :{} и {}".format(math.cos(x), math.cos(y)))
+            self.vidachaxp()
             break
 
     def profile(self):
@@ -565,23 +566,8 @@ def exit():
     with shelve.open("log") as stat:
         stat["калк"] = calc
     sys.exit()
-#фихня нужная для запоминания имени
-if platform == "win32":
-    memory = os.path.isfile("log.dat")
-else:
-    memory = os.path.isfile("log")
-if memory:
-    with shelve.open("log") as stat:
-        calc = stat["калк"]
-        print("Здравствуй, {}".format(calc.name))
-if memory == False:
-    calc = Main()
-    calc.login()
-    calc = Main(name=calc.name, age=calc.age)
-    with shelve.open("log") as stat:
-        stat["калк"] = calc
-    print(calc.name + ", наш агент фсб уже выслан к вам \n")
-def lobby():
+
+def lobby(calc):
     #начало хы
     helpme = """Функции этой прекрасной программы:
             0) Очистить
@@ -670,4 +656,22 @@ def lobby():
         with shelve.open("log") as stat:
             stat["калк"] = calc
         sys.exit()
-lobby()
+#фихня нужная для запоминания имени
+def run():
+    if platform == "win32":
+        memory = os.path.isfile("log.dat")
+    else:
+        memory = os.path.isfile("log")
+    if memory:
+        with shelve.open("log") as stat:
+            calc = stat["калк"]
+            print("Здравствуй, {}".format(calc.name))
+    if memory == False:
+        calc = Main()
+        calc.login()
+        calc = Main(name=calc.name, age=calc.age)
+        with shelve.open("log") as stat:
+            stat["калк"] = calc
+        print(calc.name + ", наш агент фсб уже выслан к вам \n")
+    lobby(calc)
+run()
