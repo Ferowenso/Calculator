@@ -1,7 +1,3 @@
-# во
-# славу
-# сатане
-# тест
 # импорт всего шо надо
 import math, time, re, shelve, sys, random, os.path, json
 from sys import platform
@@ -669,7 +665,7 @@ def lobby():
                 print("Не понимаю!")
 
 #выход через ctrl+c
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         print("Выходим")
         with shelve.open("log") as stat:
             stat["калк"] = calc
