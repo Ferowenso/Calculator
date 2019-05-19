@@ -535,7 +535,7 @@ def randomorgmain(random1, random2):
     return rrandom
 
 def clrclear():
-    if sys.platrom == "win32":
+    if sys.platform == "win32":
         os.system("cls")
     else:
         os.system("clear")
@@ -544,7 +544,7 @@ def delete():
     while True:
         yesorno = input("Да или Нет: ")
         if yesorno.lower() == "да":
-            if sys.platrom == "win32":
+            if sys.platform == "win32":
                 os.remove("log.dat")
                 os.remove("log.bak")
                 os.remove("log.dir")
@@ -657,7 +657,7 @@ def lobby(calc):
         sys.exit()
 #фихня нужная для запоминания имени
 def run():
-    if sys.platrom == "win32":
+    if sys.platform == "win32":
         memory = os.path.isfile("log.dat")
     else:
         memory = os.path.isfile("log")
