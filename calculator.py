@@ -1,6 +1,5 @@
 # импорт всего шо надо
 import math, time, re, shelve, sys, random, os.path, json
-from sys import platform
 try:
     import requests
 except ModuleNotFoundError:
@@ -536,7 +535,7 @@ def randomorgmain(random1, random2):
     return rrandom
 
 def clrclear():
-    if platform == "win32":
+    if sys.platrom == "win32":
         os.system("cls")
     else:
         os.system("clear")
@@ -545,7 +544,7 @@ def delete():
     while True:
         yesorno = input("Да или Нет: ")
         if yesorno.lower() == "да":
-            if platform == "win32":
+            if sys.platrom == "win32":
                 os.remove("log.dat")
                 os.remove("log.bak")
                 os.remove("log.dir")
@@ -658,7 +657,7 @@ def lobby(calc):
         sys.exit()
 #фихня нужная для запоминания имени
 def run():
-    if platform == "win32":
+    if sys.platrom == "win32":
         memory = os.path.isfile("log.dat")
     else:
         memory = os.path.isfile("log")
