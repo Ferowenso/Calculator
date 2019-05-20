@@ -1,4 +1,4 @@
-# импорт всего шо надо
+#!/usr/bin/env python
 import math, time, re, shelve, sys, random, os.path, json
 try:
     import requests
