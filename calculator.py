@@ -596,15 +596,13 @@ def lobby(calc):
             args1 = None
             args2 = None
             args3 = None
-            uberargs = None
             if not enter:
                 continue
             zapros = enter.split()[0]
             try:
-                if enter.split()[1]:
-                    args1 = enter.split()[1]
-                    args2 = enter.split()[2]
-                    args3 = enter.split()[3]
+                args1 = enter.split()[1]
+                args2 = enter.split()[2]
+                args3 = enter.split()[3]
             except IndexError: None
             if zapros == "калькулятор":
                 calc.calcc(args1, args2, args3)
