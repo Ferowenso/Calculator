@@ -40,7 +40,7 @@ class Main():
                 break
             else:
                 print("Я спросил имя!")
-        time.sleep(0.5)
+        time.sleep(setting["timesleep"])
         print("А сколько же тебе лет?")
         while 1:
             try:
@@ -551,7 +551,7 @@ def delete():
             else:
                 os.remove("log")
             print("Удаление...")
-            time.sleep(0.5)
+            time.sleep(setting["timesleep"])
             sys.exit()
         elif yesorno.lower() == "нет":
             print("Ну и зачем ты тогда сюда заходил?")
@@ -561,7 +561,7 @@ def delete():
             continue
 def exit():
     print("Выходим")
-    time.sleep(0.5)
+    time.sleep(setting["timesleep"])
     with shelve.open("log") as stat:
         stat["калк"] = calc
     sys.exit()
@@ -589,7 +589,7 @@ def lobby(calc):
         print("Ладно, начнем-с")
         print(helpme)
 
-        time.sleep(0.5)
+        time.sleep(setting["timesleep"])
         while True:
             enter = input("{}, ваш запрос: ".format(calc.name))
             enter = enter.lower()
@@ -655,6 +655,7 @@ def lobby(calc):
         sys.exit()
 #фихня нужная для запоминания имени
 def run():
+    global setting
     if sys.platform == "win32":
         memory = os.path.isfile("log.dat")
     else:
@@ -663,12 +664,17 @@ def run():
         with shelve.open("log") as stat:
             calc = stat["калк"]
             print("Здравствуй, {}".format(calc.name))
+        with open("log.json", "r") as stat:
+            setting = json.load(stat)
     if memory == False:
         calc = Main()
+        setting = {"timesleep": 1}
+        with open("log.json", "w") as stat:
+            json.dump(setting, stat)
         calc.login()
         calc = Main(name=calc.name, age=calc.age)
         with shelve.open("log") as stat:
             stat["калк"] = calc
-        print(calc.name + ", наш агент фсб уже выслан к вам \n")
+        print(calc.name + ", наш агент фсб уже выслан к вам ")
     lobby(calc)
 run()
