@@ -582,7 +582,7 @@ def editsetting():
                 print("цыфорками!")
                 continue
 
-def lobby(calc):
+def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
     #начало хы
     helpme = """Функции этой прекрасной программы:
             0) Очистить
@@ -604,32 +604,33 @@ def lobby(calc):
             16) Конфиг
             (все данные сохраняются только при написании команды "Выход"!) """
     try:
-        print("Ладно, начнем-с")
-        time.sleep(setting["timesleep"])
-        print(helpme)
+        if not zapros:
+            print("Здравствуй," , calc.name)
+            print("Ладно, начнем-с")
+            time.sleep(setting["timesleep"])
+            print(helpme)
 
         while True:
-            enter = input("{}, ваш запрос: ".format(calc.name))
-            enter = enter.lower()
-            args1 = None
-            args2 = None
-            args3 = None
-            if not enter:
-                continue
-            zapros = enter.split()[0]
-            try:
-                args1 = enter.split()[1]
-                args2 = enter.split()[2]
-                args3 = enter.split()[3]
-            except IndexError: None
+            if zapros == None:
+                enter = input("{}, ваш запрос: ".format(calc.name))
+                enter = enter.lower()
+                args1 = None
+                args2 = None
+                args3 = None
+                if not enter:
+                    continue
+                zapros = enter.split()[0]
+                try:
+                    args1 = enter.split()[1]
+                    args2 = enter.split()[2]
+                    args3 = enter.split()[3]
+                except IndexError: None
             if zapros == "калькулятор":
                 calc.calcc(args1, args2, args3)
-            elif enter.split()[0] == "шансы":
+            elif zapros == "шансы":
                 calc.chance(args1)
             elif zapros == "дата":
                 calc.date(args1)
-            elif enter == "удалить данные":
-                delete()
             elif zapros == "число":
                 calc.randomn(args1, args2)
             elif zapros == "удалить данные":
@@ -666,6 +667,9 @@ def lobby(calc):
                 editsetting()
             else:
                 print("Не понимаю!")
+            zapros = None
+            if argvtest:
+                sys.exit()
 
 #выход через ctrl+c
     except (KeyboardInterrupt, EOFError):
@@ -684,9 +688,21 @@ def run():
     if all([memory, jsontest]):
         with shelve.open("log") as stat:
             calc = stat["калк"]
-            print("Здравствуй, {}".format(calc.name))
         with open("log.json", "r") as stat:
             setting = json.load(stat)
+        key = None
+        args1= None
+        args2 = None
+        args3 = None
+        argvtest = False
+        try:
+            key = sys.argv[1]
+            args1 = sys.argv[2]
+            args2 = sys.argv[3]
+            args3 = sys.argv[4]
+        except IndexError: None
+        if key == os.path.basename(__file__):
+            key = None
     else:
         calc = Main()
         setting = {"timesleep": 1}
@@ -697,5 +713,20 @@ def run():
         with shelve.open("log") as stat:
             stat["калк"] = calc
         print(calc.name + ", наш агент фсб уже выслан к вам ")
-    lobby(calc)
+    key = None
+    args1= None
+    args2 = None
+    args3 = None
+    argvtest = False
+    try:
+        key = sys.argv[1]
+        args1 = sys.argv[2]
+        args2 = sys.argv[3]
+        args3 = sys.argv[4]
+    except IndexError: None
+    if key == os.path.basename(__file__):
+        key = None
+    if key:
+        argvtest = True
+    lobby(calc, key, args1, args2, args3, argvtest)
 run()
