@@ -680,13 +680,14 @@ def run():
         memory = os.path.isfile("log.dat")
     else:
         memory = os.path.isfile("log")
-    if memory:
+    jsontest = os.path.isfile("log.json")
+    if all([memory, jsontest]):
         with shelve.open("log") as stat:
             calc = stat["калк"]
             print("Здравствуй, {}".format(calc.name))
         with open("log.json", "r") as stat:
             setting = json.load(stat)
-    if memory == False:
+    if all([memory, jsontest]) == False:
         calc = Main()
         setting = {"timesleep": 1}
         with open("log.json", "w") as stat:
