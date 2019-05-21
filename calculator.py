@@ -571,7 +571,7 @@ def editsetting():
         edit = input("Чтобы изменить задержку - напишите 1: ")
         if edit == "1":
             try:
-                test  = int(input("введите новое значение: "))
+                test  = float(input("введите новое значение: "))
                 if not test:
                     continue
                 setting["timesleep"] = test
