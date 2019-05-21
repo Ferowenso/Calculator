@@ -687,7 +687,7 @@ def run():
             print("Здравствуй, {}".format(calc.name))
         with open("log.json", "r") as stat:
             setting = json.load(stat)
-    if all([memory, jsontest]) == False:
+    else:
         calc = Main()
         setting = {"timesleep": 1}
         with open("log.json", "w") as stat:
