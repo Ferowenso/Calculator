@@ -566,6 +566,22 @@ def exit():
         stat["калк"] = calc
     sys.exit()
 
+def editsetting():
+    while 1:
+        edit = input("Чтобы изменить задержку - напишите 1: ")
+        if edit == "1":
+            try:
+                test  = int(input("введите новое значение: "))
+                if not test:
+                    continue
+                setting["timesleep"] = test
+                with open("log.json", "w") as stat:
+                    json.dump(setting, stat)
+                break
+            except ValueError:
+                print("цыфорками!")
+                continue
+
 def lobby(calc):
     #начало хы
     helpme = """Функции этой прекрасной программы:
@@ -584,12 +600,14 @@ def lobby(calc):
             12) Хелп
             13) Бомба
             14) Префикс
+            15) Монета
+            16) Конфиг
             (все данные сохраняются только при написании команды "Выход"!) """
     try:
         print("Ладно, начнем-с")
+        time.sleep(setting["timesleep"])
         print(helpme)
 
-        time.sleep(setting["timesleep"])
         while True:
             enter = input("{}, ваш запрос: ".format(calc.name))
             enter = enter.lower()
@@ -644,6 +662,8 @@ def lobby(calc):
                 calc.prefix(args1)
             elif zapros == "монета":
                 calc.orelireshka()
+            elif zapros == "конфиг":
+                editsetting()
             else:
                 print("Не понимаю!")
 
