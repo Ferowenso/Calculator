@@ -14,7 +14,7 @@
 
 Сделать это вы можете [тут](https://www.python.org/)
 
-После установки Python вам понадобиться requests
+После установки Python вам понадбится requests
 #### Windows
 * cmd: pip install requests
 #### Linux
