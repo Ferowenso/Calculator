@@ -690,19 +690,6 @@ def run():
             calc = stat["калк"]
         with open("log.json", "r") as stat:
             setting = json.load(stat)
-        key = None
-        args1= None
-        args2 = None
-        args3 = None
-        argvtest = False
-        try:
-            key = sys.argv[1]
-            args1 = sys.argv[2]
-            args2 = sys.argv[3]
-            args3 = sys.argv[4]
-        except IndexError: None
-        if key == os.path.basename(__file__):
-            key = None
     else:
         calc = Main()
         setting = {"timesleep": 1}
