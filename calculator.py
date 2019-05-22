@@ -667,7 +667,6 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
                 editsetting()
             else:
                 print("Не понимаю!")
-            zapros = None
             if argvtest:
                 sys.exit()
 
@@ -716,4 +715,5 @@ def run():
     if key:
         argvtest = True
     lobby(calc, key, args1, args2, args3, argvtest)
-run()
+if __name__ == "__main__":
+    run()
