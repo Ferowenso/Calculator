@@ -582,7 +582,7 @@ def editsetting():
                 print("цыфорками!")
                 continue
 
-def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
+def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None, logfile=None):
     #начало хы
     helpme = """Функции этой прекрасной программы:
             0) Очистить
@@ -673,16 +673,16 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
 #выход через ctrl+c
     except (KeyboardInterrupt, EOFError):
         print("Выходим")
-        with shelve.open("log") as stat:
+        with shelve.open(logfile) as stat:
             stat["калк"] = calc
         sys.exit()
 #фихня нужная для запоминания имени
 def run():
     global setting
     if sys.platform == "win32":
-        logfile = "C:/log"
-        jsonfile = "С:/log.json"
-        memory = os.path.isfile("C:/log.dat")
+        logfile = "log"
+        jsonfile = "log.json"
+        memory = os.path.isfile("log.dat")
     else:
         logfile = "/home/{}/log".format(getpass.getuser())
         jsonfile = "/home/{}/log.json".format(getpass.getuser())
@@ -718,6 +718,6 @@ def run():
         key = None
     if key:
         argvtest = True
-    lobby(calc, key, args1, args2, args3, argvtest)
+    lobby(calc, key, args1, args2, args3, argvtest, logfile)
 if __name__ == "__main__":
     run()
