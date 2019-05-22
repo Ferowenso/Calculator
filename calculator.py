@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import math, time, re, shelve, sys, random, os.path, json
+import math, time, re, shelve, sys, random, os.path, json, getpass
 try:
     import requests
 except ModuleNotFoundError:
@@ -680,23 +680,27 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
 def run():
     global setting
     if sys.platform == "win32":
-        memory = os.path.isfile("log.dat")
+        logfile = "C:/log"
+        jsonfile = "С:/log.json"
+        memory = os.path.isfile("C:/log.dat")
     else:
-        memory = os.path.isfile("log")
-    jsontest = os.path.isfile("log.json")
+        logfile = "/home/{}/log".format(getpass.getuser())
+        jsonfile = "/home/{}/log.json".format(getpass.getuser())
+        memory = os.path.isfile(logfile)
+    jsontest = os.path.isfile(jsonfile)
     if all([memory, jsontest]):
-        with shelve.open("log") as stat:
+        with shelve.open(logfile) as stat:
             calc = stat["калк"]
-        with open("log.json", "r") as stat:
+        with open(jsonfile, "r") as stat:
             setting = json.load(stat)
     else:
         calc = Main()
         setting = {"timesleep": 1}
-        with open("log.json", "w") as stat:
+        with open(jsonfile, "w") as stat:
             json.dump(setting, stat)
         calc.login()
         calc = Main(name=calc.name, age=calc.age)
-        with shelve.open("log") as stat:
+        with shelve.open(logfile) as stat:
             stat["калк"] = calc
         print(calc.name + ", наш агент фсб уже выслан к вам ")
     key = None
