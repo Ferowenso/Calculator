@@ -95,49 +95,6 @@ def bomb(self):
         else:
             print("шо?")
             continue
-def levelup(self):
-    while True:
-        print("""Тут ты можешь повысить свой уровень!
-1 Уровень - 75xp
-2 Уровень - 150xp
-3 Уровень - 300xp
-для повышения напишите цифру
-для выхода напишите \"Выход\"""")
-        lvbuy = input("")
-        if lvbuy == "1":
-            if self.lvl >= 1:
-                print("Ты не можешь этого сделать!")
-                continue
-            else:
-                if calc.xp >= 75:
-                    print("Вы апнули уровень до 1!")
-                    self.lvl = 1
-                else:
-                    print("Недостаточно xp!")
-        elif lvbuy == "2":
-            if self.lvl >= 2:
-                print("Ты не можешь этого сделать!")
-                continue
-            else:
-                if calc.xp >= 150:
-                    print("Вы апнули уровень до 2!")
-                    self.lvl = 2
-                else:
-                    print("Недостаточно xp!")
-        elif lvbuy == "3":
-            if self.lvl >= 3:
-                print("Ты не можешь этого сделать!")
-                continue
-            else:
-                if calc.xp >= 300:
-                    print("Вы апнули уровень до 3!")
-                    self.lvl = 3
-                else:
-                    print("Недостаточно xp!")
-        elif lvbuy.lower() == "выход":
-            break
-        else:
-            print("шо?")
 def luck(self):
     while True:
         print("""Это игра на удачу
@@ -298,3 +255,6 @@ def shopping(self):
         else:
             print("Не понимаю!")
 Main.profile = profile
+Main.shopping = shopping
+Main.jobmain = jobmain
+

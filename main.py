@@ -1,3 +1,4 @@
+import re, time, sys, json, requests, random
 class Main():
     def __init__(self, name=None, age=None, xp=0, money=0, lvl=0, items=[]):
         self.name = name
@@ -9,6 +10,27 @@ class Main():
 
     def __str__(self):
         return "Имя: {}, возраст: {}".format(calc.name, calc.age)
+
+    def randomorgmain(self, random1, random2):
+        url = "https://api.random.org/json-rpc/2/invoke"
+        mykey = "cb5861a7-60c0-4513-af5b-f8df81aa8e7e"
+        headers = {'content-type': 'application/json'}
+        data = {'jsonrpc':'2.0',
+            'method':'generateIntegers','params':
+            {'apiKey':mykey,
+            'n':1
+            ,'min':random1
+            ,'max':random2}
+            ,'id':24565}
+        params = json.dumps(data)
+        try:
+            r = requests.post(url, params, headers=headers, timeout=5)
+            encode = r.json()
+            rrandom = encode["result"]["random"]["data"][0]
+        except:
+            print("Рандом орг чота не работает или не может прислать рандом  в ответ. Мы тада используем программный")
+            rrandom = random.randint(random1, random2)
+        return rrandom
     def vidachaxp(self):
         if self.lvl == 0:
             self.xp = self.xp + random.randint(0, 5)
@@ -33,7 +55,7 @@ class Main():
                 break
             else:
                 print("Я спросил имя!")
-        time.sleep(setting["timesleep"])
+        time.sleep(1)
         print("А сколько же тебе лет?")
         while 1:
             try:
@@ -58,7 +80,7 @@ class Main():
                 else:
                     x = int(input("Первое число: "))
                     y = int(input("Второе число: "))
-                rand = randomorgmain(x, y)
+                rand = self.randomorgmain(x, y)
                 print("Число: {}".format(rand))
                 self.vidachaxp()
                 break
@@ -68,7 +90,7 @@ class Main():
 
     def orelireshka(self):
         print("Подбрасываем монетку..")
-        random = randomorgmain(0, 2)
+        random = self.randomorgmain(0, 2)
         if random == 0:
             print("Орел")
         elif random == 1:
@@ -79,9 +101,9 @@ class Main():
         print("Тут ты можешь узнать дату какого-либо события")
         if not event:
             event = input("Событие: ")
-        day = randomorgmain(0, 31)
-        moth = randomorgmain(1, 12)
-        year = randomorgmain(2019, 3000)
+        day = self.randomorgmain(0, 31)
+        moth = self.randomorgmain(1, 12)
+        year = self.randomorgmain(2019, 3000)
         print("Дата {}: {}.{}.{}".format(event, day, moth, year))
         self.xp = self.xp + random.randint(1, 10)
     def translit(self, text):
@@ -100,9 +122,72 @@ class Main():
            event = argevent
         else:
             event = input("Событие: ")
-        test = randomorgmain(0, 100)
+        test = self.randomorgmain(0, 100)
         print("Шанс {} {}%" .format(event, test))
         self.xp = self.xp + random.randint(1, 10)
+
+
+    def prefix(self, selfprefix):
+        while 1:
+            if self.lvl < 2:
+                print("Префикс доступен со второго уровня!")
+                break
+            else:
+                if selfprefix:
+                        self.name = selfprefix
+                        if not self.name:
+                            print("Ну и зачем мне пустой ответ, а?")
+                            continue
+                        break
+                else:
+                        self.name = input("Введите префикс: ")
+                        if not self.name:
+                            print("Ну и зачем мне пустой ответ, а?")
+                            continue
+                        break
+    def levelup(self):
+        while True:
+            print("""Тут ты можешь повысить свой уровень!
+    1 Уровень - 75xp
+    2 Уровень - 150xp
+    3 Уровень - 300xp
+    для повышения напишите цифру
+    для выхода напишите \"Выход\"""")
+            lvbuy = input("")
+            if lvbuy == "1":
+                if self.lvl >= 1:
+                    print("Ты не можешь этого сделать!")
+                    continue
+                else:
+                    if calc.xp >= 75:
+                        print("Вы апнули уровень до 1!")
+                        self.lvl = 1
+                    else:
+                        print("Недостаточно xp!")
+            elif lvbuy == "2":
+                if self.lvl >= 2:
+                    print("Ты не можешь этого сделать!")
+                    continue
+                else:
+                    if calc.xp >= 150:
+                        print("Вы апнули уровень до 2!")
+                        self.lvl = 2
+                    else:
+                        print("Недостаточно xp!")
+            elif lvbuy == "3":
+                if self.lvl >= 3:
+                    print("Ты не можешь этого сделать!")
+                    continue
+                else:
+                    if calc.xp >= 300:
+                        print("Вы апнули уровень до 3!")
+                        self.lvl = 3
+                    else:
+                        print("Недостаточно xp!")
+            elif lvbuy.lower() == "выход":
+                break
+            else:
+                print("шо?")
 
     def valute(self):
         api = "https://www.cbr-xml-daily.ru/daily_json.js"
@@ -207,301 +292,3 @@ class Main():
             self.vidachaxp()
             break
 
-    def profile(self):
-        print("""Ваше имя: {}
-Ваш возраст:{}
-Ваш баланс:{}$""".format(self.name, self.age, self.money))
-        print("Ваши предметы:")
-        for it in self.items:
-            print(" •" + it)
-        print("""Ваш опыт: {}xp
-Ваш уровень:{}  """.format(self.xp, self.lvl))
-    def jobmain(self):
-        while True:
-            print("""Напишите \"Работать\", чтобы работать
-\"Выход\", чтобы выйти""")
-            jobtest = input()
-            if jobtest.lower() == "работать":
-                if self.lvl == 0:
-                    self.money = self.money + randomorgmain(1, 5)
-                    print("Ваш баланс {}".format(self.money))
-                elif self.lvl == 1:
-                        self.money = self.money + randomorgmain(5, 30)
-                        print("Ваш баланс {}".format(self.money))
-                elif self.lvl == 2:
-                    self.money = self.money + randomorgmain(25, 55)
-                    print("Ваш баланс {}".format(self.money))
-                elif self.lvl == 3:
-                    self.money = self.money + randomorgmain(50, 90)
-                    print("Ваш баланс {}".format(self.money))
-            elif jobtest.lower() == "выход":
-                break
-            else:
-                print("шо?")
-    def prefix(self, selfprefix):
-        while 1:
-            if self.lvl < 2:
-                print("Префикс доступен со второго уровня!")
-                break
-            else:
-                if selfprefix:
-                        self.name = selfprefix
-                        if not self.name:
-                            print("Ну и зачем мне пустой ответ, а?")
-                            continue
-                        break
-                else:
-                        self.name = input("Введите префикс: ")
-                        if not self.name:
-                            print("Ну и зачем мне пустой ответ, а?")
-                            continue
-                        break
-    def bomb(self):
-        print("""В этой игре вам нужно угадать верный провод для того чтобы разминировать бомбу
-Есть 4 провода:
-З - зеленый
-Ж - желтый
-К - красный
-О - оранжевый
-Вы должны сделать ставку
-Минимум - 50$""")
-        while True:
-            print("Продолжить? Да/Нет")
-            bombyes = input("")
-            bombyes = bombyes.lower()
-            if bombyes == "да":
-                try:
-                    stavka = int(input("Ставка: "))
-                    if stavka < 50:
-                        print("Минимум 50$!")
-                        continue
-                    if stavka > self.money:
-                        print("Меньше!")
-                        continue
-                except ValueError:
-                    print("Число!")
-                    continue
-                print("""Ваша ставка: {}
-Если вы выйграете +{}$
-Если проиграете -{}$""".format(stavka, stavka * 2, stavka))
-                provod = ["з", "ж", "к", "о"]
-                randomprovod = random.choice(provod)
-                choiceprovod = input("Выберите провод: ")
-                choiceprovod = choiceprovod.lower()
-                if not all([choiceprovod in provod]):
-                    print("Напишите букву провода!")
-                    continue
-                elif choiceprovod == "з" or "ж" or "к" or "о":
-                    if choiceprovod == randomprovod:
-                        print("Вы угадали! +{}$".format(stavka * 2))
-                        self.money = self.money + stavka * 2
-                    else:
-                        print("Вы проиграли! -{}$".format(stavka))
-                        self.money = self.money - stavka
-            elif bombyes == "нет":
-                break
-            else:
-                print("шо?")
-                continue
-    def levelup(self):
-        while True:
-            print("""Тут ты можешь повысить свой уровень!
-1 Уровень - 75xp
-2 Уровень - 150xp
-3 Уровень - 300xp
-для повышения напишите цифру
-для выхода напишите \"Выход\"""")
-            lvbuy = input("")
-            if lvbuy == "1":
-                if self.lvl >= 1:
-                    print("Ты не можешь этого сделать!")
-                    continue
-                else:
-                    if calc.xp >= 75:
-                        print("Вы апнули уровень до 1!")
-                        self.lvl = 1
-                    else:
-                        print("Недостаточно xp!")
-            elif lvbuy == "2":
-                if self.lvl >= 2:
-                    print("Ты не можешь этого сделать!")
-                    continue
-                else:
-                    if calc.xp >= 150:
-                        print("Вы апнули уровень до 2!")
-                        self.lvl = 2
-                    else:
-                        print("Недостаточно xp!")
-            elif lvbuy == "3":
-                if self.lvl >= 3:
-                    print("Ты не можешь этого сделать!")
-                    continue
-                else:
-                    if calc.xp >= 300:
-                        print("Вы апнули уровень до 3!")
-                        self.lvl = 3
-                    else:
-                        print("Недостаточно xp!")
-            elif lvbuy.lower() == "выход":
-                break
-            else:
-                print("шо?")
-    def luck(self):
-        while True:
-            print("""Это игра на удачу
-1 игра - 100$
-Если 2 числа совпадут - +500$
-Если 3 числа совпадут - +2500$
-Вы хотите продолжить? Да/Нет""")
-            entcas = input("")
-            if entcas.lower() == "да":
-                if self.money >= 100:
-                    self.money = self.money -100
-                    first = randomorgmain(1, 9)
-                    second = randomorgmain(1, 9)
-                    third = randomorgmain(1, 9)
-                    print("Числа: {}, {}, {}".format(first, second, third))
-                    if first == second and first != third:
-                        self.money = self.money + 500
-                        print("Два числа совпали! +500$")
-                        print("Ваш баланс {}".format(self.money))
-                    elif first == third and second != third:
-                        self.money = self.money + 500
-                        print("Два числа совпали! +500$")
-                        print("Ваш баланс {}".format(self.money))
-                    elif second == third and first != second:
-                        self.money = self.money + 500
-                        print("Два числа совпали! +500$")
-                        print("Ваш баланс {}".format(self.money))
-                    elif first == second == third:
-                        self.money = self.money + 2500
-                        print("Три числа совпали! +2500$")
-                        print("Ваш баланс {}".format(self.money))
-                    else:
-                        print("Вы проиграли D:")
-                else:
-                    print("Недостаточно денег!")
-            elif entcas.lower() == "нет":
-                break
-            else:
-                print("шо?")
-    def secret(self):
-        self.money = self.money + 99999
-
-    def shopping(self):
-        while True:
-            print("""Для покупки напишите цифру:
-1) Шапка-ушанка - 10$
-2) Мерч Хесуса - 50$
-3) Электрогитара - 75$
-4) АААААААААААвтомобиль - 150$
-5) Ракета SpaceX - 500$
-6) Кошкодевочка от Tesla - 1500$
-7) Вейп Братишкина - 2250$
-8) Футболка \"КиШ\" - 300$
-9) ПК от ZyperPC - 1000$
-Напишите \"Выход\", чтобы выйти""")
-            buy = input("")
-            if buy == "1":
-                if "Шапка-ушанка" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 10:
-                        print("Вы купили Шапку-ушанку!")
-                        self.items.append("Шапка-ушанка")
-                        self.money = self.money - 10
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "2":
-                if "Мерч Хесуса" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 50:
-                        print("Вы купили Мерч Хесуса!")
-                        calc.items.append("Мерч Хесуса")
-                        self.money = self.money -50
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "3":
-                if "Электрогитара" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 75:
-                        print("Вы купили Электрогитару!")
-                        self.items.append("Электрогитара")
-                        self.money = self.money -75
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "4":
-                if "АААААААААААвтомобиль" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 150:
-                        print("Вы купили АААААААААААвтомобиль!")
-                        self.items.append("АААААААААААвтомобиль")
-                        self.money = self.money -150
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "5":
-                if "Ракета SpaceX" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 500:
-                        print("Вы купили Ракету SpaceX!")
-                        self.items.append("Ракета SpaceX")
-                        self.money = self.money -500
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "6":
-                if "Кошкодевочка от Tesla" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 1500:
-                        print("Вы купили Кошкодевочку от Tesla!")
-                        self.items.append("Кошкодевочка от Tesla")
-                        self.money = self.money -1500
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "7":
-                if "Вейп Братишкина" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 2500:
-                        print("Вы купили Вейп Братишкина!")
-                        self.items.append("Вейп Братишкина")
-                        self.money = self.money -2250
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "8":
-                if "Футболка \"КиШ\"" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 300:
-                        print("Вы купили Футболку \"КиШ\"!")
-                        self.items.append("Футболка \"КиШ\"")
-                        self.money = self.money -300
-                    else:
-                        print("Недостаточно денег!")
-            elif buy == "9":
-                if "ПК от ZyperPC" in self.items:
-                    print("У тебя есть этот предмет!")
-                    continue
-                else:
-                    if self.money >= 1000:
-                        print("Вы купили ПК от ZyperPC!")
-                        self.items.append("ПК от ZyperPC")
-                        self.money = self.money -1000
-                    else:
-                        print("Недостаточно денег!")
-            elif buy.lower() == "выход":
-                break
-            else:
-                print("Не понимаю!")

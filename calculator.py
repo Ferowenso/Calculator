@@ -1,31 +1,12 @@
 #!/usr/bin/env python
-import math, time, re, shelve, sys, random, os.path, json, getpass
+import math, time, shelve, sys, random, os.path
 from main import *
+from economika import *
 try:
     import requests
 except ModuleNotFoundError:
     print("У вас не установлен requests!")
     sys.exit()
-def randomorgmain(random1, random2):
-    url = "https://api.random.org/json-rpc/2/invoke"
-    mykey = "cb5861a7-60c0-4513-af5b-f8df81aa8e7e"
-    headers = {'content-type': 'application/json'}
-    data = {'jsonrpc':'2.0',
-           'method':'generateIntegers','params':
-           {'apiKey':mykey,
-           'n':1
-           ,'min':random1
-           ,'max':random2}
-          ,'id':24565}
-    params = json.dumps(data)
-    try:
-        r = requests.post(url, params, headers=headers, timeout=5)
-        encode = r.json()
-        rrandom = encode["result"]["random"]["data"][0]
-    except:
-        print("Рандом орг чота не работает или не может прислать рандом  в ответ. Мы тада используем программный")
-        rrandom = random.randint(random1, random2)
-    return rrandom
 
 def clrclear():
     if sys.platform == "win32":
@@ -44,7 +25,7 @@ def delete():
             else:
                 os.remove("log")
             print("Удаление...")
-            time.sleep(setting["timesleep"])
+            time.sleep(1)
             sys.exit()
         elif yesorno.lower() == "нет":
             print("Ну и зачем ты тогда сюда заходил?")
@@ -54,7 +35,7 @@ def delete():
             continue
 def exit(calc):
     print("Выходим")
-    time.sleep(setting["timesleep"])
+    time.sleep(1)
     with shelve.open("log") as stat:
         stat["калк"] = calc
     sys.exit()
@@ -75,7 +56,7 @@ def editsetting():
                 print("цыфорками!")
                 continue
 
-def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None, logfile=None):
+def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
     #начало хы
     helpme = """Функции этой прекрасной программы:
             0) Очистить
@@ -99,8 +80,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None, 
     try:
         if not zapros:
             print("Здравствуй," , calc.name)
-            print("Ладно, начнем-с")
-            time.sleep(setting["timesleep"])
+            time.sleep(1)
             print(helpme)
 
         while True:
@@ -167,34 +147,29 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None, 
 #выход через ctrl+c
     except (KeyboardInterrupt, EOFError):
         print("Выходим")
-        with shelve.open(logfile) as stat:
+        with shelve.open("log") as stat:
             stat["калк"] = calc
         sys.exit()
 #фихня нужная для запоминания имени
 def run():
-    global setting
     if sys.platform == "win32":
-        logfile = "log"
-        jsonfile = "log.json"
         memory = os.path.isfile("log.dat")
     else:
-        logfile = "/home/{}/log".format(getpass.getuser())
-        jsonfile = "/home/{}/log.json".format(getpass.getuser())
-        memory = os.path.isfile(logfile)
-    jsontest = os.path.isfile(jsonfile)
+        memory = os.path.isfile("log")
+    jsontest = os.path.isfile("log.json")
     if all([memory, jsontest]):
-        with shelve.open(logfile) as stat:
+        with shelve.open("log") as stat:
             calc = stat["калк"]
-        with open(jsonfile, "r") as stat:
+        with open("log.json", "r") as stat:
             setting = json.load(stat)
     else:
         calc = Main()
         setting = {"timesleep": 1}
-        with open(jsonfile, "w") as stat:
+        with open("log.json", "w") as stat:
             json.dump(setting, stat)
         calc.login()
         calc = Main(name=calc.name, age=calc.age)
-        with shelve.open(logfile) as stat:
+        with shelve.open("log") as stat:
             stat["калк"] = calc
         print(calc.name + ", наш агент фсб уже выслан к вам ")
     key = None
@@ -212,6 +187,6 @@ def run():
         key = None
     if key:
         argvtest = True
-    lobby(calc, key, args1, args2, args3, argvtest, logfile)
+    lobby(calc, key, args1, args2, args3, argvtest)
 if __name__ == "__main__":
     run()
