@@ -269,13 +269,13 @@ class Main():
 • Выход
 """)
                     encalc = encalc.lower()
-                if encalc == "+":
+                if encalc == "+" or encalc == "сложение":
                     print("Вот твой результат, " + self.name + ": {}".format(x + y))
-                elif encalc == "-":
+                elif encalc == "-" or encalc == "вычитание":
                     print("Вот твой результат, " + self.name + ": {}".format(x - y))
-                elif encalc == "*":
+                elif encalc == "*" or encalc == "умножение":
                     print("Вот твой результат, " + self.name + ": {}".format(x * y))
-                elif encalc == "**":
+                elif encalc == "**" or encalc == "степень":
                     print("Вот твой результат, " + self.name + ": {}".format(x ** y))
                 elif encalc == "/":
                     try:

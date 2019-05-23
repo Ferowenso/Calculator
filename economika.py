@@ -257,4 +257,4 @@ def shopping(self):
 Main.profile = profile
 Main.shopping = shopping
 Main.jobmain = jobmain
-
+Main.bomb = bomb

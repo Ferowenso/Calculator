@@ -53,24 +53,24 @@ def editsetting():
 def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
     #начало хы
     helpme = """Функции этой прекрасной программы:
-            0) Очистить
-            1) Калькулятор
-            2) Шансы
-            3) Дата
-            4) Число
-            5) Удалить данные
-            6) Работа
-            7) Профиль
-            8) Магазин
-            9) Уровень
-            10) Погода
-            11) Курс
-            12) Хелп
-            13) Бомба
-            14) Префикс
-            15) Монета
-            16) Конфиг
-            (все данные сохраняются только при написании команды "Выход"!) """
+             •  Очистить | clear
+             •  Калькулятор | calc
+             •  Шансы
+             •  Дата | data
+             •  Число
+             •  Удалить данные
+             •  Работа | job
+             •  Профиль
+             •  Магазин
+             •  Уровень
+             •  Погода
+             •  Курс
+             •  Хелп
+             •  Бомба
+             •  Префикс
+             •  Монета
+             •  Конфиг
+                (все данные сохраняются только при написании команды "Выход"!) """
     try:
         if not zapros:
             print("Здравствуй," , calc.name)
@@ -92,39 +92,39 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
                     args2 = enter.split()[2]
                     args3 = enter.split()[3]
                 except IndexError: None
-            if zapros == "калькулятор":
+            if zapros == "калькулятор" or zapros == "calc":
                 calc.calcc(args1, args2, args3)
             elif zapros == "шансы":
                 calc.chance(args1)
-            elif zapros == "дата":
+            elif zapros == "дата" or zapros == "data":
                 calc.date(args1)
             elif zapros == "число":
                 calc.randomn(args1, args2)
             elif zapros == "удалить данные":
                 delete()
-            elif zapros == "работа":
+            elif zapros == "работа" or zapros == "job":
                 calc.jobmain()
             elif zapros == "профиль":
                 calc.profile()
-            elif zapros == "магазин":
+            elif zapros == "магазин" or zapros ==  "shop":
                 calc.shopping()
-            elif zapros == "уровень":
+            elif zapros == "уровень" or zapros == "lvl":
                 calc.levelup()
-            elif zapros == "погода":
+            elif zapros == "погода" or zapros == "weather":
                 calc.weather(args1)
             elif zapros == "курс":
                 calc.valute()
             elif zapros  == "удача":
                 calc.luck()
-            elif zapros == "очистить":
+            elif zapros == "очистить" or zapros == "clear":
                 clrclear()
-            elif zapros == "хелп":
+            elif zapros == "хелп" or zapros == "help":
                 print(helpme)
             elif zapros == "майнкрафт":
                 calc.secret()
             elif zapros == "бомба":
                 calc.bomb()
-            elif zapros == "выход":
+            elif zapros == "выход" or zapros == "exit":
                 exit(calc)
             elif zapros == "префикс":
                 calc.prefix(args1)
