@@ -1,13 +1,7 @@
 #!/usr/bin/env python
-import math, time, shelve, sys, random, os.path
+import shelve, sys, os.path
 from main import *
 from economika import *
-try:
-    import requests
-except ModuleNotFoundError:
-    print("У вас не установлен requests!")
-    sys.exit()
-
 def clrclear():
     if sys.platform == "win32":
         os.system("cls")

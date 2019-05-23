@@ -15,16 +15,16 @@ def jobmain(self):
         jobtest = input()
         if jobtest.lower() == "работать":
             if self.lvl == 0:
-                self.money = self.money + randomorgmain(1, 5)
+                self.money = self.money + self.randomorgmain(1, 5)
                 print("Ваш баланс {}".format(self.money))
             elif self.lvl == 1:
-                    self.money = self.money + randomorgmain(5, 30)
+                    self.money = self.money + self.randomorgmain(5, 30)
                     print("Ваш баланс {}".format(self.money))
             elif self.lvl == 2:
-                self.money = self.money + randomorgmain(25, 55)
+                self.money = self.money + self.randomorgmain(25, 55)
                 print("Ваш баланс {}".format(self.money))
             elif self.lvl == 3:
-                self.money = self.money + randomorgmain(50, 90)
+                self.money = self.money + self.randomorgmain(50, 90)
                 print("Ваш баланс {}".format(self.money))
         elif jobtest.lower() == "выход":
             break
@@ -106,9 +106,9 @@ def luck(self):
         if entcas.lower() == "да":
             if self.money >= 100:
                 self.money = self.money -100
-                first = randomorgmain(1, 9)
-                second = randomorgmain(1, 9)
-                third = randomorgmain(1, 9)
+                first = self.randomorgmain(1, 9)
+                second = self.randomorgmain(1, 9)
+                third = self.randomorgmain(1, 9)
                 print("Числа: {}, {}, {}".format(first, second, third))
                 if first == second and first != third:
                     self.money = self.money + 500
