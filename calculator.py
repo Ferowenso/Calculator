@@ -559,7 +559,7 @@ def delete():
         else:
             print("Да/Нет")
             continue
-def exit():
+def exit(calc):
     print("Выходим")
     time.sleep(setting["timesleep"])
     with shelve.open("log") as stat:
@@ -658,7 +658,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
             elif zapros == "бомба":
                 calc.bomb()
             elif zapros == "выход":
-                exit()
+                exit(calc)
             elif zapros == "префикс":
                 calc.prefix(args1)
             elif zapros == "монета":
@@ -669,6 +669,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
                 print("Не понимаю!")
             if argvtest:
                 sys.exit()
+            zapros = None
 
 #выход через ctrl+c
     except (KeyboardInterrupt, EOFError):
