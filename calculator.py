@@ -131,7 +131,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
             elif zapros == "монета":
                 calc.orelireshka()
             elif zapros == "конфиг":
-                editsetting()
+                print("временно вырезал из калькулятора")
             else:
                 print("Не понимаю!")
             if argvtest:
