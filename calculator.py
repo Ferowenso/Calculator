@@ -2,53 +2,6 @@
 import shelve, sys, os.path
 from main import *
 from economika import *
-def clrclear():
-    if sys.platform == "win32":
-        os.system("cls")
-    else:
-        os.system("clear")
-def delete():
-    print("Ты точно хочешь удалить данные?")
-    while True:
-        yesorno = input("Да или Нет: ")
-        if yesorno.lower() == "да":
-            if sys.platform == "win32":
-                os.remove("log.dat")
-                os.remove("log.bak")
-                os.remove("log.dir")
-            else:
-                os.remove("log")
-            print("Удаление...")
-            time.sleep(1)
-            sys.exit()
-        elif yesorno.lower() == "нет":
-            print("Ну и зачем ты тогда сюда заходил?")
-            break
-        else:
-            print("Да/Нет")
-            continue
-def exit(calc):
-    print("Выходим")
-    time.sleep(1)
-    with shelve.open("log") as stat:
-        stat["калк"] = calc
-    sys.exit()
-
-def editsetting():
-    while 1:
-        edit = input("Чтобы изменить задержку - напишите 1: ")
-        if edit == "1":
-            try:
-                test  = float(input("введите новое значение: "))
-                if not test:
-                    continue
-                setting["timesleep"] = test
-                with open("log.json", "w") as stat:
-                    json.dump(setting, stat)
-                break
-            except ValueError:
-                print("цыфорками!")
-                continue
 
 def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
     #начало хы
