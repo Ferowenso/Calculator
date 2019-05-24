@@ -1,4 +1,4 @@
-from main import Main
+from util import Main
 def profile(self):
     print("""Ваше имя: {}
 Ваш возраст:{}
@@ -254,6 +254,7 @@ def shopping(self):
             break
         else:
             print("Не понимаю!")
+# Хезе как по другому это реализовать
 Main.profile = profile
 Main.shopping = shopping
 Main.jobmain = jobmain

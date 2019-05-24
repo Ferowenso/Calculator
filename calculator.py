@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import shelve, sys, os.path
-from main import *
-from economika import *
-
+from util import *
+from economy import Main
 def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
     #начало хы
     helpme = """Функции этой прекрасной программы:
