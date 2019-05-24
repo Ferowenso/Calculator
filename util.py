@@ -41,6 +41,25 @@ class Main():
         else:
             self.xp = self.xp + random.randint(10, 30)
 
+    def prefix(self, selfprefix):
+        while 1:
+            if self.lvl < 2:
+                print("Префикс доступен со второго уровня!")
+                break
+            else:
+                if selfprefix:
+                        self.name = selfprefix
+                        if not self.name:
+                            print("Ну и зачем мне пустой ответ, а?")
+                            continue
+                        break
+                else:
+                        self.name = input("Введите префикс: ")
+                        if not self.name:
+                            print("Ну и зачем мне пустой ответ, а?")
+                            continue
+                        break
+
     def login(self):
         print("Каково же твое имя?")
         while 1:

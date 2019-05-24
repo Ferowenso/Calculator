@@ -2,7 +2,9 @@
 import shelve, sys, os.path
 from util import *
 from economy import Main
-def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
+from economygame import Main
+def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None,
+          uberargs=None):
     #начало хы
     helpme = """Функции этой прекрасной программы:
              •  Очистить | clear
@@ -36,10 +38,13 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
                 args1 = None
                 args2 = None
                 args3 = None
+                uberargs = None
                 if not enter:
                     continue
                 zapros = enter.split()[0]
                 try:
+                    uberargs = enter.split()[1:]
+                    uberargs = " ".join(uberargs)
                     args1 = enter.split()[1]
                     args2 = enter.split()[2]
                     args3 = enter.split()[3]
@@ -47,7 +52,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
             if zapros == "калькулятор" or zapros == "calc":
                 calc.calcc(args1, args2, args3)
             elif zapros == "шансы":
-                calc.chance(args1)
+                calc.chance(uberargs)
             elif zapros == "дата" or zapros == "data":
                 calc.date(args1)
             elif zapros == "число":
@@ -79,7 +84,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None):
             elif zapros == "выход" or zapros == "exit":
                 exit(calc)
             elif zapros == "префикс":
-                calc.prefix(args1)
+                calc.prefix(uberargs)
             elif zapros == "монета":
                 calc.orelireshka()
             elif zapros == "конфиг":
@@ -123,7 +128,10 @@ def run():
     args2 = None
     args3 = None
     argvtest = False
+    uberargs = None
     try:
+        uberargs = sys.argv[1:]
+        uberargs = " ".join(uberargs)
         key = sys.argv[1]
         args1 = sys.argv[2]
         args2 = sys.argv[3]
@@ -133,6 +141,6 @@ def run():
         key = None
     if key:
         argvtest = True
-    lobby(calc, key, args1, args2, args3, argvtest)
+    lobby(calc, key, args1, args2, args3, argvtest, uberargs)
 if __name__ == "__main__":
     run()
