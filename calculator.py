@@ -119,7 +119,6 @@ def run():
         with open("log.json", "w") as stat:
             json.dump(setting, stat)
         calc.login()
-        calc = Main(name=calc.name, age=calc.age)
         with shelve.open("log") as stat:
             stat["калк"] = calc
         print(calc.name + ", наш агент фсб уже выслан к вам ")
