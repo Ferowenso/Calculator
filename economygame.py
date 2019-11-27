@@ -1,4 +1,6 @@
 from util import Main
+
+
 def bomb(self):
     print("""В этой игре вам нужно угадать верный провод для того чтобы разминировать бомбу
 Есть 4 провода:
@@ -47,6 +49,7 @@ def bomb(self):
             print("шо?")
             continue
 
+
 def luck(self):
     while True:
         print("""Это игра на удачу
@@ -57,7 +60,7 @@ def luck(self):
         entcas = input("")
         if entcas.lower() == "да":
             if self.money >= 100:
-                self.money = self.money -100
+                self.money = self.money - 100
                 first = self.randomorgmain(1, 9)
                 second = self.randomorgmain(1, 9)
                 third = self.randomorgmain(1, 9)
@@ -86,5 +89,7 @@ def luck(self):
             break
         else:
             print("шо?")
+
+
 Main.bomb = bomb
 Main.luck = luck

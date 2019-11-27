@@ -1,11 +1,15 @@
 #!/usr/bin/env python
-import shelve, sys, os.path
+import shelve
+import sys
+import os.path
 from util import *
 from economy import Main
 from economygame import Main
+
+
 def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None,
           uberargs=None):
-    #начало хы
+    # начало хы
     helpme = """Функции этой прекрасной программы:
              •  Очистить | clear
              •  Калькулятор | calc
@@ -27,7 +31,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None,
                 (все данные сохраняются только при написании команды "Выход"!) """
     try:
         if not zapros:
-            print("Здравствуй," , calc.name)
+            print("Здравствуй,", calc.name)
             time.sleep(1)
             print(helpme)
 
@@ -48,7 +52,8 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None,
                     args1 = enter.split()[1]
                     args2 = enter.split()[2]
                     args3 = enter.split()[3]
-                except IndexError: None
+                except IndexError:
+                    None
             if zapros == "калькулятор" or zapros == "calc":
                 calc.calcc(args1, args2, args3)
             elif zapros == "шансы":
@@ -63,7 +68,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None,
                 calc.jobmain()
             elif zapros == "профиль":
                 calc.profile()
-            elif zapros == "магазин" or zapros ==  "shop":
+            elif zapros == "магазин" or zapros == "shop":
                 calc.shopping()
             elif zapros == "уровень" or zapros == "lvl":
                 calc.levelup()
@@ -71,7 +76,7 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None,
                 calc.weather(args1)
             elif zapros == "курс":
                 calc.valute()
-            elif zapros  == "удача":
+            elif zapros == "удача":
                 calc.luck()
             elif zapros == "очистить" or zapros == "clear":
                 clrclear()
@@ -95,13 +100,15 @@ def lobby(calc, zapros=None, args1=None, args2=None, args3=None, argvtest=None,
                 sys.exit()
             zapros = None
 
-#выход через ctrl+c
+# выход через ctrl+c
     except (KeyboardInterrupt, EOFError):
         print("Выходим")
         with shelve.open("log") as stat:
             stat["калк"] = calc
         sys.exit()
-#фихня нужная для запоминания имени
+# фихня нужная для запоминания имени
+
+
 def run():
     if sys.platform == "win32":
         memory = os.path.isfile("log.dat")
@@ -123,7 +130,7 @@ def run():
             stat["калк"] = calc
         print(calc.name + ", наш агент фсб уже выслан к вам ")
     key = None
-    args1= None
+    args1 = None
     args2 = None
     args3 = None
     argvtest = False
@@ -135,11 +142,14 @@ def run():
         args1 = sys.argv[2]
         args2 = sys.argv[3]
         args3 = sys.argv[4]
-    except IndexError: None
+    except IndexError:
+        None
     if key == os.path.basename(__file__):
         key = None
     if key:
         argvtest = True
     lobby(calc, key, args1, args2, args3, argvtest, uberargs)
+
+
 if __name__ == "__main__":
     run()

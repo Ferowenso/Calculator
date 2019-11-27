@@ -1,4 +1,6 @@
 from util import Main
+
+
 def profile(self):
     print("""Ваше имя: {}
 Ваш возраст:{}
@@ -8,6 +10,8 @@ def profile(self):
         print(" •" + it)
     print("""Ваш опыт: {}xp
 Ваш уровень:{}  """.format(self.xp, self.lvl))
+
+
 def jobmain(self):
     while True:
         print("""Напишите \"Работать\", чтобы работать
@@ -18,8 +22,8 @@ def jobmain(self):
                 self.money = self.money + self.randomorgmain(1, 5)
                 print("Ваш баланс {}".format(self.money))
             elif self.lvl == 1:
-                    self.money = self.money + self.randomorgmain(5, 30)
-                    print("Ваш баланс {}".format(self.money))
+                self.money = self.money + self.randomorgmain(5, 30)
+                print("Ваш баланс {}".format(self.money))
             elif self.lvl == 2:
                 self.money = self.money + self.randomorgmain(25, 55)
                 print("Ваш баланс {}".format(self.money))
@@ -30,8 +34,11 @@ def jobmain(self):
             break
         else:
             print("шо?")
+
+
 def secret(self):
     self.money = self.money + 99999
+
 
 def shopping(self):
     while True:
@@ -66,7 +73,7 @@ def shopping(self):
                 if self.money >= 50:
                     print("Вы купили Мерч Хесуса!")
                     calc.items.append("Мерч Хесуса")
-                    self.money = self.money -50
+                    self.money = self.money - 50
                 else:
                     print("Недостаточно денег!")
         elif buy == "3":
@@ -77,7 +84,7 @@ def shopping(self):
                 if self.money >= 75:
                     print("Вы купили Электрогитару!")
                     self.items.append("Электрогитара")
-                    self.money = self.money -75
+                    self.money = self.money - 75
                 else:
                     print("Недостаточно денег!")
         elif buy == "4":
@@ -88,7 +95,7 @@ def shopping(self):
                 if self.money >= 150:
                     print("Вы купили АААААААААААвтомобиль!")
                     self.items.append("АААААААААААвтомобиль")
-                    self.money = self.money -150
+                    self.money = self.money - 150
                 else:
                     print("Недостаточно денег!")
         elif buy == "5":
@@ -99,7 +106,7 @@ def shopping(self):
                 if self.money >= 500:
                     print("Вы купили Ракету SpaceX!")
                     self.items.append("Ракета SpaceX")
-                    self.money = self.money -500
+                    self.money = self.money - 500
                 else:
                     print("Недостаточно денег!")
         elif buy == "6":
@@ -110,7 +117,7 @@ def shopping(self):
                 if self.money >= 1500:
                     print("Вы купили Кошкодевочку от Tesla!")
                     self.items.append("Кошкодевочка от Tesla")
-                    self.money = self.money -1500
+                    self.money = self.money - 1500
                 else:
                     print("Недостаточно денег!")
         elif buy == "7":
@@ -121,7 +128,7 @@ def shopping(self):
                 if self.money >= 2500:
                     print("Вы купили Вейп Братишкина!")
                     self.items.append("Вейп Братишкина")
-                    self.money = self.money -2250
+                    self.money = self.money - 2250
                 else:
                     print("Недостаточно денег!")
         elif buy == "8":
@@ -132,7 +139,7 @@ def shopping(self):
                 if self.money >= 300:
                     print("Вы купили Футболку \"КиШ\"!")
                     self.items.append("Футболка \"КиШ\"")
-                    self.money = self.money -300
+                    self.money = self.money - 300
                 else:
                     print("Недостаточно денег!")
         elif buy == "9":
@@ -143,13 +150,15 @@ def shopping(self):
                 if self.money >= 1000:
                     print("Вы купили ПК от ZyperPC!")
                     self.items.append("ПК от ZyperPC")
-                    self.money = self.money -1000
+                    self.money = self.money - 1000
                 else:
                     print("Недостаточно денег!")
         elif buy.lower() == "выход":
             break
         else:
             print("Не понимаю!")
+
+
 # Хезе как по другому это реализовать
 Main.profile = profile
 Main.shopping = shopping
